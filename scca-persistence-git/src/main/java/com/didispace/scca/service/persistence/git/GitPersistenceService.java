@@ -1,12 +1,9 @@
-package com.didispace.scca.core.service.impl;
+package com.didispace.scca.service.persistence.git;
 
 import com.didispace.easyutils.cmd.CmdRunner;
 import com.didispace.easyutils.file.FileUtils;
 import com.didispace.easyutils.file.PropertiesUtils;
-import com.didispace.scca.core.config.GitProperties;
-import com.didispace.scca.core.service.BaseOptService;
 import com.didispace.scca.core.service.PersistenceService;
-import com.didispace.scca.core.service.PropertiesService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -24,11 +21,7 @@ import java.util.UUID;
 public class GitPersistenceService implements PersistenceService {
 
     @Autowired
-    private BaseOptService baseOptService;
-    @Autowired
     private GitProperties gitProperties;
-    @Autowired
-    private PropertiesService propertiesService;
 
     @Override
     public void updateProperties(String name, String profile, String label, Properties update) {

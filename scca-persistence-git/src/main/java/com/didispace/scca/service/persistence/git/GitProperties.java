@@ -1,4 +1,4 @@
-package com.didispace.scca.core.config;
+package com.didispace.scca.service.persistence.git;
 
 import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -10,7 +10,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  * Github: https://github.com/dyc87112/
  */
 @Data
-@ConfigurationProperties(prefix = "git")
+@ConfigurationProperties(prefix = "scca.git")
 public class GitProperties {
 
     private String username;
