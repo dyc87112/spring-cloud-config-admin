@@ -31,11 +31,11 @@ public class Env {
      **/
     private String name;
     /**
-     * 注册中心地址
+     * 注册中心地址，如果为空，配置中心的访问地址不使用服务名
      **/
     private String registryAddress;
     /**
-     * 配置中心的注册服务名
+     * 配置中心的访问地址（比如：http://localhost:8888/）或服务名（配置服务名的时候需要与服务发现组件配合使用）
      **/
     private String configServerName;
 

@@ -64,7 +64,7 @@ public class BaseOptServiceImpl implements BaseOptService {
                 .build();
 
         Call call = okHttpClient.newCall(request);
-        okhttp3.Response response = call.execute();
+        Response response = call.execute();
         ResponseBody responseBody = response.body();
         return responseBody.string();
     }
@@ -77,7 +77,7 @@ public class BaseOptServiceImpl implements BaseOptService {
                 .build();
 
         Call call = okHttpClient.newCall(request);
-        okhttp3.Response response = call.execute();
+        Response response = call.execute();
         ResponseBody responseBody = response.body();
 
         ObjectMapper mapper = new ObjectMapper();
