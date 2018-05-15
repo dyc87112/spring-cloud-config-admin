@@ -4,6 +4,8 @@ import com.didispace.scca.core.config.SccaBaseConfiguration;
 import com.didispace.scca.service.discovery.consul.SccaConsulConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
+import org.springframework.cloud.config.server.EnableConfigServer;
 import org.springframework.context.annotation.Import;
 
 /**
@@ -12,6 +14,8 @@ import org.springframework.context.annotation.Import;
  * Blog: http://blog.didispace.com/
  * Github: https://github.com/dyc87112/
  */
+@EnableDiscoveryClient
+@EnableConfigServer
 @SpringBootApplication
 @Import({SccaConsulConfiguration.class, SccaBaseConfiguration.class})
 public class TestApplication {

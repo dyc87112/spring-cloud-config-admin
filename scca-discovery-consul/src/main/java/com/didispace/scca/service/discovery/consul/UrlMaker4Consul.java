@@ -23,8 +23,13 @@ public class UrlMaker4Consul extends BaseUrlMaker {
         Env env = envRepo.findByName(envName);
 
         ConsulClient consulClient = new ConsulClient(env.getRegistryAddress());
-        Response<List<HealthService>> response = consulClient.getHealthServices(env.getConfigServerName(), true, null);
+        Response<List<HealthService>> response = consulClient.getHealthServices(env.getConfigServerName(), false, null);
         List<HealthService> configServerList = response.getValue();
+
+        if(configServerList.size() == 0) {
+            throw new RuntimeException("No instances : " + env.getConfigServerName());
+        }
+
         HealthService healthService = configServerList.get(0);
 
         String ip = healthService.getService().getAddress();
