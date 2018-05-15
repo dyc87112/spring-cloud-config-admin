@@ -21,7 +21,7 @@ public class GitPersistenceTest {
 
     @Test
     public void testPersistenceService() {
-        String name = "http://gitlab.yonghuivip.com/config-repo/yh-consul-admin.git/application-stage.properties";
+        String name = "https://github.com/dyc87112/scca-repo.git/application-stage.properties";
         String profile = "stage";
         String label = "develop";
 
