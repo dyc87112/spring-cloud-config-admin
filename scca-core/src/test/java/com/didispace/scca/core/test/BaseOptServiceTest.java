@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class BaseOptServiceTest {
 
     @Autowired
@@ -34,7 +34,7 @@ public class BaseOptServiceTest {
         // 新增一个环境，使用默认的配置
         Env stage = new Env();
         stage.setName("stage");
-        stage.setConfigServerName("http://10.19.129.121:9010");
+        stage.setConfigServerName("http://localhost:10010");
         envRepo.save(stage);
 
         // 加密解密测试
@@ -50,14 +50,15 @@ public class BaseOptServiceTest {
 
         assertThat(originValue).isEqualTo(decryptValue);
 
-
         // 访问配置中心获取配置内容
-        Environment environment = baseOptService.getProperties("yh-consul-admin", "stage", "develop");
+        String serviceName = "scca-repo";
+
+        Environment environment = baseOptService.getProperties(serviceName, "stage", "develop");
         for (PropertySource propertySource : environment.getPropertySources()) {
             log.info(propertySource.toString());
         }
 
-        environment = baseOptService.getProperties("yh-consul-admin", "stage", null);
+        environment = baseOptService.getProperties(serviceName, "stage", null);
         for (PropertySource propertySource : environment.getPropertySources()) {
             log.info(propertySource.toString());
         }

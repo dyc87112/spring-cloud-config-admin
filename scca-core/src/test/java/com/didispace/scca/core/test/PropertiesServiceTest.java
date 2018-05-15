@@ -18,7 +18,7 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 @Slf4j
 @RunWith(SpringRunner.class)
-@SpringBootTest
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.DEFINED_PORT)
 public class PropertiesServiceTest {
 
     @Autowired
@@ -38,7 +38,7 @@ public class PropertiesServiceTest {
         // 新增一个环境，使用默认的配置
         Env stage = new Env();
         stage.setName("stage");
-        stage.setConfigServerName("http://10.19.129.121:9010");
+        stage.setConfigServerName("http://localhost:10010");
         envRepo.save(stage);
 
         // 为stage环境新增两个参数配置

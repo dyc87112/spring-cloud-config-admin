@@ -3,6 +3,7 @@ package com.didispace.scca.core.test;
 import com.didispace.scca.core.config.SccaBaseConfiguration;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.cloud.config.server.EnableConfigServer;
 import org.springframework.context.annotation.Import;
 
 /**
@@ -11,6 +12,7 @@ import org.springframework.context.annotation.Import;
  * Blog: http://blog.didispace.com/
  * Github: https://github.com/dyc87112/
  */
+@EnableConfigServer
 @SpringBootApplication
 @Import(SccaBaseConfiguration.class)
 public class TestApplication {
