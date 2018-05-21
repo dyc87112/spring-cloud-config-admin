@@ -23,3 +23,4 @@ SCCA采用了前后端分离的架构，通过core模块抽象了前端需要的
 # 贡献者
 
 - [程序猿DD](https://github.com/dyc87112)
+- [stone-jin](https://github.com/stone-jin)
