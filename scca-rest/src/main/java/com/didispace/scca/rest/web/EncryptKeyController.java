@@ -46,7 +46,7 @@ public class EncryptKeyController extends BaseController {
         return WebResp.success("delete encryptKey [" + encryptKey.getEKey() + "] success");
     }
 
-    @ApiOperation("Update Env / 更新环境")
+    @ApiOperation("Update EncryptKey / 更新需加密的Key")
     @RequestMapping(method = RequestMethod.PUT)
     public WebResp<String> update(@RequestBody EncryptKey encryptKey) {
         EncryptKey ek = encryptKeyRepo.findOne(encryptKey.getId());

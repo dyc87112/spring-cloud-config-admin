@@ -61,7 +61,7 @@
       },
       "put" : {
         "tags" : [ "EncryptKey MGT（加密管理）" ],
-        "summary" : "Update Env / 更新环境",
+        "summary" : "Update EncryptKey / 更新需加密的Key",
         "description" : "",
         "operationId" : "update",
         "parameters" : [ {
@@ -213,9 +213,9 @@
       },
       "post" : {
         "tags" : [ "EnvParam MGT（环境参数管理）" ],
-        "summary" : "Add EnvParam / 添加一个环境参数",
+        "summary" : "Add EnvParams / 新增一批环境参数",
         "description" : "",
-        "operationId" : "addEnvParam",
+        "operationId" : "createBatch",
         "parameters" : [ {
           "name" : "",
           "in" : "query",
@@ -227,14 +227,17 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/EnvParam"
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/EnvParam"
+            }
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespEnvParam"
+              "$ref" : "#/definitions/WebRespString"
             }
           }
         }
@@ -352,7 +355,6 @@
           "format" : "int32"
         },
         "data" : {
-          "description" : "响应数据",
           "$ref" : "#/definitions/EncryptKey"
         },
         "message" : {
@@ -374,7 +376,6 @@
           "format" : "int32"
         },
         "data" : {
-          "description" : "响应数据",
           "$ref" : "#/definitions/Env"
         },
         "message" : {
@@ -396,7 +397,6 @@
           "format" : "int32"
         },
         "data" : {
-          "description" : "响应数据",
           "$ref" : "#/definitions/EnvParam"
         },
         "message" : {
@@ -419,7 +419,6 @@
         },
         "data" : {
           "type" : "array",
-          "description" : "响应数据",
           "items" : {
             "$ref" : "#/definitions/EncryptKey"
           }
@@ -444,7 +443,6 @@
         },
         "data" : {
           "type" : "array",
-          "description" : "响应数据",
           "items" : {
             "$ref" : "#/definitions/Env"
           }
@@ -469,7 +467,6 @@
         },
         "data" : {
           "type" : "array",
-          "description" : "响应数据",
           "items" : {
             "$ref" : "#/definitions/EnvParam"
           }
@@ -493,8 +490,7 @@
           "format" : "int32"
         },
         "data" : {
-          "type" : "string",
-          "description" : "响应数据"
+          "type" : "string"
         },
         "message" : {
           "type" : "string",
