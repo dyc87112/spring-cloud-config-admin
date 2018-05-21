@@ -15,5 +15,6 @@ public interface EnvParamRepo extends JpaRepository<EnvParam, Long> {
 
     List<EnvParam> findAllByEnvironment_Name(String environmentName);
 
+    List<EnvParam> findAllByEnvironment_Id(Long id);
 
 }

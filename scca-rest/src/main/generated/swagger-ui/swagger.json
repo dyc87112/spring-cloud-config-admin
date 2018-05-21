@@ -1,0 +1,511 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "This is a sample.",
+    "version" : "v1",
+    "title" : "Swagger Maven Plugin Sample",
+    "termsOfService" : "http://www.github.com/kongchen/swagger-maven-plugin",
+    "license" : {
+      "name" : "Apache 2.0",
+      "url" : "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "tags" : [ {
+    "name" : "EncryptKey MGT（加密管理）"
+  }, {
+    "name" : "Env MGT（环境管理）"
+  }, {
+    "name" : "EnvParam MGT（环境参数管理）"
+  } ],
+  "schemes" : [ "http", "https" ],
+  "paths" : {
+    "/encryptKey" : {
+      "get" : {
+        "tags" : [ "EncryptKey MGT（加密管理）" ],
+        "summary" : "List EncryptKey / 需加密的Key清单",
+        "description" : "",
+        "operationId" : "findAll",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespListEncryptKey"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "EncryptKey MGT（加密管理）" ],
+        "summary" : "Add EncryptKeys / 批量新增需加密的Key",
+        "description" : "",
+        "operationId" : "createBatch",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/EncryptKey"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "EncryptKey MGT（加密管理）" ],
+        "summary" : "Update Env / 更新环境",
+        "description" : "",
+        "operationId" : "update",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/EncryptKey"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "EncryptKey MGT（加密管理）" ],
+        "summary" : "Delete EncryptKeys / 批量删除需加密的Key",
+        "description" : "",
+        "operationId" : "deleteBatch",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
+    "/env" : {
+      "get" : {
+        "tags" : [ "Env MGT（环境管理）" ],
+        "summary" : "List Env / 环境列表",
+        "description" : "",
+        "operationId" : "findAll",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespListEnv"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Env MGT（环境管理）" ],
+        "summary" : "Create Env / 创建环境",
+        "description" : "",
+        "operationId" : "create",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Env"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespEnv"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Env MGT（环境管理）" ],
+        "summary" : "Update Env / 更新环境",
+        "description" : "",
+        "operationId" : "update",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Env"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Env MGT（环境管理）" ],
+        "summary" : "Delete Env / 删除环境",
+        "description" : "",
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
+    "/envParam" : {
+      "get" : {
+        "tags" : [ "EnvParam MGT（环境参数管理）" ],
+        "summary" : "List EnvParam / 环境参数列表",
+        "description" : "",
+        "operationId" : "findByEnv",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespListEnvParam"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "EnvParam MGT（环境参数管理）" ],
+        "summary" : "Add EnvParam / 添加一个环境参数",
+        "description" : "",
+        "operationId" : "addEnvParam",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/EnvParam"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespEnvParam"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "EnvParam MGT（环境参数管理）" ],
+        "summary" : "Update EnvParam / 更新某个环境参数",
+        "description" : "",
+        "operationId" : "update",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/EnvParam"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "EnvParam MGT（环境参数管理）" ],
+        "summary" : "Delete EnvParams / 删除一批环境参数",
+        "description" : "",
+        "operationId" : "deleteBatch",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "type" : "integer",
+              "format" : "int64"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions" : {
+    "EncryptKey" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "ekey" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Env" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "registryAddress" : {
+          "type" : "string"
+        },
+        "configServerName" : {
+          "type" : "string"
+        },
+        "envParams" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EnvParam"
+          }
+        }
+      }
+    },
+    "EnvParam" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "environment" : {
+          "$ref" : "#/definitions/Env"
+        },
+        "pkey" : {
+          "type" : "string"
+        },
+        "pvalue" : {
+          "type" : "string"
+        }
+      }
+    },
+    "WebRespEncryptKey" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "description" : "响应数据",
+          "$ref" : "#/definitions/EncryptKey"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "now" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespEnv" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "description" : "响应数据",
+          "$ref" : "#/definitions/Env"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "now" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespEnvParam" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "description" : "响应数据",
+          "$ref" : "#/definitions/EnvParam"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "now" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespListEncryptKey" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "type" : "array",
+          "description" : "响应数据",
+          "items" : {
+            "$ref" : "#/definitions/EncryptKey"
+          }
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "now" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespListEnv" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "type" : "array",
+          "description" : "响应数据",
+          "items" : {
+            "$ref" : "#/definitions/Env"
+          }
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "now" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespListEnvParam" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "type" : "array",
+          "description" : "响应数据",
+          "items" : {
+            "$ref" : "#/definitions/EnvParam"
+          }
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "now" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespString" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "type" : "string",
+          "description" : "响应数据"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "now" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    }
+  }
+}

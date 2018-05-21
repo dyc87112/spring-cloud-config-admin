@@ -16,7 +16,7 @@
         <module>scca-core</module>
         <module>scca-discovery-consul</module>
         <module>scca-persistence-git</module>
-        <module>scca-ui</module>
+        <module>scca-rest</module>
     </modules>
 
     <properties>
@@ -58,7 +58,7 @@
             <dependency>
                 <groupId>com.didispace</groupId>
                 <artifactId>easy-utils</artifactId>
-                <version>1.0.0-SNAPSHOT</version>
+                <version>1.0.0-RELEASE</version>
             </dependency>
 
             <dependency>
