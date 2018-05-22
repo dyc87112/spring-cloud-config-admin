@@ -25,13 +25,13 @@ public class EnvParamController extends BaseController {
 
     @ApiOperation("List EnvParam / 环境参数列表")
     @RequestMapping(method = RequestMethod.GET)
-    public WebResp<List<EnvParam>> findByEnv(@RequestParam Long envId) {
+    public WebResp<List<EnvParam>> findByEnv(@RequestParam("envId") Long envId) {
         return WebResp.success(envParamRepo.findAllByEnvironment_Id(envId));
     }
 
     @ApiOperation("Add EnvParam / 添加一个环境参数")
     @RequestMapping(method = RequestMethod.POST)
-    public WebResp<EnvParam> addEnvParam(@RequestParam Long envId, @RequestBody EnvParam envParam) {
+    public WebResp<EnvParam> addEnvParam(@RequestParam("envId") Long envId, @RequestBody EnvParam envParam) {
         log.info("Add an EnvParam to {} : {} ", envId, envParam);
 
         Env env = envRepo.findOne(envId);
@@ -56,7 +56,7 @@ public class EnvParamController extends BaseController {
 
     @ApiOperation("Delete EnvParam / 删除某个环境参数")
     @RequestMapping(method = RequestMethod.DELETE)
-    public WebResp<String> delete(@RequestParam Long id) {
+    public WebResp<String> delete(@RequestParam("envId") Long id) {
         EnvParam envParam = envParamRepo.findOne(id);
 
         log.info("delete EnvParam : " + envParam);
@@ -72,7 +72,7 @@ public class EnvParamController extends BaseController {
     @Transactional
     @ApiOperation("Add EnvParams / 新增一批环境参数")
     @RequestMapping(path = "/batch", method = RequestMethod.POST)
-    public WebResp<String> createBatch(@RequestParam Long envId, @RequestBody List<EnvParam> envParams) {
+    public WebResp<String> createBatch(@RequestParam("envId") Long envId, @RequestBody List<EnvParam> envParams) {
         Env env = envRepo.findOne(envId);
         log.info("Add EnvParams to {} : {} ", env.getName(), envParams);
 

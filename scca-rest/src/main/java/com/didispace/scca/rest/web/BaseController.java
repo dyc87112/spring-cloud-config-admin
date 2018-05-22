@@ -3,6 +3,7 @@ package com.didispace.scca.rest.web;
 import com.didispace.scca.core.domain.EncryptKeyRepo;
 import com.didispace.scca.core.domain.EnvParamRepo;
 import com.didispace.scca.core.domain.EnvRepo;
+import com.didispace.scca.core.domain.ProjectRepo;
 import com.didispace.scca.core.service.BaseOptService;
 import com.didispace.scca.core.service.PersistenceService;
 import com.didispace.scca.core.service.PropertiesService;
@@ -25,8 +26,10 @@ public class BaseController {
     protected EnvParamRepo envParamRepo;
     @Autowired
     protected EncryptKeyRepo encryptKeyRepo;
-
     @Autowired
+    protected ProjectRepo projectRepo;
+
+   @Autowired
     protected BaseOptService baseOptService;
     @Autowired
     protected PersistenceService persistenceService;

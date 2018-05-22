@@ -16,6 +16,8 @@
     "name" : "Env MGT（环境管理）"
   }, {
     "name" : "EnvParam MGT（环境参数管理）"
+  }, {
+    "name" : "Project MGT（项目管理）"
   } ],
   "schemes" : [ "http", "https" ],
   "paths" : {
@@ -173,7 +175,7 @@
         "description" : "",
         "operationId" : "delete",
         "parameters" : [ {
-          "name" : "",
+          "name" : "id",
           "in" : "query",
           "required" : true,
           "type" : "integer",
@@ -196,7 +198,7 @@
         "description" : "",
         "operationId" : "findByEnv",
         "parameters" : [ {
-          "name" : "",
+          "name" : "envId",
           "in" : "query",
           "required" : true,
           "type" : "integer",
@@ -213,11 +215,11 @@
       },
       "post" : {
         "tags" : [ "EnvParam MGT（环境参数管理）" ],
-        "summary" : "Add EnvParams / 新增一批环境参数",
+        "summary" : "Add EnvParam / 添加一个环境参数",
         "description" : "",
-        "operationId" : "createBatch",
+        "operationId" : "addEnvParam",
         "parameters" : [ {
-          "name" : "",
+          "name" : "envId",
           "in" : "query",
           "required" : true,
           "type" : "integer",
@@ -227,17 +229,14 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/definitions/EnvParam"
-            }
+            "$ref" : "#/definitions/EnvParam"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespString"
+              "$ref" : "#/definitions/WebRespEnvParam"
             }
           }
         }
@@ -280,6 +279,100 @@
               "format" : "int64"
             }
           }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
+    "/project" : {
+      "get" : {
+        "tags" : [ "Project MGT（项目管理）" ],
+        "summary" : "List Project / 项目列表",
+        "description" : "",
+        "operationId" : "findAll",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespPageProject"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Project MGT（项目管理）" ],
+        "summary" : "Create Project / 创建项目",
+        "description" : "",
+        "operationId" : "create",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Project"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespProject"
+            }
+          }
+        }
+      },
+      "put" : {
+        "tags" : [ "Project MGT（项目管理）" ],
+        "summary" : "Update Project / 更新环境",
+        "description" : "",
+        "operationId" : "update",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/Project"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Project MGT（项目管理）" ],
+        "summary" : "Delete Project / 删除环境",
+        "description" : "",
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
         } ],
         "responses" : {
           "200" : {
@@ -346,6 +439,63 @@
           "type" : "string"
         }
       }
+    },
+    "PageProject" : {
+      "type" : "object",
+      "properties" : {
+        "totalElements" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "size" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "content" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Project"
+          }
+        },
+        "number" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "sort" : {
+          "$ref" : "#/definitions/Sort"
+        },
+        "first" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "numberOfElements" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "last" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      }
+    },
+    "Project" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        }
+      }
+    },
+    "Sort" : {
+      "type" : "object"
     },
     "WebRespEncryptKey" : {
       "type" : "object",
@@ -470,6 +620,48 @@
           "items" : {
             "$ref" : "#/definitions/EnvParam"
           }
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "now" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespPageProject" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "$ref" : "#/definitions/PageProject"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "now" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespProject" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "$ref" : "#/definitions/Project"
         },
         "message" : {
           "type" : "string",

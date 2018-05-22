@@ -36,7 +36,7 @@ public class EnvController extends BaseController {
 
     @ApiOperation("Delete Env / 删除环境")
     @RequestMapping(method = RequestMethod.DELETE)
-    public WebResp<String> delete(@RequestParam Long id) {
+    public WebResp<String> delete(@RequestParam("id") Long id) {
         Env env = envRepo.findOne(id);
 
         log.info("delete env : " + env);

@@ -37,7 +37,7 @@ public class EncryptKeyController extends BaseController {
 
     @ApiOperation("Delete EncryptKey / 删除需加密的Key")
     @RequestMapping(method = RequestMethod.DELETE)
-    public WebResp<String> delete(@RequestParam Long id) {
+    public WebResp<String> delete(@RequestParam("envId") Long id) {
         EncryptKey encryptKey = encryptKeyRepo.findOne(id);
 
         log.info("delete encryptKey : " + encryptKey);
