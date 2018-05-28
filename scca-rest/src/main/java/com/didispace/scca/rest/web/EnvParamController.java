@@ -20,7 +20,7 @@ import java.util.List;
 @Api("EnvParam MGT（环境参数管理）")
 @Slf4j
 @RestController
-@RequestMapping("/envParam")
+@RequestMapping("/xhr/envParam")
 public class EnvParamController extends BaseController {
 
     @ApiOperation("List EnvParam / 环境参数列表")

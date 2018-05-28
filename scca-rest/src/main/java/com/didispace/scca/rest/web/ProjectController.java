@@ -21,14 +21,15 @@ import java.util.List;
 @Api("Project MGT（项目管理）")
 @Slf4j
 @RestController
-@RequestMapping("/project")
+@RequestMapping("/xhr/project")
 public class ProjectController extends BaseController {
 
     @ApiOperation("List Project / 项目列表")
     @RequestMapping(method = RequestMethod.GET)
-    public WebResp<Page<Project>> findAll(@RequestParam("page") int page,@RequestParam("size") int size) {
-        Pageable pageable = new PageRequest(page, size);
-        Page<Project> r = projectRepo.findAll(pageable);
+    public WebResp<List<Project>> findAll() {
+//        Pageable pageable = new PageRequest(page, size);
+        log.info("=====>findALl");
+        List<Project> r = projectRepo.findAll();
         return WebResp.success(r);
     }
 

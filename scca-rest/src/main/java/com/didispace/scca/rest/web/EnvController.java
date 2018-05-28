@@ -18,7 +18,7 @@ import java.util.List;
 @Api("Env MGT（环境管理）")
 @Slf4j
 @RestController
-@RequestMapping("/env")
+@RequestMapping("/xhr/env")
 public class EnvController extends BaseController {
 
     @ApiOperation("List Env / 环境列表")
