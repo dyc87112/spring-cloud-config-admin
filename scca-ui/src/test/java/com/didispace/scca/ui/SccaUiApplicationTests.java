@@ -1,4 +1,4 @@
-package com.didispace.sscca.ui;
+package com.didispace.scca.ui;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;

@@ -1,4 +1,4 @@
-package com.didispace.sscca.ui.controller;
+package com.didispace.scca.ui.controller;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;

@@ -1,4 +1,4 @@
-package com.didispace.sscca.ui;
+package com.didispace.scca.ui;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;

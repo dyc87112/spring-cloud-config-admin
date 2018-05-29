@@ -1,7 +1,11 @@
-package com.didispace.sscca.ui.controller.ajax;
+package com.didispace.scca.ui.controller.ajax;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -58,7 +62,13 @@ public class SccaRestController {
                 }
                 result = restTemplate.getForObject(url, String.class);
             } else if (Objects.equals(request.getMethod(), "POST")) {
-                result = restTemplate.postForObject(uri.toString(), requestBody, String.class);
+                // FIXME http 415
+                HttpHeaders headers = new HttpHeaders();
+                headers.add(HttpHeaders.CONTENT_TYPE, "application/json");
+                HttpEntity<String> requestEntity = new HttpEntity<>(requestBody, headers);
+                ResponseEntity<String> responseEntity = restTemplate.exchange(uri.toString(), HttpMethod.POST, requestEntity, String.class);
+                result = responseEntity.getBody();
+//                result = restTemplate.postForObject(uri.toString(), requestBody, String.class);
             } else if (Objects.equals(request.getMethod(), "DELETE")) {
                 restTemplate.delete(uri.toString());
             } else if (Objects.equals(request.getMethod(), "PUT")) {
