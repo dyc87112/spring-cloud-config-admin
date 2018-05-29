@@ -21,7 +21,7 @@ import java.util.List;
 @Api("Project MGT（项目管理）")
 @Slf4j
 @RestController
-@RequestMapping("/xhr/project")
+@RequestMapping("/project")
 public class ProjectController extends BaseController {
 
     @ApiOperation("List Project / 项目列表")
