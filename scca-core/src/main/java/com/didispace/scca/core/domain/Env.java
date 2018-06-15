@@ -3,10 +3,7 @@ package com.didispace.scca.core.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -44,5 +41,11 @@ public class Env {
      **/
     @OneToMany(mappedBy = "environment")
     private List<EnvParam> envParams = new ArrayList<>();
+
+    /**
+     * 该环境下的所有项目
+     */
+    @ManyToMany(mappedBy = "envs")
+    private List<Project> projects = new ArrayList<>();
 
 }
