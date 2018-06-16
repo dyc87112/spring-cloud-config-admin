@@ -11,6 +11,8 @@
     }
   },
   "tags" : [ {
+    "name" : "Config MGT（配置管理）"
+  }, {
     "name" : "EncryptKey MGT（加密管理）"
   }, {
     "name" : "Env MGT（环境管理）"
@@ -21,6 +23,60 @@
   } ],
   "schemes" : [ "http", "https" ],
   "paths" : {
+    "/edit4service/labels" : {
+      "get" : {
+        "tags" : [ "Config MGT（配置管理）" ],
+        "summary" : "Get labels by project / 根据项目名获取label列表",
+        "description" : "",
+        "operationId" : "getLabels",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespListString"
+            }
+          }
+        }
+      }
+    },
+    "/edit4service/properties" : {
+      "get" : {
+        "tags" : [ "Config MGT（配置管理）" ],
+        "summary" : "Get properties / 获取详细配置信息",
+        "description" : "",
+        "operationId" : "properties",
+        "parameters" : [ {
+          "name" : "",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
     "/encryptKey" : {
       "get" : {
         "tags" : [ "EncryptKey MGT（加密管理）" ],
@@ -296,24 +352,11 @@
         "summary" : "List Project / 项目列表",
         "description" : "",
         "operationId" : "findAll",
-        "parameters" : [ {
-          "name" : "page",
-          "in" : "query",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        }, {
-          "name" : "size",
-          "in" : "query",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespPageProject"
+              "$ref" : "#/definitions/WebRespListProject"
             }
           }
         }
@@ -440,48 +483,6 @@
         }
       }
     },
-    "PageProject" : {
-      "type" : "object",
-      "properties" : {
-        "totalElements" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "totalPages" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "size" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "content" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/Project"
-          }
-        },
-        "number" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sort" : {
-          "$ref" : "#/definitions/Sort"
-        },
-        "first" : {
-          "type" : "boolean",
-          "default" : false
-        },
-        "numberOfElements" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "last" : {
-          "type" : "boolean",
-          "default" : false
-        }
-      }
-    },
     "Project" : {
       "type" : "object",
       "properties" : {
@@ -493,9 +494,6 @@
           "type" : "string"
         }
       }
-    },
-    "Sort" : {
-      "type" : "object"
     },
     "WebRespEncryptKey" : {
       "type" : "object",
@@ -632,7 +630,7 @@
         }
       }
     },
-    "WebRespPageProject" : {
+    "WebRespListProject" : {
       "type" : "object",
       "properties" : {
         "code" : {
@@ -640,7 +638,34 @@
           "format" : "int32"
         },
         "data" : {
-          "$ref" : "#/definitions/PageProject"
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Project"
+          }
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "now" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespListString" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
         },
         "message" : {
           "type" : "string",

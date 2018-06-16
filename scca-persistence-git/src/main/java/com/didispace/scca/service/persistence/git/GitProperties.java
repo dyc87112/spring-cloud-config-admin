@@ -13,7 +13,13 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties(prefix = "scca.git")
 public class GitProperties {
 
+    /**
+     * Git登录的用户名
+     */
     private String username;
+    /**
+     * Git登录的密码
+     */
     private String password;
 
 }

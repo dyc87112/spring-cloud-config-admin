@@ -1,12 +1,15 @@
 package com.didispace.scca.rest.web;
 
 import com.didispace.scca.core.domain.Env;
+import com.didispace.scca.rest.dto.EnvDto;
 import com.didispace.scca.rest.dto.base.WebResp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -23,41 +26,54 @@ public class EnvController extends BaseController {
 
     @ApiOperation("List Env / 环境列表")
     @RequestMapping(method = RequestMethod.GET)
-    public WebResp<List<Env>> findAll() {
-        return WebResp.success(envRepo.findAll());
+    public WebResp<List<EnvDto>> findAllEnv() {
+
+        List<EnvDto> result = new ArrayList<>();
+        for (Env env : envRepo.findAll()) {
+            EnvDto dto = new EnvDto();
+            BeanUtils.copyProperties(env, dto);
+            result.add(dto);
+        }
+
+        return WebResp.success(result);
     }
 
     @ApiOperation("Create Env / 创建环境")
     @RequestMapping(method = RequestMethod.POST)
-    public WebResp<Env> create(@RequestBody Env env) {
+    public WebResp<String> createEnv(@RequestBody EnvDto env) {
         log.info("create env : " + env);
-        return WebResp.success(envRepo.save(env));
+
+        Env saveEnv = new Env();
+        BeanUtils.copyProperties(env, saveEnv);
+        envRepo.save(saveEnv);
+
+        return WebResp.success("create Env success");
     }
 
     @ApiOperation("Delete Env / 删除环境")
     @RequestMapping(method = RequestMethod.DELETE)
-    public WebResp<String> delete(@RequestParam("id") Long id) {
+    public WebResp<String> deleteEnv(@RequestParam("id") Long id) {
         Env env = envRepo.findOne(id);
 
         log.info("delete env : " + env);
         envRepo.delete(id);
 
-        return WebResp.success("delete env [" + env.getName() + "] success");
+        return WebResp.success("delete Env success");
     }
 
     @ApiOperation("Update Env / 更新环境")
     @RequestMapping(method = RequestMethod.PUT)
-    public WebResp<String> update(@RequestBody Env env) {
+    public WebResp<String> updateEnv(@RequestBody EnvDto env) {
         Env u = envRepo.findOne(env.getId());
 
-        log.info("Update Env : " + u + " --> " + env);
+        log.info("update env : " + u + " --> " + env);
 
         u.setName(env.getName());
         u.setConfigServerName(env.getConfigServerName());
         u.setRegistryAddress(env.getRegistryAddress());
         envRepo.save(u);
 
-        return WebResp.success("update env [" + env.getName() + "] success");
+        return WebResp.success("update Env success");
     }
 
 }
