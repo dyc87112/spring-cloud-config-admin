@@ -1,5 +1,6 @@
 package com.didispace.scca.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -19,10 +20,12 @@ public class EnvParamDto {
     /**
      * 配置key
      **/
+    @JsonProperty("pKey")
     private String pKey;
     /**
      * 配置value
      **/
+    @JsonProperty("pValue")
     private String pValue;
 
 }

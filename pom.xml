@@ -25,7 +25,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.java>1.8</version.java>
         <!--dependencies version-->
-        <version.spring-boot>1.5.10.RELEASE</version.spring-boot>
+        <version.spring-boot>1.5.11.RELEASE</version.spring-boot>
         <version.spring-cloud>Dalston.SR5</version.spring-cloud>
         <!--plugin version-->
         <version.maven-javadoc-plugin>2.10.4</version.maven-javadoc-plugin>

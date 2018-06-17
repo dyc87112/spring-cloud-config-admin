@@ -1,5 +1,6 @@
 package com.didispace.scca.rest.dto;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,6 +21,7 @@ public class EncryptKeyDto {
     /**
      * 需要加密的key
      **/
+    @JsonProperty("eKey")
     private String eKey;
 
 }
