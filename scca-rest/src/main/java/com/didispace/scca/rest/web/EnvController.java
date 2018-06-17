@@ -1,5 +1,6 @@
 package com.didispace.scca.rest.web;
 
+import com.alibaba.fastjson.JSON;
 import com.didispace.scca.core.domain.Env;
 import com.didispace.scca.rest.dto.EnvDto;
 import com.didispace.scca.rest.dto.base.WebResp;
@@ -41,7 +42,7 @@ public class EnvController extends BaseController {
     @ApiOperation("Create Env / 创建环境")
     @RequestMapping(method = RequestMethod.POST)
     public WebResp<String> createEnv(@RequestBody EnvDto env) {
-        log.info("create env : " + env);
+        log.info("create env. env={}", JSON.toJSONString(env));
 
         Env saveEnv = new Env();
         BeanUtils.copyProperties(env, saveEnv);
@@ -55,7 +56,7 @@ public class EnvController extends BaseController {
     public WebResp<String> deleteEnv(@RequestParam("id") Long id) {
         Env env = envRepo.findOne(id);
 
-        log.info("delete env : " + env);
+        log.info("delete env. env={}", JSON.toJSONString(env));
         envRepo.delete(id);
 
         return WebResp.success("delete Env success");
@@ -66,7 +67,7 @@ public class EnvController extends BaseController {
     public WebResp<String> updateEnv(@RequestBody EnvDto env) {
         Env u = envRepo.findOne(env.getId());
 
-        log.info("update env : " + u + " --> " + env);
+        log.info("update env. u={} env={}", JSON.toJSONString(u), JSON.toJSONString(env));
 
         u.setName(env.getName());
         u.setConfigServerName(env.getConfigServerName());
