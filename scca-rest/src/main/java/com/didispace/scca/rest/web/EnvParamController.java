@@ -1,5 +1,6 @@
 package com.didispace.scca.rest.web;
 
+import com.alibaba.fastjson.JSON;
 import com.didispace.scca.core.domain.Env;
 import com.didispace.scca.core.domain.EnvParam;
 import com.didispace.scca.rest.dto.EnvParamDto;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+
 
 /**
  * Created by 程序猿DD/翟永超 on 2018/4/27.
@@ -33,6 +35,7 @@ public class EnvParamController extends BaseController {
 
         for (EnvParam envParam : envParamRepo.findAllByEnvironment_Id(envId)) {
             EnvParamDto dto = new EnvParamDto();
+            log.info("envParam={}", JSON.toJSONString(envParam));
             BeanUtils.copyProperties(envParam, dto);
             result.add(dto);
         }
@@ -43,7 +46,7 @@ public class EnvParamController extends BaseController {
     @ApiOperation("Add EnvParam / 添加一个环境参数")
     @RequestMapping(method = RequestMethod.POST)
     public WebResp<String> addEnvParam(@RequestParam("envId") Long envId, @RequestBody EnvParamDto envParam) {
-        log.info("add an EnvParam to {} : {} ", envId, envParam);
+        log.info("add an EnvParam to {} : {} ", envId, JSON.toJSONString(envParam));
 
         EnvParam saveEnvParam = new EnvParam();
         BeanUtils.copyProperties(envParam, saveEnvParam);
@@ -56,9 +59,10 @@ public class EnvParamController extends BaseController {
     @ApiOperation("Update EnvParam / 更新某个环境参数")
     @RequestMapping(method = RequestMethod.PUT)
     public WebResp<String> updateEnvParam(@RequestBody EnvParamDto envParam) {
+        log.info("update envParam. envParam={}", JSON.toJSONString(envParam));
         EnvParam updateEnvParam = envParamRepo.findOne(envParam.getId());
 
-        log.info("update EnvParam : " + updateEnvParam + " --> " + envParam);
+        log.info("updateEnvParam={}", JSON.toJSONString(updateEnvParam));
 
         updateEnvParam.setPKey(envParam.getPKey());
         updateEnvParam.setPValue(envParam.getPValue());
@@ -72,7 +76,8 @@ public class EnvParamController extends BaseController {
     public WebResp<String> delete(@RequestParam("envParamId") Long envParamId) {
         EnvParam envParam = envParamRepo.findOne(envParamId);
 
-        log.info("delete EnvParam : " + envParam);
+        log.info("delete envParam. envParam={}", JSON.toJSONString(envParam));
+
         envParamRepo.delete(envParamId);
 
         return WebResp.success("delete EnvParam success");

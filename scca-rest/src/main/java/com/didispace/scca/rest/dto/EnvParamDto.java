@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
  * Github: https://github.com/dyc87112/
  */
 @Data
-@NoArgsConstructor
 public class EnvParamDto {
 
     private Long id;
