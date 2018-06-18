@@ -1,6 +1,5 @@
 package com.didispace.scca.rest.web;
 
-import com.didispace.scca.core.domain.Env;
 import com.didispace.scca.core.domain.Label;
 import com.didispace.scca.core.domain.Project;
 import com.didispace.scca.rest.dto.ProjectDto;
@@ -39,6 +38,17 @@ public class ProjectController extends BaseController {
         return WebResp.success(result);
     }
 
+    @ApiOperation("Project Detail / 项目详情")
+    @RequestMapping(path = "/detail", method = RequestMethod.GET)
+    public WebResp<ProjectDto> findProjectDetail(@RequestParam("id") Long id) {
+
+        Project project = projectRepo.findOne(id);
+        ProjectDto dto = new ProjectDto();
+        BeanUtils.copyProperties(project, dto);
+
+        return WebResp.success(dto);
+    }
+
     @ApiOperation("Create Project / 创建项目")
     @RequestMapping(method = RequestMethod.POST)
     public WebResp<String> create(@RequestBody ProjectDto project) {
@@ -48,10 +58,12 @@ public class ProjectController extends BaseController {
         BeanUtils.copyProperties(project, saveProject);
         projectRepo.save(saveProject);
 
+        // TODO 同时关联环境与配置版本
+
         return WebResp.success("create Project success");
     }
 
-    @ApiOperation("Delete Project / 删除环境")
+    @ApiOperation("Delete Project / 删除项目")
     @RequestMapping(method = RequestMethod.DELETE)
     public WebResp<String> deleteProject(@RequestParam("id") Long id) {
         Project project = projectRepo.findOne(id);
@@ -59,10 +71,12 @@ public class ProjectController extends BaseController {
         log.info("delete Project : " + project);
         projectRepo.delete(id);
 
+        // TODO 级联删除配置版本的数据与实际配置存储
+
         return WebResp.success("delete Project success");
     }
 
-    @ApiOperation("Update Project / 更新项目（仅名称）")
+    @ApiOperation("Update Project / 更新项目")
     @RequestMapping(method = RequestMethod.PUT)
     public WebResp<String> updateProject(@RequestBody ProjectDto project) {
         Project updateProject = projectRepo.findOne(project.getId());
@@ -70,25 +84,28 @@ public class ProjectController extends BaseController {
         log.info("update Project : " + updateProject + " --> " + project);
 
         updateProject.setName(project.getName());
+        // TODO 增加部署环境与配置版本的更新，移除的需要联合删除操作
+
         projectRepo.save(updateProject);
 
         return WebResp.success("update Project success");
     }
 
-    @ApiOperation("Project Add Env / 项目加入环境")
-    @RequestMapping(path = "/env", method = RequestMethod.POST)
-    public WebResp<String> createProjectLabel(@RequestParam("projectId") Long projectId,
-                                              @RequestParam("envId") Long envId) {
-        Project owner = projectRepo.findOne(projectId);
+//    @ApiOperation("Project Add Env / 项目增加部署环境")
+//    @RequestMapping(path = "/env", method = RequestMethod.POST)
+//    public WebResp<String> createProjectLabel(@RequestParam("projectId") Long projectId,
+//                                              @RequestParam("envId") Long envId) {
+//        Project owner = projectRepo.findOne(projectId);
+//
+//        Env env = envRepo.findOne(envId);
+//        owner.getEnvs().add(env);
+//        projectRepo.save(owner);
+//
+//        return WebResp.success("create project [" + owner.getName() + "] env [" + env.getName() + "] success");
+//    }
+//
 
-        Env env = envRepo.findOne(envId);
-        owner.getEnvs().add(env);
-        projectRepo.save(owner);
-
-        return WebResp.success("create project [" + owner.getName() + "] env [" + env.getName() + "] success");
-    }
-
-    @ApiOperation("Project Add Label / 项目增加标签")
+    @ApiOperation("Project Add Label / 项目增加配置版本")
     @RequestMapping(path = "/label", method = RequestMethod.POST)
     public WebResp<String> addProjectLabel(@RequestParam("projectId") Long projectId,
                                            @RequestParam("labelName") String labelName) {
@@ -103,13 +120,15 @@ public class ProjectController extends BaseController {
     }
 
 
-    @ApiOperation("Project Delete Label / 项目删除标签")
+    @ApiOperation("Project Delete Label / 项目删除版本")
     @RequestMapping(path = "/label", method = RequestMethod.DELETE)
     public WebResp<String> deleteProjectLabel(@RequestParam("labelId") Long labelId) {
         Label label = labelRepo.findOne(labelId);
         log.info("delete Label : " + label);
 
         labelRepo.delete(labelId);
+
+        // TODO 需要同步删除配置的存储
 
         return WebResp.success("delete project [" + label.getProject().getName() + "] label [" + label.getName() + "] success");
     }

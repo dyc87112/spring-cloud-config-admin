@@ -30,11 +30,11 @@ public class ProjectDto {
     /**
      * 部署的环境列表
      */
-    private List<Env> envs = new ArrayList<>();
+    private List<EnvDto> envs = new ArrayList<>();
 
     /**
      * 配置便签列表（灰度用）
      */
-    private List<Label> labels = new ArrayList<>();
+    private List<LabelDto> labels = new ArrayList<>();
 
 }

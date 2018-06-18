@@ -73,12 +73,12 @@ public class EnvParamController extends BaseController {
 
     @ApiOperation("Delete EnvParam / 删除某个环境参数")
     @RequestMapping(method = RequestMethod.DELETE)
-    public WebResp<String> delete(@RequestParam("envParamId") Long envParamId) {
-        EnvParam envParam = envParamRepo.findOne(envParamId);
+    public WebResp<String> delete(@RequestParam("id") Long id) {
+        EnvParam envParam = envParamRepo.findOne(id);
 
         log.info("delete envParam. envParam={}", JSON.toJSONString(envParam));
 
-        envParamRepo.delete(envParamId);
+        envParamRepo.delete(id);
 
         return WebResp.success("delete EnvParam success");
     }

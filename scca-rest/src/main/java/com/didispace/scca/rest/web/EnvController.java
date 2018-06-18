@@ -39,6 +39,17 @@ public class EnvController extends BaseController {
         return WebResp.success(result);
     }
 
+    @ApiOperation("Env Detail / 环境详情")
+    @RequestMapping(path = "/detail", method = RequestMethod.GET)
+    public WebResp<EnvDto> findEnvDetail(@RequestParam("id") Long id) {
+
+        Env env = envRepo.findOne(id);
+        EnvDto dto = new EnvDto();
+        BeanUtils.copyProperties(env, dto);
+
+        return WebResp.success(dto);
+    }
+
     @ApiOperation("Create Env / 创建环境")
     @RequestMapping(method = RequestMethod.POST)
     public WebResp<String> createEnv(@RequestBody EnvDto env) {
@@ -58,6 +69,8 @@ public class EnvController extends BaseController {
 
         log.info("delete env. env={}", JSON.toJSONString(env));
         envRepo.delete(id);
+
+        // TODO 级联删除该环境下面的所有配置，包括：scca内部实体、实际持久化内容
 
         return WebResp.success("delete Env success");
     }
