@@ -39,13 +39,13 @@ public class Env {
     /**
      * 该环境下的配置内容
      **/
-    @OneToMany(mappedBy = "environment")
+    @OneToMany(mappedBy = "env", cascade = CascadeType.REMOVE)
     private List<EnvParam> envParams = new ArrayList<>();
 
     /**
      * 该环境下的所有项目
      */
-    @ManyToMany(mappedBy = "envs")
+    @ManyToMany(mappedBy = "envs", cascade = CascadeType.DETACH)
     private List<Project> projects = new ArrayList<>();
 
 }

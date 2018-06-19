@@ -13,8 +13,8 @@ import java.util.List;
  */
 public interface EnvParamRepo extends JpaRepository<EnvParam, Long> {
 
-    List<EnvParam> findAllByEnvironment_Name(String environmentName);
+    List<EnvParam> findAllByEnv_Name(String envName);
 
-    List<EnvParam> findAllByEnvironment_Id(Long id);
+    List<EnvParam> findAllByEnv_Id(Long id);
 
 }

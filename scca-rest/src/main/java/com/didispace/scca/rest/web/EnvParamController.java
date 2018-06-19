@@ -33,7 +33,7 @@ public class EnvParamController extends BaseController {
     public WebResp<List<EnvParamDto>> findEnvParamsByEnv(@RequestParam("envId") Long envId) {
         List<EnvParamDto> result = new ArrayList<>();
 
-        for (EnvParam envParam : envParamRepo.findAllByEnvironment_Id(envId)) {
+        for (EnvParam envParam : envParamRepo.findAllByEnv_Id(envId)) {
             EnvParamDto dto = new EnvParamDto();
             log.info("envParam={}", JSON.toJSONString(envParam));
             BeanUtils.copyProperties(envParam, dto);
@@ -50,7 +50,7 @@ public class EnvParamController extends BaseController {
 
         EnvParam saveEnvParam = new EnvParam();
         BeanUtils.copyProperties(envParam, saveEnvParam);
-        saveEnvParam.setEnvironment(envRepo.findOne(envId));
+        saveEnvParam.setEnv(envRepo.findOne(envId));
         envParamRepo.save(saveEnvParam);
 
         return WebResp.success("save EnvParam success");
@@ -97,7 +97,7 @@ public class EnvParamController extends BaseController {
         for (EnvParamDto envParam : envParams) {
             EnvParam saveEnvParam = new EnvParam();
             BeanUtils.copyProperties(envParam, saveEnvParam);
-            saveEnvParam.setEnvironment(env);
+            saveEnvParam.setEnv(env);
             envParamRepo.save(saveEnvParam);
         }
 

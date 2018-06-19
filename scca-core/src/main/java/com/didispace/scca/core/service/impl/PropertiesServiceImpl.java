@@ -67,7 +67,7 @@ public class PropertiesServiceImpl implements PropertiesService {
      */
     private Map<String, String> getEnvironmentParams(String envName) {
         Map<String, String> result = new HashMap<>();
-        List<EnvParam> envParams = envParamRepo.findAllByEnvironment_Name(envName);
+        List<EnvParam> envParams = envParamRepo.findAllByEnv_Name(envName);
         for (EnvParam envParam : envParams) {
             result.put(envParam.getPKey(), envParam.getPValue());
         }

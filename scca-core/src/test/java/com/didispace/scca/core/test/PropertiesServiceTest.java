@@ -45,13 +45,13 @@ public class PropertiesServiceTest {
         EnvParam envParam;
 
         envParam = new EnvParam();
-        envParam.setEnvironment(stage);
+        envParam.setEnv(stage);
         envParam.setPKey("spring.redis.host");
         envParam.setPValue("2.2.2.2");
         envParamRepo.save(envParam);
 
         envParam = new EnvParam();
-        envParam.setEnvironment(stage);
+        envParam.setEnv(stage);
         envParam.setPKey("jdbc.password");
         envParam.setPValue("abc123");
         envParamRepo.save(envParam);

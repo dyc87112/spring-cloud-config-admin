@@ -37,6 +37,6 @@ public class EnvParam {
      * 所属环境
      **/
     @ManyToOne
-    private Env environment;
+    private Env env;
 
 }

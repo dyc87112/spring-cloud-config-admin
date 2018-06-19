@@ -8,6 +8,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -62,15 +63,26 @@ public class EnvController extends BaseController {
         return WebResp.success("create Env success");
     }
 
+    /**
+     * 删除某个环境，同时级联删除该环境下面的所有配置, 包括：
+     *
+     * 1. scca内部实体：通过hibernate实体CascadeType配置实现，具体见 {@link Env}实体
+     * 2. 实际持久化内容：根据不同的存储方式调用不同的删除逻辑
+     *
+     * @param id
+     * @return
+     */
+    @Transactional
     @ApiOperation("Delete Env / 删除环境")
     @RequestMapping(method = RequestMethod.DELETE)
     public WebResp<String> deleteEnv(@RequestParam("id") Long id) {
+        // 删除scca内部实体
         Env env = envRepo.findOne(id);
-
         log.info("delete env. env={}", JSON.toJSONString(env));
         envRepo.delete(id);
 
-        // TODO 级联删除该环境下面的所有配置，包括：scca内部实体、实际持久化内容
+        // TODO 删除实际持久化内容
+
 
         return WebResp.success("delete Env success");
     }
