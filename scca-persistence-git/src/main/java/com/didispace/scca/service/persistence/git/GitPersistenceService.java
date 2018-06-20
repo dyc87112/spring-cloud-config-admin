@@ -116,4 +116,9 @@ public class GitPersistenceService implements PersistenceService {
 
     }
 
+    @Override
+    public void updateProfileName(String oldName, String newName) {
+        // TODO git存储时候需求修改存储的配置文件位置或者文件名
+
+    }
 }

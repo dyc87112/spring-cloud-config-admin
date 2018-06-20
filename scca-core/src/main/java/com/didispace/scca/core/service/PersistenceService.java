@@ -32,4 +32,12 @@ public interface PersistenceService {
      */
     void saveProperties(String application, String profile, String label, Properties update);
 
+    /**
+     * 修改环境名之后需要操作的配置持久化内容
+     *
+     * @param oldName - 原环境名
+     * @param newName - 新环境名
+     */
+    void updateProfileName(String oldName, String newName);
+
 }

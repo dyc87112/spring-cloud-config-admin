@@ -2,6 +2,8 @@ package com.didispace.scca.rest.web;
 
 import com.alibaba.fastjson.JSON;
 import com.didispace.scca.core.domain.Env;
+import com.didispace.scca.core.domain.Label;
+import com.didispace.scca.core.domain.Project;
 import com.didispace.scca.rest.dto.EnvDto;
 import com.didispace.scca.rest.dto.base.WebResp;
 import io.swagger.annotations.Api;
@@ -65,7 +67,7 @@ public class EnvController extends BaseController {
 
     /**
      * 删除某个环境，同时级联删除该环境下面的所有配置, 包括：
-     *
+     * <p>
      * 1. scca内部实体：通过hibernate实体CascadeType配置实现，具体见 {@link Env}实体
      * 2. 实际持久化内容：根据不同的存储方式调用不同的删除逻辑
      *
@@ -76,23 +78,34 @@ public class EnvController extends BaseController {
     @ApiOperation("Delete Env / 删除环境")
     @RequestMapping(method = RequestMethod.DELETE)
     public WebResp<String> deleteEnv(@RequestParam("id") Long id) {
-        // 删除scca内部实体
         Env env = envRepo.findOne(id);
         log.info("delete env. env={}", JSON.toJSONString(env));
+
+        // 删除实际持久化内容
+        for (Project project : env.getProjects()) {
+            for (Label label : project.getLabels()) {
+                persistenceService.deleteProperties(project.getName(), env.getName(), label.getName());
+            }
+        }
+
+        // 删除逻辑实体
         envRepo.delete(id);
-
-        // TODO 删除实际持久化内容
-
 
         return WebResp.success("delete Env success");
     }
 
+    @Transactional
     @ApiOperation("Update Env / 更新环境")
     @RequestMapping(method = RequestMethod.PUT)
     public WebResp<String> updateEnv(@RequestBody EnvDto env) {
         Env u = envRepo.findOne(env.getId());
 
         log.info("update env. u={} env={}", JSON.toJSONString(u), JSON.toJSONString(env));
+
+        if(!u.getName().equals(env.getName())) {
+            // 环境名称有修改，如果不是db存储，其他的存储还要更新持久化内容
+            persistenceService.updateProfileName(u.getName(), env.getName());
+        }
 
         u.setName(env.getName());
         u.setConfigServerName(env.getConfigServerName());

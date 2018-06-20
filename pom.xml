@@ -16,6 +16,7 @@
         <module>scca-core</module>
         <module>scca-discovery-consul</module>
         <module>scca-persistence-git</module>
+        <module>scca-persistence-db</module>
         <module>scca-rest</module>
         <module>scca-ui</module>
     </modules>

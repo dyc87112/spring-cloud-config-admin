@@ -23,28 +23,6 @@
   } ],
   "schemes" : [ "http", "https" ],
   "paths" : {
-    "/edit4service/labels" : {
-      "get" : {
-        "tags" : [ "Config MGT（配置管理）" ],
-        "summary" : "Get labels by project / 根据项目名获取label列表",
-        "description" : "",
-        "operationId" : "getLabels",
-        "parameters" : [ {
-          "name" : "",
-          "in" : "query",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/WebRespListString"
-            }
-          }
-        }
-      }
-    },
     "/edit4service/properties" : {
       "get" : {
         "tags" : [ "Config MGT（配置管理）" ],
@@ -87,7 +65,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespListEncryptKey"
+              "$ref" : "#/definitions/WebRespListEncryptKeyDto"
             }
           }
         }
@@ -104,7 +82,7 @@
           "schema" : {
             "type" : "array",
             "items" : {
-              "$ref" : "#/definitions/EncryptKey"
+              "$ref" : "#/definitions/EncryptKeyDto"
             }
           }
         } ],
@@ -121,13 +99,13 @@
         "tags" : [ "EncryptKey MGT（加密管理）" ],
         "summary" : "Update EncryptKey / 更新需加密的Key",
         "description" : "",
-        "operationId" : "update",
+        "operationId" : "updateEncryptKey",
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/EncryptKey"
+            "$ref" : "#/definitions/EncryptKeyDto"
           }
         } ],
         "responses" : {
@@ -169,14 +147,21 @@
     "/env" : {
       "get" : {
         "tags" : [ "Env MGT（环境管理）" ],
-        "summary" : "List Env / 环境列表",
+        "summary" : "Env Detail / 环境详情",
         "description" : "",
-        "operationId" : "findAll",
+        "operationId" : "findEnvDetail",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespListEnv"
+              "$ref" : "#/definitions/WebRespEnvDto"
             }
           }
         }
@@ -185,20 +170,20 @@
         "tags" : [ "Env MGT（环境管理）" ],
         "summary" : "Create Env / 创建环境",
         "description" : "",
-        "operationId" : "create",
+        "operationId" : "createEnv",
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/Env"
+            "$ref" : "#/definitions/EnvDto"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespEnv"
+              "$ref" : "#/definitions/WebRespString"
             }
           }
         }
@@ -207,13 +192,13 @@
         "tags" : [ "Env MGT（环境管理）" ],
         "summary" : "Update Env / 更新环境",
         "description" : "",
-        "operationId" : "update",
+        "operationId" : "updateEnv",
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/Env"
+            "$ref" : "#/definitions/EnvDto"
           }
         } ],
         "responses" : {
@@ -229,7 +214,7 @@
         "tags" : [ "Env MGT（环境管理）" ],
         "summary" : "Delete Env / 删除环境",
         "description" : "",
-        "operationId" : "delete",
+        "operationId" : "deleteEnv",
         "parameters" : [ {
           "name" : "id",
           "in" : "query",
@@ -252,7 +237,7 @@
         "tags" : [ "EnvParam MGT（环境参数管理）" ],
         "summary" : "List EnvParam / 环境参数列表",
         "description" : "",
-        "operationId" : "findByEnv",
+        "operationId" : "findEnvParamsByEnv",
         "parameters" : [ {
           "name" : "envId",
           "in" : "query",
@@ -264,7 +249,7 @@
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespListEnvParam"
+              "$ref" : "#/definitions/WebRespListEnvParamDto"
             }
           }
         }
@@ -285,14 +270,14 @@
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/EnvParam"
+            "$ref" : "#/definitions/EnvParamDto"
           }
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespEnvParam"
+              "$ref" : "#/definitions/WebRespString"
             }
           }
         }
@@ -301,13 +286,13 @@
         "tags" : [ "EnvParam MGT（环境参数管理）" ],
         "summary" : "Update EnvParam / 更新某个环境参数",
         "description" : "",
-        "operationId" : "update",
+        "operationId" : "updateEnvParam",
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/EnvParam"
+            "$ref" : "#/definitions/EnvParamDto"
           }
         } ],
         "responses" : {
@@ -349,51 +334,62 @@
     "/project" : {
       "get" : {
         "tags" : [ "Project MGT（项目管理）" ],
-        "summary" : "List Project / 项目列表",
+        "summary" : "Project Detail / 项目详情",
         "description" : "",
-        "operationId" : "findAll",
+        "operationId" : "findProjectDetail",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespListProject"
+              "$ref" : "#/definitions/WebRespProjectDto"
             }
           }
         }
       },
       "post" : {
         "tags" : [ "Project MGT（项目管理）" ],
-        "summary" : "Create Project / 创建项目",
+        "summary" : "Project Add Label / 项目增加配置版本",
         "description" : "",
-        "operationId" : "create",
+        "operationId" : "addProjectLabel",
         "parameters" : [ {
-          "in" : "body",
-          "name" : "body",
-          "required" : false,
-          "schema" : {
-            "$ref" : "#/definitions/Project"
-          }
+          "name" : "projectId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "labelName",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
         } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespProject"
+              "$ref" : "#/definitions/WebRespString"
             }
           }
         }
       },
       "put" : {
         "tags" : [ "Project MGT（项目管理）" ],
-        "summary" : "Update Project / 更新环境",
+        "summary" : "Update Project / 更新项目",
         "description" : "",
-        "operationId" : "update",
+        "operationId" : "updateProject",
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
           "required" : false,
           "schema" : {
-            "$ref" : "#/definitions/Project"
+            "$ref" : "#/definitions/ProjectDto"
           }
         } ],
         "responses" : {
@@ -407,11 +403,11 @@
       },
       "delete" : {
         "tags" : [ "Project MGT（项目管理）" ],
-        "summary" : "Delete Project / 删除环境",
+        "summary" : "Project Delete Label / 项目删除版本",
         "description" : "",
-        "operationId" : "delete",
+        "operationId" : "deleteProjectLabel",
         "parameters" : [ {
-          "name" : "id",
+          "name" : "labelId",
           "in" : "query",
           "required" : true,
           "type" : "integer",
@@ -429,7 +425,7 @@
     }
   },
   "definitions" : {
-    "EncryptKey" : {
+    "EncryptKeyDto" : {
       "type" : "object",
       "properties" : {
         "id" : {
@@ -438,10 +434,13 @@
         },
         "ekey" : {
           "type" : "string"
+        },
+        "eKey" : {
+          "type" : "string"
         }
       }
     },
-    "Env" : {
+    "EnvDto" : {
       "type" : "object",
       "properties" : {
         "id" : {
@@ -456,34 +455,31 @@
         },
         "configServerName" : {
           "type" : "string"
-        },
-        "envParams" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/EnvParam"
-          }
         }
       }
     },
-    "EnvParam" : {
+    "EnvParamDto" : {
       "type" : "object",
       "properties" : {
         "id" : {
           "type" : "integer",
           "format" : "int64"
         },
-        "environment" : {
-          "$ref" : "#/definitions/Env"
-        },
         "pkey" : {
           "type" : "string"
         },
         "pvalue" : {
           "type" : "string"
+        },
+        "pKey" : {
+          "type" : "string"
+        },
+        "pValue" : {
+          "type" : "string"
         }
       }
     },
-    "Project" : {
+    "LabelDto" : {
       "type" : "object",
       "properties" : {
         "id" : {
@@ -495,7 +491,31 @@
         }
       }
     },
-    "WebRespEncryptKey" : {
+    "ProjectDto" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "envs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EnvDto"
+          }
+        },
+        "labels" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/LabelDto"
+          }
+        }
+      }
+    },
+    "WebRespEnvDto" : {
       "type" : "object",
       "properties" : {
         "code" : {
@@ -503,7 +523,7 @@
           "format" : "int32"
         },
         "data" : {
-          "$ref" : "#/definitions/EncryptKey"
+          "$ref" : "#/definitions/EnvDto"
         },
         "message" : {
           "type" : "string",
@@ -516,49 +536,7 @@
         }
       }
     },
-    "WebRespEnv" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "data" : {
-          "$ref" : "#/definitions/Env"
-        },
-        "message" : {
-          "type" : "string",
-          "description" : "响应消息"
-        },
-        "now" : {
-          "type" : "integer",
-          "format" : "int64",
-          "description" : "时间戳"
-        }
-      }
-    },
-    "WebRespEnvParam" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "data" : {
-          "$ref" : "#/definitions/EnvParam"
-        },
-        "message" : {
-          "type" : "string",
-          "description" : "响应消息"
-        },
-        "now" : {
-          "type" : "integer",
-          "format" : "int64",
-          "description" : "时间戳"
-        }
-      }
-    },
-    "WebRespListEncryptKey" : {
+    "WebRespListEncryptKeyDto" : {
       "type" : "object",
       "properties" : {
         "code" : {
@@ -568,7 +546,7 @@
         "data" : {
           "type" : "array",
           "items" : {
-            "$ref" : "#/definitions/EncryptKey"
+            "$ref" : "#/definitions/EncryptKeyDto"
           }
         },
         "message" : {
@@ -582,7 +560,7 @@
         }
       }
     },
-    "WebRespListEnv" : {
+    "WebRespListEnvDto" : {
       "type" : "object",
       "properties" : {
         "code" : {
@@ -592,7 +570,7 @@
         "data" : {
           "type" : "array",
           "items" : {
-            "$ref" : "#/definitions/Env"
+            "$ref" : "#/definitions/EnvDto"
           }
         },
         "message" : {
@@ -606,7 +584,7 @@
         }
       }
     },
-    "WebRespListEnvParam" : {
+    "WebRespListEnvParamDto" : {
       "type" : "object",
       "properties" : {
         "code" : {
@@ -616,7 +594,7 @@
         "data" : {
           "type" : "array",
           "items" : {
-            "$ref" : "#/definitions/EnvParam"
+            "$ref" : "#/definitions/EnvParamDto"
           }
         },
         "message" : {
@@ -630,7 +608,7 @@
         }
       }
     },
-    "WebRespListProject" : {
+    "WebRespListProjectDto" : {
       "type" : "object",
       "properties" : {
         "code" : {
@@ -640,7 +618,7 @@
         "data" : {
           "type" : "array",
           "items" : {
-            "$ref" : "#/definitions/Project"
+            "$ref" : "#/definitions/ProjectDto"
           }
         },
         "message" : {
@@ -654,7 +632,7 @@
         }
       }
     },
-    "WebRespListString" : {
+    "WebRespProjectDto" : {
       "type" : "object",
       "properties" : {
         "code" : {
@@ -662,31 +640,7 @@
           "format" : "int32"
         },
         "data" : {
-          "type" : "array",
-          "items" : {
-            "type" : "string"
-          }
-        },
-        "message" : {
-          "type" : "string",
-          "description" : "响应消息"
-        },
-        "now" : {
-          "type" : "integer",
-          "format" : "int64",
-          "description" : "时间戳"
-        }
-      }
-    },
-    "WebRespProject" : {
-      "type" : "object",
-      "properties" : {
-        "code" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "data" : {
-          "$ref" : "#/definitions/Project"
+          "$ref" : "#/definitions/ProjectDto"
         },
         "message" : {
           "type" : "string",

@@ -20,7 +20,7 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 @EnableDiscoveryClient
 @EnableConfigServer
 @SpringBootApplication
-public class TestApplication {
+public class TestRestApplication {
 
     public static void main(String[] args) {
         ConsulProcess consul = ConsulStarterBuilder.consulStarter().build().start();
@@ -29,7 +29,7 @@ public class TestApplication {
         System.setProperty("spring.cloud.consul.host", "localhost");
         System.setProperty("spring.cloud.consul.port", String.valueOf(consul.getHttpPort()));
 
-        SpringApplication.run(TestApplication.class);
+        SpringApplication.run(TestRestApplication.class);
     }
 
 }

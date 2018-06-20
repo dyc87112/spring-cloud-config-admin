@@ -68,4 +68,9 @@ public class DbPersistenceService implements PersistenceService {
         log.info("add {}-{}-{} rows {}", application, profile, label, update.size());
     }
 
+    @Override
+    public void updateProfileName(String oldName, String newName) {
+        // do nothing
+    }
+
 }
