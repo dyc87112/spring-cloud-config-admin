@@ -14,21 +14,22 @@ import java.util.Properties;
 public interface PersistenceService {
 
     /**
-     * 更新某个配置文件
+     * 删除某个配置文件
      *
-     * @param name    - 通过访问配置中心返回的配置名称
-     * @param profile - 环境名称
-     * @param label   - 分支名称
-     * @param update  - 更新的全量配置内容
+     * @param application - 应用名称
+     * @param profile     - 环境名称
+     * @param label       - 版本名称
      */
-    void updateProperties(String name, String profile, String label, Properties update);
+    void deleteProperties(String application, String profile, String label);
 
     /**
-     * 获取某个应用代码库中的配置模版
+     * 更新某个配置文件
      *
-     * @param applicationName
-     * @return
+     * @param application - 应用名称
+     * @param profile     - 环境名称
+     * @param label       - 版本名称
+     * @param update      - 更新的全量配置内容
      */
-    Properties readPropertiesTemplate(String applicationName);
+    void updateProperties(String application, String profile, String label, Properties update);
 
 }

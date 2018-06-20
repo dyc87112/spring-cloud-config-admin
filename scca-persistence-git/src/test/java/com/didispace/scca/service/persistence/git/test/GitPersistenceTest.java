@@ -20,8 +20,8 @@ public class GitPersistenceTest {
     private PersistenceService persistenceService;
 
     @Test
-    public void testPersistenceService() {
-        String name = "https://github.com/dyc87112/scca-repo.git/application-stage.properties";
+    public void testUpdateProperties() {
+        String application = "scca-repo";
         String profile = "stage";
         String label = "develop";
 
@@ -38,7 +38,16 @@ public class GitPersistenceTest {
         source.put("xxx", "oooooooo");
         source.put("aaa", "mmmmmmmm");
 
-        persistenceService.updateProperties(name, profile, label, source);
+        persistenceService.updateProperties(application, profile, label, source);
+    }
+
+    @Test
+    public void testDeleteProperties() {
+        // 先准备一个test分支
+        String application = "scca-repo";
+        String profile = "stage";
+        String label = "test";
+        persistenceService.deleteProperties(application, profile, label);
     }
 
 }

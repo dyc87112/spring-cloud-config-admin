@@ -23,11 +23,15 @@ public class GitPersistenceService implements PersistenceService {
     @Autowired
     private GitProperties gitProperties;
 
+
     @Override
-    public void updateProperties(String name, String profile, String label, Properties update) {
-        int index = name.indexOf(".git");
-        String projectUrl = name.substring(0, index + 4);
-        String propertiesFile = name.substring(index + 5);
+    public void deleteProperties(String application, String profile, String label) {
+        // 删除某个配置文件
+        // 组织配置项目的git地址
+        String projectUrl = gitProperties.getRepoUri().replaceFirst("\\{application\\}", application);
+        String propertiesFile = gitProperties.getFilePattern()
+                .replaceFirst("\\{application\\}", application)
+                .replaceFirst("\\{profile\\}", profile);
 
         // 生成本地拉取配置用来修改使用的唯一目录名
         String dir = UUID.randomUUID().toString();
@@ -36,9 +40,53 @@ public class GitPersistenceService implements PersistenceService {
         log.debug("update file : " + path);
 
         // projectUrl append username & password， git clone projectUrl
-        projectUrl = projectUrl.replace("http://",
-                "http://" + gitProperties.getUsername() + ":" + gitProperties.getPassword() + "@");
-        log.debug("projectUrl : " + projectUrl);
+        projectUrl = projectUrl.replaceFirst("http://", "http://" + gitProperties.getUsername() + ":" + gitProperties.getPassword() + "@");
+        log.debug("project url : " + projectUrl);
+
+        try {
+            // git clone properites from git
+            CmdRunner.execute("git clone " + projectUrl + " " + dir);
+
+            // git checkout branch(label)
+            CmdRunner.execute("git checkout " + label, new File(dir));
+
+            // delete propertiesFile
+            File file = new File(path);
+            if(file.exists()) {
+                file.delete();
+                log.info("delete file : " + file.getAbsolutePath());
+            }
+
+            // commit & push
+            CmdRunner.execute("git add .", new File(dir));
+            CmdRunner.execute("git commit -m 'update'", new File(dir));
+            CmdRunner.execute("git push", new File(dir));
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            FileUtils.deleteDirectory(new File(dir));
+        }
+
+    }
+
+    @Override
+    public void updateProperties(String application, String profile, String label, Properties update) {
+        // 组织配置项目的git地址
+        String projectUrl = gitProperties.getRepoUri().replaceFirst("\\{application\\}", application);
+        String propertiesFile = gitProperties.getFilePattern()
+                .replaceFirst("\\{application\\}", application)
+                .replaceFirst("\\{profile\\}", profile);
+
+        // 生成本地拉取配置用来修改使用的唯一目录名
+        String dir = UUID.randomUUID().toString();
+        // 获取要修改文件的相对路径
+        String path = dir + "/" + propertiesFile;
+        log.debug("update file : " + path);
+
+        // projectUrl append username & password， git clone projectUrl
+        projectUrl = projectUrl.replaceFirst("http://", "http://" + gitProperties.getUsername() + ":" + gitProperties.getPassword() + "@");
+        log.debug("project url : " + projectUrl);
 
         try {
             // git clone properites from git
@@ -67,14 +115,6 @@ public class GitPersistenceService implements PersistenceService {
             FileUtils.deleteDirectory(new File(dir));
         }
 
-
     }
-
-    @Override
-    public Properties readPropertiesTemplate(String applicationName) {
-        // TODO
-        return null;
-    }
-
 
 }
