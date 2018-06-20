@@ -23,7 +23,6 @@ public class GitPersistenceService implements PersistenceService {
     @Autowired
     private GitProperties gitProperties;
 
-
     @Override
     public void deleteProperties(String application, String profile, String label) {
         // 删除某个配置文件
@@ -71,7 +70,7 @@ public class GitPersistenceService implements PersistenceService {
     }
 
     @Override
-    public void updateProperties(String application, String profile, String label, Properties update) {
+    public void saveProperties(String application, String profile, String label, Properties update) {
         // 组织配置项目的git地址
         String projectUrl = gitProperties.getRepoUri().replaceFirst("\\{application\\}", application);
         String propertiesFile = gitProperties.getFilePattern()

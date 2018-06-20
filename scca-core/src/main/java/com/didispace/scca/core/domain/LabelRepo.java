@@ -14,4 +14,6 @@ public interface LabelRepo extends JpaRepository<Label, Long> {
 
     List<Label> findAllByProject_Id(long id);
 
+    Label findFirstByNameAndProject(String name, Project project);
+
 }

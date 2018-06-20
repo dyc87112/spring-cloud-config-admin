@@ -12,10 +12,10 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  */
 @EnableSccaPersistenceGit
 @SpringBootApplication
-public class TestApplication {
+public class TestGitApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TestApplication.class);
+        SpringApplication.run(TestGitApplication.class);
     }
 
 }

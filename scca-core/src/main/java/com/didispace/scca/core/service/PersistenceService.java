@@ -23,13 +23,13 @@ public interface PersistenceService {
     void deleteProperties(String application, String profile, String label);
 
     /**
-     * 更新某个配置文件
+     * 保存某个配置文件
      *
      * @param application - 应用名称
      * @param profile     - 环境名称
      * @param label       - 版本名称
      * @param update      - 更新的全量配置内容
      */
-    void updateProperties(String application, String profile, String label, Properties update);
+    void saveProperties(String application, String profile, String label, Properties update);
 
 }

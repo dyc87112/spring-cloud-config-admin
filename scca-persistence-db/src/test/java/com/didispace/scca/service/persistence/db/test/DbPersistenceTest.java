@@ -1,6 +1,7 @@
-package com.didispace.scca.service.persistence.git.test;
+package com.didispace.scca.service.persistence.db.test;
 
 import com.didispace.easyutils.file.OrderedProperties;
+import com.didispace.scca.core.domain.*;
 import com.didispace.scca.core.service.PersistenceService;
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
@@ -14,16 +15,37 @@ import java.util.Properties;
 @Slf4j
 @RunWith(SpringRunner.class)
 @SpringBootTest
-public class GitPersistenceTest {
+public class DbPersistenceTest {
 
     @Autowired
     private PersistenceService persistenceService;
 
+    @Autowired
+    private EnvRepo envRepo;
+    @Autowired
+    private ProjectRepo projectRepo;
+    @Autowired
+    private LabelRepo labelRepo;
+
     @Test
-    public void testUpdateProperties() {
+    public void testSaveProperties() {
         String application = "scca-repo";
         String profile = "stage";
-        String label = "develop";
+        String version = "develop";
+
+        Env env = new Env();
+        env.setName(profile);
+        env = envRepo.save(env);
+
+        Project project = new Project();
+        project.setName(application);
+        project.getEnvs().add(env);
+        project = projectRepo.save(project);
+
+        Label label = new Label();
+        label.setName(version);
+        label.setProject(project);
+        label = labelRepo.save(label);
 
         // 前端可以按顺序传上来，然后转换成这个OrderedProperties，就可以调用下面的写入并提交到Git的实现了
         Properties source = new OrderedProperties();
@@ -38,7 +60,12 @@ public class GitPersistenceTest {
         source.put("xxx", "oooooooo");
         source.put("aaa", "mmmmmmmm");
 
-        persistenceService.saveProperties(application, profile, label, source);
+        persistenceService.saveProperties(application, profile, version, source);
+        log.info("save finish!");
+
+        persistenceService.deleteProperties(application, profile, version);
+        log.info("delete finish!");
+        log.info("");
     }
 
     @Test
