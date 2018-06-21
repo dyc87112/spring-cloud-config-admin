@@ -1,5 +1,6 @@
 package com.didispace.scca.rest.web;
 
+import com.didispace.scca.core.config.SccaProperties;
 import com.didispace.scca.core.domain.*;
 import com.didispace.scca.core.service.BaseOptService;
 import com.didispace.scca.core.service.PersistenceService;
@@ -18,6 +19,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class BaseController {
 
     @Autowired
+    protected SccaProperties sccaProperties;
+
+    @Autowired
     protected EnvRepo envRepo;
     @Autowired
     protected EnvParamRepo envParamRepo;
@@ -28,7 +32,7 @@ public class BaseController {
     @Autowired
     protected LabelRepo labelRepo;
 
-   @Autowired
+    @Autowired
     protected BaseOptService baseOptService;
     @Autowired
     protected PersistenceService persistenceService;

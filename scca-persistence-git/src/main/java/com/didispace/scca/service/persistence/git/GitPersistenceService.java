@@ -3,6 +3,9 @@ package com.didispace.scca.service.persistence.git;
 import com.didispace.easyutils.cmd.CmdRunner;
 import com.didispace.easyutils.file.FileUtils;
 import com.didispace.easyutils.file.PropertiesUtils;
+import com.didispace.scca.core.domain.Env;
+import com.didispace.scca.core.domain.Label;
+import com.didispace.scca.core.domain.Project;
 import com.didispace.scca.core.service.PersistenceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,6 +25,21 @@ public class GitPersistenceService implements PersistenceService {
 
     @Autowired
     private GitProperties gitProperties;
+
+    @Override
+    public void deletePropertiesByEnv(Env env) {
+        try {
+            // TODO 删除配置信息异常的时候，如何处理需要再思考一下，目前先忽略
+            for (Project project : env.getProjects()) {
+                for (Label label : project.getLabels()) {
+                    // 删除单个配置文件
+                    deleteProperties(project.getName(), env.getName(), label.getName());
+                }
+            }
+        } catch (Exception e) {
+            log.error(e.getMessage());
+        }
+    }
 
     @Override
     public void deleteProperties(String application, String profile, String label) {
@@ -51,7 +69,7 @@ public class GitPersistenceService implements PersistenceService {
 
             // delete propertiesFile
             File file = new File(path);
-            if(file.exists()) {
+            if (file.exists()) {
                 file.delete();
                 log.info("delete file : " + file.getAbsolutePath());
             }

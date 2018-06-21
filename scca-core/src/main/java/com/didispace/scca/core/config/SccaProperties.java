@@ -13,5 +13,6 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("scca")
 public class SccaProperties {
 
+    private String defaultLabel = "master";
 
 }

@@ -45,7 +45,7 @@ public class Env {
     /**
      * 该环境下的所有项目
      */
-    @ManyToMany(mappedBy = "envs", cascade = CascadeType.DETACH)
+    @ManyToMany(mappedBy = "envs", cascade = CascadeType.PERSIST)
     private List<Project> projects = new ArrayList<>();
 
 }

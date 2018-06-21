@@ -12,6 +12,8 @@ import java.util.List;
  */
 public interface PropertyRepo extends JpaRepository<Property, Long> {
 
+    int deleteAllByEnv(Env env);
+
     List<Property> findByEnv_IdAndProject_IdAndLabel_Id(Long envId, Long projectId, Long labelId);
 
     List<Property> findByEnvAndAndProjectAndLabel(Env env, Project project, Label label);

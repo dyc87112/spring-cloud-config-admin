@@ -34,7 +34,6 @@ public class WebResp<T> {
         WebResp<String> webResp = new WebResp<>();
         webResp.setCode(SUCCESS);
         webResp.setMessage(message);
-        webResp.setData("");
         return webResp;
     }
 

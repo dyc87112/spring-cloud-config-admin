@@ -28,6 +28,13 @@ public class DbPersistenceService implements PersistenceService {
     private PropertyRepo propertyRepo;
 
     @Override
+    public void deletePropertiesByEnv(Env env) {
+        // 删除某个环境下的所有配置
+        int rows = propertyRepo.deleteAllByEnv(env);
+        log.info("delete {} property rows {}", env.getName(), rows);
+    }
+
+    @Override
     @Transactional
     public void deleteProperties(String application, String profile, String label) {
         // 查询要保存配置的坐标
@@ -38,7 +45,7 @@ public class DbPersistenceService implements PersistenceService {
         // 1. 删除原来的配置
         int rows = propertyRepo.deleteAllByEnvAndAndProjectAndLabel(e, p, l);
 
-        log.info("delete {}-{}-{} rows {}", application, profile, label, rows);
+        log.info("delete {}-{}-{} property rows {}", application, profile, label, rows);
     }
 
     @Override
@@ -52,7 +59,7 @@ public class DbPersistenceService implements PersistenceService {
         // 1. 删除原来的配置
         int rows = propertyRepo.deleteAllByEnvAndAndProjectAndLabel(e, p, l);
 
-        log.info("delete {}-{}-{} rows {}", application, profile, label, rows);
+        log.info("delete {}-{}-{} property rows {}", application, profile, label, rows);
 
         // 2. 保存新的配置
         for (String name : update.stringPropertyNames()) {

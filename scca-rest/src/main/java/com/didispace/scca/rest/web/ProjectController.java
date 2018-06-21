@@ -1,13 +1,16 @@
 package com.didispace.scca.rest.web;
 
+import com.didispace.scca.core.domain.Env;
 import com.didispace.scca.core.domain.Label;
 import com.didispace.scca.core.domain.Project;
+import com.didispace.scca.rest.dto.EnvDto;
 import com.didispace.scca.rest.dto.ProjectDto;
 import com.didispace.scca.rest.dto.base.WebResp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -49,16 +52,26 @@ public class ProjectController extends BaseController {
         return WebResp.success(dto);
     }
 
+    @Transactional
     @ApiOperation("Create Project / 创建项目")
     @RequestMapping(method = RequestMethod.POST)
     public WebResp<String> create(@RequestBody ProjectDto project) {
         log.info("create Project : " + project);
 
         Project saveProject = new Project();
-        BeanUtils.copyProperties(project, saveProject);
-        projectRepo.save(saveProject);
+        BeanUtils.copyProperties(project, saveProject, "envs", "labels");
+        // 关联环境（env)
+        for (EnvDto envDto : project.getEnvs()) {
+            Env env = envRepo.findOne(envDto.getId());
+            saveProject.getEnvs().add(env);
+        }
+        saveProject = projectRepo.save(saveProject);
 
-        // TODO 同时关联环境与配置版本
+        // 关联默认版本（label）
+        Label label = new Label();
+        label.setName(sccaProperties.getDefaultLabel());
+        label.setProject(saveProject);
+        labelRepo.save(label);
 
         return WebResp.success("create Project success");
     }
@@ -68,7 +81,7 @@ public class ProjectController extends BaseController {
     public WebResp<String> deleteProject(@RequestParam("id") Long id) {
         Project project = projectRepo.findOne(id);
 
-        log.info("delete Project : " + project);
+        log.info("delete Project : " + project.getName());
         projectRepo.delete(id);
 
         // TODO 级联删除配置版本的数据与实际配置存储

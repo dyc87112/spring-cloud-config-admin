@@ -1,5 +1,7 @@
 package com.didispace.scca.core.service;
 
+import com.didispace.scca.core.domain.Env;
+
 import java.util.Properties;
 
 /**
@@ -12,6 +14,13 @@ import java.util.Properties;
  * Github: https://github.com/dyc87112/
  */
 public interface PersistenceService {
+
+    /**
+     * 删除某个环境下所有的配置文件
+     *
+     * @param env
+     */
+    void deletePropertiesByEnv(Env env);
 
     /**
      * 删除某个配置文件

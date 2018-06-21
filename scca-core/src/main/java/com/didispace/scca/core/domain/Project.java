@@ -29,14 +29,16 @@ public class Project {
      */
     private String name;
 
-
     /**
      * 该项目有哪些环境的配置
      */
     @ManyToMany
     private List<Env> envs = new ArrayList<>();
 
-    @OneToMany(mappedBy = "project")
+    /**
+     * 该项目的配置有哪些版本
+     */
+    @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<Label> labels = new ArrayList<>();
 
 }

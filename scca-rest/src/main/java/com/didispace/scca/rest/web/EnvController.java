@@ -2,7 +2,6 @@ package com.didispace.scca.rest.web;
 
 import com.alibaba.fastjson.JSON;
 import com.didispace.scca.core.domain.Env;
-import com.didispace.scca.core.domain.Label;
 import com.didispace.scca.core.domain.Project;
 import com.didispace.scca.rest.dto.EnvDto;
 import com.didispace.scca.rest.dto.base.WebResp;
@@ -82,10 +81,12 @@ public class EnvController extends BaseController {
         log.info("delete env. env={}", JSON.toJSONString(env));
 
         // 删除实际持久化内容
+        persistenceService.deletePropertiesByEnv(env);
+
+        // 删除这个env与project的关联
         for (Project project : env.getProjects()) {
-            for (Label label : project.getLabels()) {
-                persistenceService.deleteProperties(project.getName(), env.getName(), label.getName());
-            }
+            project.getEnvs().remove(env);
+            projectRepo.save(project);
         }
 
         // 删除逻辑实体
@@ -102,7 +103,7 @@ public class EnvController extends BaseController {
 
         log.info("update env. u={} env={}", JSON.toJSONString(u), JSON.toJSONString(env));
 
-        if(!u.getName().equals(env.getName())) {
+        if (!u.getName().equals(env.getName())) {
             // 环境名称有修改，如果不是db存储，其他的存储还要更新持久化内容
             persistenceService.updateProfileName(u.getName(), env.getName());
         }
