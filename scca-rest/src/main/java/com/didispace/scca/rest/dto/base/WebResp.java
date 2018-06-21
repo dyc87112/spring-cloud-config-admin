@@ -21,7 +21,7 @@ public class WebResp<T> {
     @ApiModelProperty("响应消息")
     private String message;
     @ApiModelProperty("时间戳")
-    private Long now = System.currentTimeMillis();
+    private Long timestamp = System.currentTimeMillis();
 
     public static <T> WebResp<T> success(T data) {
         WebResp<T> webResp = new WebResp<>();
