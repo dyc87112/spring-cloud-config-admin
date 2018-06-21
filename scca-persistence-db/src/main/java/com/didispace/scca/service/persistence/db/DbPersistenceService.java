@@ -1,11 +1,13 @@
 package com.didispace.scca.service.persistence.db;
 
+import com.didispace.easyutils.file.PropertiesUtils;
 import com.didispace.scca.core.domain.*;
 import com.didispace.scca.core.service.PersistenceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -28,6 +30,21 @@ public class DbPersistenceService implements PersistenceService {
     private PropertyRepo propertyRepo;
 
     @Override
+    public Properties readProperties(String application, String profile, String label) {
+        // 查询要保存配置的坐标
+        Env e = envRepo.findByName(profile);
+        Project p = projectRepo.findByName(application);
+        Label l = labelRepo.findFirstByNameAndProject(label, p);
+
+        Properties properties = new Properties();
+        for(Property property : propertyRepo.findByEnvAndAndProjectAndLabel(e, p, l)) {
+            properties.put(property.getPKey(), property.getPValue());
+        }
+
+        return properties;
+    }
+
+    @Override
     public void deletePropertiesByEnv(Env env) {
         // 删除某个环境下的所有配置
         int rows = propertyRepo.deleteAllByEnv(env);
@@ -40,7 +57,7 @@ public class DbPersistenceService implements PersistenceService {
         // 查询要保存配置的坐标
         Env e = envRepo.findByName(profile);
         Project p = projectRepo.findByName(application);
-        Label l = labelRepo.findFirstByNameAndProject(application, p);
+        Label l = labelRepo.findFirstByNameAndProject(label, p);
 
         // 1. 删除原来的配置
         int rows = propertyRepo.deleteAllByEnvAndAndProjectAndLabel(e, p, l);
@@ -54,7 +71,7 @@ public class DbPersistenceService implements PersistenceService {
         // 查询要保存配置的坐标
         Env e = envRepo.findByName(profile);
         Project p = projectRepo.findByName(application);
-        Label l = labelRepo.findFirstByNameAndProject(application, p);
+        Label l = labelRepo.findFirstByNameAndProject(label, p);
 
         // 1. 删除原来的配置
         int rows = propertyRepo.deleteAllByEnvAndAndProjectAndLabel(e, p, l);

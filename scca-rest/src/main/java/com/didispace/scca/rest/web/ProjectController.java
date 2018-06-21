@@ -11,6 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
@@ -104,32 +105,20 @@ public class ProjectController extends BaseController {
         return WebResp.success("update Project success");
     }
 
-//    @ApiOperation("Project Add Env / 项目增加部署环境")
-//    @RequestMapping(path = "/env", method = RequestMethod.POST)
-//    public WebResp<String> createProjectLabel(@RequestParam("projectId") Long projectId,
-//                                              @RequestParam("envId") Long envId) {
-//        Project owner = projectRepo.findOne(projectId);
-//
-//        Env env = envRepo.findOne(envId);
-//        owner.getEnvs().add(env);
-//        projectRepo.save(owner);
-//
-//        return WebResp.success("create project [" + owner.getName() + "] env [" + env.getName() + "] success");
-//    }
-//
-
     @ApiOperation("Project Add Label / 项目增加配置版本")
     @RequestMapping(path = "/label", method = RequestMethod.POST)
     public WebResp<String> addProjectLabel(@RequestParam("projectId") Long projectId,
                                            @RequestParam("labelName") String labelName) {
         Project owner = projectRepo.findOne(projectId);
 
+        Assert.notNull(owner, "Project [" + projectId + "] not exist");
+
         Label label = new Label();
         label.setName(labelName);
         label.setProject(owner);
         labelRepo.save(label);
 
-        return WebResp.success("create project [" + projectId + "] label [" + labelName + "] success");
+        return WebResp.success("create project [" + owner.getName() + "] label [" + labelName + "] success");
     }
 
 

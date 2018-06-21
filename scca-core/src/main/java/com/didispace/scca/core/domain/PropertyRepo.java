@@ -22,4 +22,6 @@ public interface PropertyRepo extends JpaRepository<Property, Long> {
 
     int deleteAllByEnvAndAndProjectAndLabel(Env env, Project project, Label label);
 
+    List<Property> findByLabel_Id(Long labelId);
+
 }

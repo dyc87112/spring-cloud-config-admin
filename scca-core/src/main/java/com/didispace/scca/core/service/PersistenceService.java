@@ -16,6 +16,17 @@ import java.util.Properties;
 public interface PersistenceService {
 
     /**
+     * 获取某个配置文件
+     *
+     * @param application - 应用名称
+     * @param profile     - 环境名称
+     * @param label       - 版本名称
+     * @return
+     */
+    Properties readProperties(String application, String profile, String label);
+
+
+    /**
      * 删除某个环境下所有的配置文件
      *
      * @param env
