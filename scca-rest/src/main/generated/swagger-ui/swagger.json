@@ -11,8 +11,6 @@
     }
   },
   "tags" : [ {
-    "name" : "Config MGT（配置管理）"
-  }, {
     "name" : "EncryptKey MGT（加密管理）"
   }, {
     "name" : "Env MGT（环境管理）"
@@ -20,41 +18,11 @@
     "name" : "EnvParam MGT（环境参数管理）"
   }, {
     "name" : "Project MGT（项目管理）"
+  }, {
+    "name" : "Property MGT（配置详细管理）"
   } ],
   "schemes" : [ "http", "https" ],
   "paths" : {
-    "/edit4service/properties" : {
-      "get" : {
-        "tags" : [ "Config MGT（配置管理）" ],
-        "summary" : "Get properties / 获取详细配置信息",
-        "description" : "",
-        "operationId" : "properties",
-        "parameters" : [ {
-          "name" : "",
-          "in" : "query",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "",
-          "in" : "query",
-          "required" : true,
-          "type" : "string"
-        }, {
-          "name" : "",
-          "in" : "query",
-          "required" : true,
-          "type" : "string"
-        } ],
-        "responses" : {
-          "200" : {
-            "description" : "successful operation",
-            "schema" : {
-              "$ref" : "#/definitions/WebRespString"
-            }
-          }
-        }
-      }
-    },
     "/encryptKey" : {
       "get" : {
         "tags" : [ "EncryptKey MGT（加密管理）" ],
@@ -72,18 +40,15 @@
       },
       "post" : {
         "tags" : [ "EncryptKey MGT（加密管理）" ],
-        "summary" : "Add EncryptKeys / 批量新增需加密的Key",
+        "summary" : "Add EncryptKey / 新增需加密的Key",
         "description" : "",
-        "operationId" : "createBatch",
+        "operationId" : "createEncryptKey",
         "parameters" : [ {
           "in" : "body",
           "name" : "body",
           "required" : false,
           "schema" : {
-            "type" : "array",
-            "items" : {
-              "$ref" : "#/definitions/EncryptKeyDto"
-            }
+            "$ref" : "#/definitions/EncryptKeyDto"
           }
         } ],
         "responses" : {
@@ -106,6 +71,54 @@
           "required" : false,
           "schema" : {
             "$ref" : "#/definitions/EncryptKeyDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "EncryptKey MGT（加密管理）" ],
+        "summary" : "Delete EncryptKey / 删除需加密的Key",
+        "description" : "",
+        "operationId" : "deleteEncryptKey",
+        "parameters" : [ {
+          "name" : "encryptKeyId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
+    "/encryptKey/batch" : {
+      "post" : {
+        "tags" : [ "EncryptKey MGT（加密管理）" ],
+        "summary" : "Add EncryptKeys / 批量新增需加密的Key",
+        "description" : "",
+        "operationId" : "createBatch",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/EncryptKeyDto"
+            }
           }
         } ],
         "responses" : {
@@ -147,21 +160,14 @@
     "/env" : {
       "get" : {
         "tags" : [ "Env MGT（环境管理）" ],
-        "summary" : "Env Detail / 环境详情",
+        "summary" : "List Env / 环境列表",
         "description" : "",
-        "operationId" : "findEnvDetail",
-        "parameters" : [ {
-          "name" : "id",
-          "in" : "query",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        } ],
+        "operationId" : "findAllEnv",
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespEnvDto"
+              "$ref" : "#/definitions/WebRespListEnvDto"
             }
           }
         }
@@ -227,6 +233,29 @@
             "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
+    "/env/detail" : {
+      "get" : {
+        "tags" : [ "Env MGT（环境管理）" ],
+        "summary" : "Env Detail / 环境详情",
+        "description" : "",
+        "operationId" : "findEnvDetail",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespEnvDto"
             }
           }
         }
@@ -306,6 +335,60 @@
       },
       "delete" : {
         "tags" : [ "EnvParam MGT（环境参数管理）" ],
+        "summary" : "Delete EnvParam / 删除某个环境参数",
+        "description" : "",
+        "operationId" : "delete",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
+    "/envParam/batch" : {
+      "post" : {
+        "tags" : [ "EnvParam MGT（环境参数管理）" ],
+        "summary" : "Add EnvParams / 新增一批环境参数",
+        "description" : "",
+        "operationId" : "createBatch",
+        "parameters" : [ {
+          "name" : "envId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "array",
+            "items" : {
+              "$ref" : "#/definitions/EnvParamDto"
+            }
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "EnvParam MGT（环境参数管理）" ],
         "summary" : "Delete EnvParams / 删除一批环境参数",
         "description" : "",
         "operationId" : "deleteBatch",
@@ -348,20 +431,16 @@
       },
       "post" : {
         "tags" : [ "Project MGT（项目管理）" ],
-        "summary" : "Project Add Label / 项目增加配置版本",
+        "summary" : "Create Project / 创建项目",
         "description" : "",
-        "operationId" : "addProjectLabel",
+        "operationId" : "create",
         "parameters" : [ {
-          "name" : "projectId",
-          "in" : "query",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int64"
-        }, {
-          "name" : "labelName",
-          "in" : "query",
-          "required" : true,
-          "type" : "string"
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/ProjectDto"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -396,6 +475,78 @@
       },
       "delete" : {
         "tags" : [ "Project MGT（项目管理）" ],
+        "summary" : "Delete Project / 删除项目",
+        "description" : "",
+        "operationId" : "deleteProject",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
+    "/project/detail" : {
+      "get" : {
+        "tags" : [ "Project MGT（项目管理）" ],
+        "summary" : "Project Detail / 项目详情",
+        "description" : "",
+        "operationId" : "findProjectDetail",
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespProjectDto"
+            }
+          }
+        }
+      }
+    },
+    "/project/label" : {
+      "post" : {
+        "tags" : [ "Project MGT（项目管理）" ],
+        "summary" : "Project Add Label / 项目增加配置版本",
+        "description" : "",
+        "operationId" : "addProjectLabel",
+        "parameters" : [ {
+          "name" : "projectId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "labelName",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      },
+      "delete" : {
+        "tags" : [ "Project MGT（项目管理）" ],
         "summary" : "Project Delete Label / 项目删除版本",
         "description" : "",
         "operationId" : "deleteProjectLabel",
@@ -405,6 +556,166 @@
           "required" : true,
           "type" : "integer",
           "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
+    "/property/configServer" : {
+      "get" : {
+        "tags" : [ "Property MGT（配置详细管理）" ],
+        "summary" : "config server properties / 获取配置中心获取的配置信息",
+        "description" : "",
+        "operationId" : "propertiesFromConfigServer",
+        "parameters" : [ {
+          "name" : "project",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "profile",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "label",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespListPropertySource"
+            }
+          }
+        }
+      }
+    },
+    "/property/decrypt" : {
+      "get" : {
+        "tags" : [ "Property MGT（配置详细管理）" ],
+        "summary" : "Decrypt property / 解密配置",
+        "description" : "",
+        "operationId" : "decrypt",
+        "parameters" : [ {
+          "name" : "envId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "value",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
+    "/property/encrypt" : {
+      "get" : {
+        "tags" : [ "Property MGT（配置详细管理）" ],
+        "summary" : "Encrypt property / 加密配置",
+        "description" : "",
+        "operationId" : "encrypt",
+        "parameters" : [ {
+          "name" : "envId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        }, {
+          "name" : "value",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
+    "/property/persistent" : {
+      "get" : {
+        "tags" : [ "Property MGT（配置详细管理）" ],
+        "summary" : "persistent properties / 获取持久化的配置信息",
+        "description" : "",
+        "operationId" : "propertiesFromPersistent",
+        "parameters" : [ {
+          "name" : "project",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "profile",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "label",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespProperties"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Property MGT（配置详细管理）" ],
+        "summary" : "Save properties / 保存持久化的配置信息",
+        "description" : "",
+        "operationId" : "saveProperties",
+        "parameters" : [ {
+          "name" : "project",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "profile",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "name" : "label",
+          "in" : "query",
+          "required" : true,
+          "type" : "string"
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "object",
+            "additionalProperties" : {
+              "type" : "string"
+            }
+          }
         } ],
         "responses" : {
           "200" : {
@@ -508,6 +819,43 @@
         }
       }
     },
+    "PropertySource" : {
+      "type" : "object",
+      "properties" : {
+        "name" : {
+          "type" : "string",
+          "readOnly" : true
+        },
+        "source" : {
+          "type" : "object",
+          "readOnly" : true,
+          "additionalProperties" : {
+            "type" : "object"
+          }
+        }
+      }
+    },
+    "WebResp" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "type" : "object"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "timestamp" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
     "WebRespEnvDto" : {
       "type" : "object",
       "properties" : {
@@ -522,7 +870,7 @@
           "type" : "string",
           "description" : "响应消息"
         },
-        "now" : {
+        "timestamp" : {
           "type" : "integer",
           "format" : "int64",
           "description" : "时间戳"
@@ -546,7 +894,7 @@
           "type" : "string",
           "description" : "响应消息"
         },
-        "now" : {
+        "timestamp" : {
           "type" : "integer",
           "format" : "int64",
           "description" : "时间戳"
@@ -570,7 +918,7 @@
           "type" : "string",
           "description" : "响应消息"
         },
-        "now" : {
+        "timestamp" : {
           "type" : "integer",
           "format" : "int64",
           "description" : "时间戳"
@@ -594,7 +942,7 @@
           "type" : "string",
           "description" : "响应消息"
         },
-        "now" : {
+        "timestamp" : {
           "type" : "integer",
           "format" : "int64",
           "description" : "时间戳"
@@ -618,7 +966,31 @@
           "type" : "string",
           "description" : "响应消息"
         },
-        "now" : {
+        "timestamp" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespListPropertySource" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/PropertySource"
+          }
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "timestamp" : {
           "type" : "integer",
           "format" : "int64",
           "description" : "时间戳"
@@ -639,7 +1011,31 @@
           "type" : "string",
           "description" : "响应消息"
         },
-        "now" : {
+        "timestamp" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespProperties" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "type" : "object",
+          "additionalProperties" : {
+            "type" : "string"
+          }
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "timestamp" : {
           "type" : "integer",
           "format" : "int64",
           "description" : "时间戳"
@@ -660,7 +1056,7 @@
           "type" : "string",
           "description" : "响应消息"
         },
-        "now" : {
+        "timestamp" : {
           "type" : "integer",
           "format" : "int64",
           "description" : "时间戳"

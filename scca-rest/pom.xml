@@ -122,7 +122,7 @@
             <plugin>
                 <groupId>com.github.kongchen</groupId>
                 <artifactId>swagger-maven-plugin</artifactId>
-                <version>3.1.4</version>
+                <version>3.1.7</version>
                 <configuration>
                     <apiSources>
                         <apiSource>
