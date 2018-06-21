@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.List;
 import java.util.Properties;
 
 /**
@@ -19,7 +20,7 @@ import java.util.Properties;
  * Blog: http://blog.didispace.com/
  * Github: https://github.com/dyc87112/
  */
-@Api("Property MGT（配置管理）")
+@Api("Property MGT（配置详细管理）")
 @Slf4j
 @RestController
 @RequestMapping("/property")
@@ -37,16 +38,12 @@ public class PropertyController extends BaseController {
 
     @ApiOperation("Get properties from config server / 通过配置中心接口获取详细配置信息")
     @RequestMapping(path = "/configServer", method = RequestMethod.GET)
-    public WebResp<String> propertiesFromConfigServer(@RequestParam String project,
-                                                      @RequestParam String profile,
-                                                      @RequestParam String label) {
-        // TODO 通过配置中间来获取配置信息
-
+    public WebResp<List<PropertySource>> propertiesFromConfigServer(@RequestParam String project,
+                                                                    @RequestParam String profile,
+                                                                    @RequestParam String label) {
+        // 通过配置中心来获取配置信息, 参考应用获取的具体配置信息
         Environment environment = baseOptService.getProperties(project, profile, label);
-        for (PropertySource propertySource : environment.getPropertySources()) {
-
-        }
-        return null;
+        return WebResp.success(environment.getPropertySources());
     }
 
 
