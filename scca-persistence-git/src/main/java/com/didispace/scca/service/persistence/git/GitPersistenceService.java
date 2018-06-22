@@ -51,21 +51,36 @@ public class GitPersistenceService implements PersistenceService {
 
     @Override
     public void deletePropertiesByEnv(Env env) {
-        try {
-            // TODO 删除配置信息异常的时候，如何处理需要再思考一下，目前先忽略
-            for (Project project : env.getProjects()) {
-                for (Label label : project.getLabels()) {
-                    // 删除单个配置文件
-                    deleteProperties(project.getName(), env.getName(), label.getName());
-                }
+        for (Project project : env.getProjects()) {
+            for (Label label : project.getLabels()) {
+                // 删除单个配置文件
+                deleteProperties(project.getName(), env.getName(), label.getName());
             }
-        } catch (Exception e) {
-            log.error(e.getMessage());
+        }
+    }
+
+    @Override
+    public void deletePropertiesByProject(Project project) {
+        for (Env env : project.getEnvs()) {
+            for (Label label : project.getLabels()) {
+                // 删除单个配置文件
+                deleteProperties(project.getName(), env.getName(), label.getName());
+            }
+        }
+    }
+
+    @Override
+    public void deletePropertiesByLabel(Label label) {
+        String projectName = label.getProject().getName();
+        for (Env env : label.getProject().getEnvs()) {
+            // 删除单个配置文件
+            deleteProperties(projectName, env.getName(), label.getName());
         }
     }
 
     @Override
     public void deleteProperties(String application, String profile, String label) {
+        log.info("delete properties git : {}, {}, {}", application, profile, label);
         // 删除某个配置文件
         ProjectInfo projectInfo = new ProjectInfo(application, profile, label, this.gitProperties);
         try {
@@ -80,6 +95,8 @@ public class GitPersistenceService implements PersistenceService {
             if (file.exists()) {
                 file.delete();
                 log.info("delete file : " + file.getAbsolutePath());
+            } else {
+                log.error("delete file not exist: " + projectInfo.getPath());
             }
 
             // commit & push
@@ -98,6 +115,7 @@ public class GitPersistenceService implements PersistenceService {
 
     @Override
     public void saveProperties(String application, String profile, String label, Properties update) {
+        // TODO 文件不存在的时候，自动创建
         ProjectInfo projectInfo = new ProjectInfo(application, profile, label, this.gitProperties);
         try {
             // git clone properites from git

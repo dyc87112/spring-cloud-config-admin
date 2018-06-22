@@ -1,13 +1,11 @@
 package com.didispace.scca.service.persistence.db;
 
-import com.didispace.easyutils.file.PropertiesUtils;
 import com.didispace.scca.core.domain.*;
 import com.didispace.scca.core.service.PersistenceService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
 import java.util.Properties;
 
 /**
@@ -37,7 +35,7 @@ public class DbPersistenceService implements PersistenceService {
         Label l = labelRepo.findFirstByNameAndProject(label, p);
 
         Properties properties = new Properties();
-        for(Property property : propertyRepo.findByEnvAndAndProjectAndLabel(e, p, l)) {
+        for (Property property : propertyRepo.findByEnvAndAndProjectAndLabel(e, p, l)) {
             properties.put(property.getPKey(), property.getPValue());
         }
 
@@ -48,7 +46,20 @@ public class DbPersistenceService implements PersistenceService {
     public void deletePropertiesByEnv(Env env) {
         // 删除某个环境下的所有配置
         int rows = propertyRepo.deleteAllByEnv(env);
-        log.info("delete {} property rows {}", env.getName(), rows);
+        log.info("delete env [{}] property rows {}", env.getName(), rows);
+    }
+
+    @Override
+    public void deletePropertiesByProject(Project project) {
+        int rows = propertyRepo.deleteAllByProject(project);
+        log.info("delete project [{}] property rows {}", project.getName(), rows);
+    }
+
+    @Override
+    public void deletePropertiesByLabel(Label label) {
+        int rows = propertyRepo.deleteAllByLabel(label);
+        log.info("delete project [{}] label [{}] property rows {}",
+                label.getProject().getName(), label.getName(), rows);
     }
 
     @Override

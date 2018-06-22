@@ -1,6 +1,8 @@
 package com.didispace.scca.core.service;
 
 import com.didispace.scca.core.domain.Env;
+import com.didispace.scca.core.domain.Label;
+import com.didispace.scca.core.domain.Project;
 
 import java.util.Properties;
 
@@ -27,11 +29,27 @@ public interface PersistenceService {
 
 
     /**
-     * 删除某个环境下所有的配置文件
+     * 删除某个环境下所有项目所有版本的配置文件
      *
      * @param env
      */
     void deletePropertiesByEnv(Env env);
+
+    /**
+     * 删除某个项目，所有版本在所有环境下的所有配置文件
+     *
+     * @param project
+     */
+    void deletePropertiesByProject(Project project);
+
+    /**
+     * 删除某个项目某个版本下所有的配置文件
+     * <p>
+     * （由于Label只属于一个项目，所以该操作就是删除某个项目某个版本在所有环境下的配置）
+     *
+     * @param label
+     */
+    void deletePropertiesByLabel(Label label);
 
     /**
      * 删除某个配置文件

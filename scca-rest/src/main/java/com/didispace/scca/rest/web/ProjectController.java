@@ -77,40 +77,52 @@ public class ProjectController extends BaseController {
         return WebResp.success("create Project success");
     }
 
+    @Transactional
     @ApiOperation("Delete Project / 删除项目")
     @RequestMapping(method = RequestMethod.DELETE)
     public WebResp<String> deleteProject(@RequestParam("id") Long id) {
         Project project = projectRepo.findOne(id);
+        Assert.notNull(project, "Project [" + id + "] not exist");
 
         log.info("delete Project : " + project.getName());
-        projectRepo.delete(id);
 
-        // TODO 级联删除配置版本的数据与实际配置存储
+        // 级联删除配置版本的数据与实际配置存储
+        persistenceService.deletePropertiesByProject(project);
+
+        // 删除scca中的管理实体
+        projectRepo.delete(project);
 
         return WebResp.success("delete Project success");
     }
 
+    @Transactional
     @ApiOperation("Update Project / 更新项目")
     @RequestMapping(method = RequestMethod.PUT)
     public WebResp<String> updateProject(@RequestBody ProjectDto project) {
         Project updateProject = projectRepo.findOne(project.getId());
+        Assert.notNull(updateProject, "Project [" + project.getId() + "] not exist");
 
         log.info("update Project : " + updateProject + " --> " + project);
 
-        updateProject.setName(project.getName());
         // TODO 增加部署环境与配置版本的更新，移除的需要联合删除操作
+        List<Env> envs = updateProject.getEnvs();
 
+
+        // TODO 整理出要新增或删除的Env
+
+
+        updateProject.setName(project.getName());
         projectRepo.save(updateProject);
 
         return WebResp.success("update Project success");
     }
 
+    @Transactional
     @ApiOperation("Project Add Label / 项目增加配置版本")
     @RequestMapping(path = "/label", method = RequestMethod.POST)
     public WebResp<String> addProjectLabel(@RequestParam("projectId") Long projectId,
                                            @RequestParam("labelName") String labelName) {
         Project owner = projectRepo.findOne(projectId);
-
         Assert.notNull(owner, "Project [" + projectId + "] not exist");
 
         Label label = new Label();
@@ -122,15 +134,20 @@ public class ProjectController extends BaseController {
     }
 
 
+    @Transactional
     @ApiOperation("Project Delete Label / 项目删除版本")
     @RequestMapping(path = "/label", method = RequestMethod.DELETE)
     public WebResp<String> deleteProjectLabel(@RequestParam("labelId") Long labelId) {
         Label label = labelRepo.findOne(labelId);
-        log.info("delete Label : " + label);
+        Assert.notNull(label, "Label [" + labelId + "] not exist");
 
-        labelRepo.delete(labelId);
+        log.info("delete Label [{}-{}]", label.getProject().getName(), label.getName());
 
-        // TODO 需要同步删除配置的存储
+        // 同步删除配置的存储
+        persistenceService.deletePropertiesByLabel(label);
+
+        // 删除scca中的管理实体
+        labelRepo.delete(label);
 
         return WebResp.success("delete project [" + label.getProject().getName() + "] label [" + label.getName() + "] success");
     }
