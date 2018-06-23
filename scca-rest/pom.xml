@@ -18,18 +18,21 @@
         <!-- scca discovery dependency-->
         <dependency>
             <groupId>com.didispace</groupId>
-            <artifactId>scca-discovery-consul</artifactId>
+            <artifactId>scca-discovery-eureka</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
+        <!--<dependency>-->
+            <!--<groupId>com.didispace</groupId>-->
+            <!--<artifactId>scca-discovery-consul</artifactId>-->
+            <!--<version>1.0.0-SNAPSHOT</version>-->
+        <!--</dependency>-->
 
         <!-- scca persistence dependency -->
-
         <dependency>
             <groupId>com.didispace</groupId>
             <artifactId>scca-persistence-db</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-
         <!--<dependency>-->
             <!--<groupId>com.didispace</groupId>-->
             <!--<artifactId>scca-persistence-git</artifactId>-->
