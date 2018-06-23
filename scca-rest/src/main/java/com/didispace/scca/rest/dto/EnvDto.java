@@ -35,4 +35,10 @@ public class EnvDto {
     @JsonProperty("configServerName")
     private String configServerName;
 
+    /**
+     * 如果配置中心设置了contextPath，那么也需要维护进来
+     */
+    @JsonProperty("contextPath")
+    private String contextPath;
+
 }
