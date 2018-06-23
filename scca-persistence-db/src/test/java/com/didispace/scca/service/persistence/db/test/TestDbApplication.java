@@ -1,6 +1,5 @@
 package com.didispace.scca.service.persistence.db.test;
 
-import com.didispace.scca.service.persistence.db.EnableSccaPersistenceDb;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 
@@ -10,7 +9,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * Blog: http://blog.didispace.com/
  * Github: https://github.com/dyc87112/
  */
-@EnableSccaPersistenceDb
 @SpringBootApplication
 public class TestDbApplication {
 
