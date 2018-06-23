@@ -20,7 +20,7 @@ import java.util.List;
 public class UrlMaker4Consul extends BaseUrlMaker {
 
     // FIXME 由于配置中心与rest一体化，所以直接用这个，如果分离要扩展单独配置
-    @Value("${server.context-path}")
+    @Value("${server.context-path:}")
     private String contextPath;
 
     @Override

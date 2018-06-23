@@ -1,6 +1,5 @@
 package com.didispace.scca.service.discovery.consul.test;
 
-import com.didispace.scca.service.discovery.consul.EnableSccaDiscoveryConsul;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
@@ -15,7 +14,6 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 @EnableDiscoveryClient
 @EnableConfigServer
 @SpringBootApplication
-@EnableSccaDiscoveryConsul
 public class TestApplication {
 
     public static void main(String[] args) {

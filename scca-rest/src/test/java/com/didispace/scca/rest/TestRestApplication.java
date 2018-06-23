@@ -1,7 +1,5 @@
 package com.didispace.scca.rest;
 
-import com.didispace.scca.service.discovery.consul.EnableSccaDiscoveryConsul;
-import com.didispace.scca.service.persistence.git.EnableSccaPersistenceGit;
 import com.pszymczyk.consul.ConsulProcess;
 import com.pszymczyk.consul.ConsulStarterBuilder;
 import org.springframework.boot.SpringApplication;
@@ -15,10 +13,8 @@ import org.springframework.cloud.config.server.EnableConfigServer;
  * Blog: http://blog.didispace.com/
  * Github: https://github.com/dyc87112/
  */
-@EnableSccaDiscoveryConsul
-@EnableSccaPersistenceGit
-@EnableDiscoveryClient
 @EnableConfigServer
+@EnableDiscoveryClient
 @SpringBootApplication
 public class TestRestApplication {
 
