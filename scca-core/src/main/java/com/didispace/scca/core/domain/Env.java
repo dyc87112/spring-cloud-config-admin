@@ -35,6 +35,10 @@ public class Env {
      * 配置中心的访问地址（比如：http://localhost:8888/）或服务名（配置服务名的时候需要与服务发现组件配合使用）
      **/
     private String configServerName;
+    /**
+     * 如果配置中心设置了contextPath，那么也需要维护进来
+     */
+    private String contextPath = "";
 
     /**
      * 该环境下的配置内容

@@ -39,7 +39,7 @@ public class BaseUrlMaker implements UrlMakerService {
         Env env = envRepo.findByName(envName);
         if (env.getRegistryAddress() == null || env.getRegistryAddress().isEmpty()) {
             log.debug("config server url : " + env.getConfigServerName());
-            return env.getConfigServerName();
+            return env.getConfigServerName() + env.getContextPath();
         } else {
             log.error("Your env config use registry address, So you should use service discovery plugin and make sure property is not `sccs.config-server-url.enable=true`");
             throw new RuntimeException("Need use service discovery plugin");

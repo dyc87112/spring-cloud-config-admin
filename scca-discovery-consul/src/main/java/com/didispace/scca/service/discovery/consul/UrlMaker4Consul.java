@@ -6,7 +6,6 @@ import com.ecwid.consul.v1.ConsulClient;
 import com.ecwid.consul.v1.Response;
 import com.ecwid.consul.v1.health.model.HealthService;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Value;
 
 import java.util.List;
 
@@ -19,10 +18,6 @@ import java.util.List;
 @Slf4j
 public class UrlMaker4Consul extends BaseUrlMaker {
 
-    // FIXME 由于配置中心与rest一体化，所以直接用这个，如果分离要扩展单独配置
-    @Value("${server.context-path:}")
-    private String contextPath;
-
     @Override
     public String configServerBaseUrl(String envName) {
         Env env = envRepo.findByName(envName);
@@ -31,7 +26,7 @@ public class UrlMaker4Consul extends BaseUrlMaker {
         Response<List<HealthService>> response = consulClient.getHealthServices(env.getConfigServerName(), false, null);
         List<HealthService> configServerList = response.getValue();
 
-        if(configServerList.size() == 0) {
+        if (configServerList.size() == 0) {
             throw new RuntimeException("No instances : " + env.getConfigServerName());
         }
 
@@ -39,7 +34,7 @@ public class UrlMaker4Consul extends BaseUrlMaker {
 
         String ip = healthService.getService().getAddress();
         String port = healthService.getService().getPort().toString();
-        return "http://" + ip + ":" + port + contextPath;
+        return "http://" + ip + ":" + port + env.getContextPath();
     }
 
 }

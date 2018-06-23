@@ -11,13 +11,13 @@ import org.springframework.cloud.config.server.EnableConfigServer;
  * Blog: http://blog.didispace.com/
  * Github: https://github.com/dyc87112/
  */
-@EnableDiscoveryClient
 @EnableConfigServer
+@EnableDiscoveryClient
 @SpringBootApplication
-public class TestApplication {
+public class TestConsulApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(TestApplication.class);
+        SpringApplication.run(TestConsulApplication.class);
     }
 
 }

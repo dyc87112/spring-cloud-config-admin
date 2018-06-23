@@ -46,19 +46,21 @@ public class UrlMaker4ConsulTest {
         stage.setName("stage");
         stage.setConfigServerName("scca-repo");
         stage.setRegistryAddress("localhost:" + consul.getHttpPort());
+//        stage.setRegistryAddress("localhost:8500");
+        stage.setContextPath("/xxx");
         envRepo.save(stage);
 
         // 获取stage环境的配置中心URL
         String configServerUrl = urlMakerService.configServerBaseUrl("stage");
         log.info(configServerUrl);
         assertThat(configServerUrl).startsWith("http://");
-        assertThat(configServerUrl).endsWith("10020");
+        assertThat(configServerUrl).endsWith("10020/xxx");
 
         // 获取yh-consul-admin项目、stage环境、develop分支的配置抓取链接
         String propertiesUrl = urlMakerService.propertiesLoadUrl("scca-repo", "stage", "develop");
         log.info(propertiesUrl);
         assertThat(propertiesUrl).startsWith("http://");
-        assertThat(propertiesUrl).endsWith("10020/scca-repo/stage/develop");
+        assertThat(propertiesUrl).endsWith("10020/xxx/scca-repo/stage/develop");
     }
 
 }
