@@ -15,29 +15,11 @@
     </parent>
 
     <dependencies>
-        <!-- scca discovery dependency-->
         <dependency>
             <groupId>com.didispace</groupId>
-            <artifactId>scca-discovery-eureka</artifactId>
+            <artifactId>scca-core</artifactId>
             <version>1.0.0-SNAPSHOT</version>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.didispace</groupId>-->
-            <!--<artifactId>scca-discovery-consul</artifactId>-->
-            <!--<version>1.0.0-SNAPSHOT</version>-->
-        <!--</dependency>-->
-
-        <!-- scca persistence dependency -->
-        <dependency>
-            <groupId>com.didispace</groupId>
-            <artifactId>scca-persistence-db</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
-        </dependency>
-        <!--<dependency>-->
-            <!--<groupId>com.didispace</groupId>-->
-            <!--<artifactId>scca-persistence-git</artifactId>-->
-            <!--<version>1.0.0-SNAPSHOT</version>-->
-        <!--</dependency>-->
 
         <!-- spring boot-->
         <dependency>
@@ -69,6 +51,35 @@
         </dependency>
 
         <!--Test Dependency-->
+
+        <!-- scca discovery dependency-->
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-discovery-eureka</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>com.didispace</groupId>-->
+        <!--<artifactId>scca-discovery-consul</artifactId>-->
+        <!--<version>1.0.0-SNAPSHOT</version>-->
+        <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
+        <!-- scca persistence dependency -->
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-persistence-db</artifactId>
+            <version>1.0.0-SNAPSHOT</version>
+            <scope>test</scope>
+        </dependency>
+        <!--<dependency>-->
+        <!--<groupId>com.didispace</groupId>-->
+        <!--<artifactId>scca-persistence-git</artifactId>-->
+        <!--<version>1.0.0-SNAPSHOT</version>-->
+        <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-actuator</artifactId>

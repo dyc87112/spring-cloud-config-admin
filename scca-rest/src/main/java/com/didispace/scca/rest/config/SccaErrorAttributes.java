@@ -6,7 +6,6 @@ import org.springframework.web.context.request.RequestAttributes;
 
 import java.util.Map;
 
-@Component
 public class SccaErrorAttributes extends DefaultErrorAttributes {
 
     @Override
