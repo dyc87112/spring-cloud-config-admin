@@ -5,6 +5,7 @@
 **项目地址**
 
 - Github: https://github.com/dyc87112/spring-cloud-config-admin
+- Gitee：https://gitee.com/didispace/spring-cloud-config-admin
 
 # SCCA的架构
 
@@ -14,7 +15,9 @@ SCCA采用了前后端分离的架构，通过core模块抽象了前端需要的
 
 # 路线图
 
-- v1.0.0：实现基础版配置管理功能：对Git存储和Consul、Eureka服务治理的支持
+- v1.0.0：实现基础版配置管理功能：实现环境管理、环境参数管理、项目管理、配置管理、对配置信息的加密解密、环境配置等基础功能。对于服务治理上支持eureka和consul、配置存储上支持git和db。
+- v1.1.0：
+
 
 # 使用手册
 
