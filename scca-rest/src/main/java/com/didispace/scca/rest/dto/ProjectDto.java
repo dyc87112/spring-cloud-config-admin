@@ -1,7 +1,5 @@
 package com.didispace.scca.rest.dto;
 
-import com.didispace.scca.core.domain.Env;
-import com.didispace.scca.core.domain.Label;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 

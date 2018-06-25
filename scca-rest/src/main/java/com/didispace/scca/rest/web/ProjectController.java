@@ -4,6 +4,7 @@ import com.didispace.scca.core.domain.Env;
 import com.didispace.scca.core.domain.Label;
 import com.didispace.scca.core.domain.Project;
 import com.didispace.scca.rest.dto.EnvDto;
+import com.didispace.scca.rest.dto.LabelDto;
 import com.didispace.scca.rest.dto.ProjectDto;
 import com.didispace.scca.rest.dto.base.WebResp;
 import io.swagger.annotations.Api;
@@ -36,7 +37,20 @@ public class ProjectController extends BaseController {
         List<ProjectDto> result = new ArrayList<>();
         for (Project project : projectRepo.findAll()) {
             ProjectDto dto = new ProjectDto();
-            BeanUtils.copyProperties(project, dto);
+            BeanUtils.copyProperties(project, dto, "envs", "labels");
+
+            for (Env env : project.getEnvs()) {
+                EnvDto envDto = new EnvDto();
+                BeanUtils.copyProperties(env, envDto);
+                dto.getEnvs().add(envDto);
+            }
+
+            for (Label label : project.getLabels()) {
+                LabelDto labelDto = new LabelDto();
+                BeanUtils.copyProperties(label, labelDto);
+                dto.getLabels().add(labelDto);
+            }
+
             result.add(dto);
         }
         return WebResp.success(result);
