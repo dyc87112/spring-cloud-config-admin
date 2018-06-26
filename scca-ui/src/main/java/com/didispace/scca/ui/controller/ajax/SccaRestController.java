@@ -1,6 +1,8 @@
 package com.didispace.scca.ui.controller.ajax;
 
+import com.didispace.scca.ui.SccaUIProperties;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -13,14 +15,19 @@ import org.springframework.web.client.RestTemplate;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.net.URI;
 
 /**
  * Created by stone-jin on 2018/5/28.
  */
-@Controller
 @Slf4j
+@Controller
 public class SccaRestController {
+
+    @Autowired
+    private SccaUIProperties sccaUIProperties;
+
+    @Autowired
+    private RestTemplate restTemplate;
 
     // 依据具体项目，可以修改为对应的入口url
     @RequestMapping("/xhr/**")
@@ -30,39 +37,45 @@ public class SccaRestController {
         log.info("====>");
         String result = "";
         String originalUrl = "";
-        String forwardUrl = "";
         String queryString = ""; //get请求时候的参数
+
+        StringBuffer forwardUrl = new StringBuffer();
         try {
-            //获取原始url
+            //获取前端原始请求url
             originalUrl = request.getRequestURI();
+            //获取前端原始请求url中的参数
             queryString = request.getQueryString();
-            //去除前缀(/xhr/ius)，重构url,参数根据具体url的真是长度指定
-            log.info("forwardUrl: {}", originalUrl);
-            forwardUrl = originalUrl;
+            log.info("originalUrl = {}, queryString = {}", originalUrl, queryString);
 
-            URI uri = new URI("http://127.0.0.1:10030" + forwardUrl);
+            // 产生要转发到rest-server后端服务的请求url
+            String forwardPath = originalUrl.replace("/xhr", sccaUIProperties.getRestServerContextPath());
 
-            forwardUrl = uri.toString();
+            if (sccaUIProperties.getRestServerName() != null) {
+                // 服务发现访问rest-server
+                forwardUrl.append("http://" + sccaUIProperties.getRestServerName())
+                        .append(forwardPath);
+            } else {
+                // 配置了访问URL的方式
+                forwardUrl.append(sccaUIProperties.getRestServerUrl())
+                        .append(forwardPath);
+            }
+
             // 日志输出根据具体项目而定
             log.info("{}, action=REQUEST, queryString={}, forwardUrl={}, requestBody={}",
-                    originalUrl, queryString, uri, requestBody);
+                    originalUrl, queryString, forwardUrl, requestBody);
 
             // 头信息统一处理
             HttpHeaders headers = new HttpHeaders();
             headers.add(HttpHeaders.CONTENT_TYPE, "application/json;charset=utf-8");
-            RestTemplate restTemplate = new RestTemplate();
 
             // url统一处理
-            String url = uri.toString();
-            if(null != queryString) {
-                url = url + "?" + queryString;
-            }
+            String url = forwardUrl.toString() + "?" + queryString;
 
             HttpEntity<String> requestEntity;
             ResponseEntity<String> responseEntity;
 
             switch (request.getMethod()) {
-                case "GET" :
+                case "GET":
                     result = restTemplate.getForObject(url, String.class);
                     break;
                 case "DELETE":
@@ -83,7 +96,7 @@ public class SccaRestController {
             //  日志输出根据具体项目而定
             log.info(
                     "{}, action=SUCC, queryString={}, forwardUrl={}, requestBody={}, result={}, time={}",
-                    originalUrl, queryString, uri, requestBody, result, System.currentTimeMillis() - t1);
+                    originalUrl, queryString, url, requestBody, result, System.currentTimeMillis() - t1);
 
         } catch (Exception e) {
             log.error("e={}", e, e);

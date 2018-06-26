@@ -23,6 +23,8 @@
         <module>scca-rest-server-with-git-config-server</module>
         <module>scca-rest-server-with-db-config-server</module>
         <module>scca-ui</module>
+        <module>scca-ui-server</module>
+        <module>scca-server-all-in-one</module>
     </modules>
 
     <properties>
