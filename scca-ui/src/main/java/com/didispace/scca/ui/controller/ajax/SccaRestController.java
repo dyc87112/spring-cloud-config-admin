@@ -18,7 +18,15 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 /**
+ * 该controller接收前端请求并转发到scca-rest服务端。
+ *
+ * 设置参数scca.ui.standalone=false，开启整合部署，配置中心、scca-rest服务端以及scca-ui端部署在一个应用中。
+ * 整合部署的时候将不初始化这个controller，前端直接请求本地的scca-rest接口。
+ *
  * Created by stone-jin on 2018/5/28.
+ *
+ * 【模块重构】 Modified by dyc87112 on 2018/06/26
+ *
  */
 @Slf4j
 @Controller
