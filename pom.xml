@@ -13,18 +13,21 @@
     <description>spring-cloud-config-admin</description>
 
     <modules>
+        <!-- 核心模块 -->
         <module>scca-core</module>
         <module>scca-discovery-consul</module>
         <module>scca-discovery-eureka</module>
         <module>scca-persistence-git</module>
         <module>scca-persistence-db</module>
         <module>scca-rest</module>
-        <module>scca-rest-server</module>
-        <module>scca-rest-server-with-git-config-server</module>
-        <module>scca-rest-server-with-db-config-server</module>
         <module>scca-ui</module>
-        <module>scca-ui-server</module>
-        <module>scca-server-all-in-one</module>
+
+        <!-- 使用案例 -->
+        <module>scca-use-cases/scca-rest-server</module>
+        <module>scca-use-cases/scca-rest-server-with-git-config-server</module>
+        <module>scca-use-cases/scca-rest-server-with-db-config-server</module>
+        <module>scca-use-cases/scca-ui-server</module>
+        <module>scca-use-cases/scca-server-all-in-one</module>
     </modules>
 
     <properties>
