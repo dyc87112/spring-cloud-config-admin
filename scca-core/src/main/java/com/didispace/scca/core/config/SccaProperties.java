@@ -13,6 +13,9 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @ConfigurationProperties("scca")
 public class SccaProperties {
 
+    /**
+     * 默认的label名称
+     */
     private String defaultLabel = "master";
 
 }

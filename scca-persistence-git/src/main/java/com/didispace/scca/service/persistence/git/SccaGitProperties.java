@@ -11,7 +11,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  */
 @Data
 @ConfigurationProperties(prefix = "scca.git")
-public class GitProperties {
+public class SccaGitProperties {
 
     /**
      * Git登录的用户名

@@ -23,7 +23,7 @@
   } ],
   "schemes" : [ "http", "https" ],
   "paths" : {
-    "/encryptKey" : {
+    "${scca.rest.context-path}/encryptKey" : {
       "get" : {
         "tags" : [ "EncryptKey MGT（加密管理）" ],
         "summary" : "List EncryptKey / 需加密的Key清单",
@@ -104,7 +104,7 @@
         }
       }
     },
-    "/encryptKey/batch" : {
+    "${scca.rest.context-path}/encryptKey/batch" : {
       "post" : {
         "tags" : [ "EncryptKey MGT（加密管理）" ],
         "summary" : "Add EncryptKeys / 批量新增需加密的Key",
@@ -157,7 +157,7 @@
         }
       }
     },
-    "/env" : {
+    "${scca.rest.context-path}/env" : {
       "get" : {
         "tags" : [ "Env MGT（环境管理）" ],
         "summary" : "List Env / 环境列表",
@@ -238,7 +238,7 @@
         }
       }
     },
-    "/env/detail" : {
+    "${scca.rest.context-path}/env/detail" : {
       "get" : {
         "tags" : [ "Env MGT（环境管理）" ],
         "summary" : "Env Detail / 环境详情",
@@ -261,7 +261,7 @@
         }
       }
     },
-    "/envParam" : {
+    "${scca.rest.context-path}/envParam" : {
       "get" : {
         "tags" : [ "EnvParam MGT（环境参数管理）" ],
         "summary" : "List EnvParam / 环境参数列表",
@@ -355,7 +355,7 @@
         }
       }
     },
-    "/envParam/batch" : {
+    "${scca.rest.context-path}/envParam/batch" : {
       "post" : {
         "tags" : [ "EnvParam MGT（环境参数管理）" ],
         "summary" : "Add EnvParams / 新增一批环境参数",
@@ -414,7 +414,7 @@
         }
       }
     },
-    "/project" : {
+    "${scca.rest.context-path}/project" : {
       "get" : {
         "tags" : [ "Project MGT（项目管理）" ],
         "summary" : "List Project / 项目列表",
@@ -495,7 +495,7 @@
         }
       }
     },
-    "/project/detail" : {
+    "${scca.rest.context-path}/project/detail" : {
       "get" : {
         "tags" : [ "Project MGT（项目管理）" ],
         "summary" : "Project Detail / 项目详情",
@@ -518,7 +518,7 @@
         }
       }
     },
-    "/project/label" : {
+    "${scca.rest.context-path}/project/label" : {
       "post" : {
         "tags" : [ "Project MGT（项目管理）" ],
         "summary" : "Project Add Label / 项目增加配置版本",
@@ -567,7 +567,7 @@
         }
       }
     },
-    "/property/configServer" : {
+    "${scca.rest.context-path}/property/configServer" : {
       "get" : {
         "tags" : [ "Property MGT（配置详细管理）" ],
         "summary" : "config server properties / 获取配置中心获取的配置信息",
@@ -599,7 +599,7 @@
         }
       }
     },
-    "/property/decrypt" : {
+    "${scca.rest.context-path}/property/decrypt" : {
       "get" : {
         "tags" : [ "Property MGT（配置详细管理）" ],
         "summary" : "Decrypt property / 解密配置",
@@ -627,7 +627,7 @@
         }
       }
     },
-    "/property/encrypt" : {
+    "${scca.rest.context-path}/property/encrypt" : {
       "get" : {
         "tags" : [ "Property MGT（配置详细管理）" ],
         "summary" : "Encrypt property / 加密配置",
@@ -655,7 +655,7 @@
         }
       }
     },
-    "/property/persistent" : {
+    "${scca.rest.context-path}/property/persistent" : {
       "get" : {
         "tags" : [ "Property MGT（配置详细管理）" ],
         "summary" : "persistent properties / 获取持久化的配置信息",

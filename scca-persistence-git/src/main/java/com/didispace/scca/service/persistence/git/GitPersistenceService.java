@@ -25,7 +25,7 @@ import java.util.UUID;
 public class GitPersistenceService implements PersistenceService {
 
     @Autowired
-    private GitProperties gitProperties;
+    private SccaGitProperties gitProperties;
 
     @Override
     public Properties readProperties(String application, String profile, String label) {
@@ -171,7 +171,7 @@ public class GitPersistenceService implements PersistenceService {
          */
         private String path;
 
-        public ProjectInfo(String application, String profile, String label, GitProperties gitProperties) {
+        public ProjectInfo(String application, String profile, String label, SccaGitProperties gitProperties) {
             // 组织配置项目的git地址
             this.projectUrl = gitProperties.getRepoUri().replaceFirst("\\{application\\}", application);
             String propertiesFile = gitProperties.getFilePattern()

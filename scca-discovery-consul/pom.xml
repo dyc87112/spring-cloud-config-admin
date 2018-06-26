@@ -32,6 +32,12 @@
             <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+
         <!--Test Dependency-->
         <dependency>
             <groupId>com.pszymczyk.consul</groupId>
