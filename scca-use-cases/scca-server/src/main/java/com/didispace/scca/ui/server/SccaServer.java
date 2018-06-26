@@ -8,10 +8,10 @@ import org.springframework.cloud.config.server.EnableConfigServer;
 @EnableConfigServer
 @EnableDiscoveryClient
 @SpringBootApplication
-public class SccaAllInOneServer {
+public class SccaServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(SccaAllInOneServer.class, args);
+        SpringApplication.run(SccaServer.class, args);
     }
 
 }

@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.didispace</groupId>
-    <artifactId>scca-server-all-in-one</artifactId>
+    <artifactId>scca-server</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>scca-server-all-in-one</name>
+    <name>scca-server</name>
 
     <properties>
         <maven.test.skip>true</maven.test.skip>

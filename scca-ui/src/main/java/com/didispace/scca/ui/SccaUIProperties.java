@@ -20,9 +20,8 @@ public class SccaUIProperties {
      */
     private String restServerContextPath = "";
     /**
-     * standalone部署模式，默认为：true，即：scca-rest模块与scca-ui模块分离部署模式；
-     * 如果设置为false，即：配置中心、scca-rest模块和scca-ui模块一体化；
+     *
      */
-    private boolean standalone = true;
+    private boolean useEmbedSccaRestServer;
 
 }

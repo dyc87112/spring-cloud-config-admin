@@ -27,7 +27,8 @@
         <module>scca-use-cases/scca-rest-server-with-git-config-server</module>
         <module>scca-use-cases/scca-rest-server-with-db-config-server</module>
         <module>scca-use-cases/scca-ui-server</module>
-        <module>scca-use-cases/scca-server-all-in-one</module>
+        <module>scca-use-cases/scca-server</module>
+
     </modules>
 
     <properties>
