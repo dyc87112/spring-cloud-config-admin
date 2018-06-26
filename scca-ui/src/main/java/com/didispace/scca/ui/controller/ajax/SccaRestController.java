@@ -3,6 +3,7 @@ package com.didispace.scca.ui.controller.ajax;
 import com.didispace.scca.ui.SccaUIProperties;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -21,6 +22,7 @@ import java.io.IOException;
  */
 @Slf4j
 @Controller
+@ConditionalOnProperty(value = "scca.ui.standalone", matchIfMissing = true)
 public class SccaRestController {
 
     @Autowired
@@ -31,7 +33,6 @@ public class SccaRestController {
 
     // 依据具体项目，可以修改为对应的入口url
     @RequestMapping("/xhr/**")
-    @Deprecated
     public void forward(@RequestBody(required = false) String requestBody, HttpServletRequest request, HttpServletResponse response) throws IOException {
         long t1 = System.currentTimeMillis();
         log.info("====>");

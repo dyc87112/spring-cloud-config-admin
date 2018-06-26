@@ -14,8 +14,8 @@ import org.springframework.web.client.RestTemplate;
  * Blog: http://blog.didispace.com/
  * Github: https://github.com/dyc87112/
  */
-@ComponentScan
 @Configuration
+@ComponentScan
 @PropertySource("scca-ui.properties")
 @EnableConfigurationProperties(SccaUIProperties.class)
 public class SccaUIAutoConfiguration {
