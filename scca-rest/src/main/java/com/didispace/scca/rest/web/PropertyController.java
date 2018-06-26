@@ -21,7 +21,7 @@ import java.util.Properties;
 @Api("Property MGT（配置详细管理）")
 @Slf4j
 @RestController
-@RequestMapping("/property")
+@RequestMapping("${scca.rest.context-path:}/property")
 public class PropertyController extends BaseController {
 
     @ApiOperation("persistent properties / 获取持久化的配置信息")

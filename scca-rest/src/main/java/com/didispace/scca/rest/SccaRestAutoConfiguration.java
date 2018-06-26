@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.PropertySource;
 
 /**
  * Created by 程序猿DD/翟永超 on 2018/6/23.
@@ -15,6 +16,7 @@ import org.springframework.context.annotation.Configuration;
  */
 @ComponentScan
 @Configuration
+@PropertySource("scca-rest.properties")
 public class SccaRestAutoConfiguration {
 
     @Bean

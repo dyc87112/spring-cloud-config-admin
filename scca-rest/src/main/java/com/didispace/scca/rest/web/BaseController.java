@@ -15,7 +15,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
  * Blog: http://blog.didispace.com/
  * Github: https://github.com/dyc87112/
  */
-@RequestMapping("/scca")
 public class BaseController {
 
     @Autowired

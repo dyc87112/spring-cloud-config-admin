@@ -22,7 +22,7 @@ import java.util.List;
 @Api("EncryptKey MGT（加密管理）")
 @Slf4j
 @RestController
-@RequestMapping("/encryptKey")
+@RequestMapping("${scca.rest.context-path:}/encryptKey")
 public class EncryptKeyController extends BaseController {
 
     @ApiOperation("List EncryptKey / 需加密的Key清单")

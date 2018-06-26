@@ -27,7 +27,7 @@ import java.util.List;
 @Api("Project MGT（项目管理）")
 @Slf4j
 @RestController
-@RequestMapping("/project")
+@RequestMapping("${scca.rest.context-path:}/project")
 public class ProjectController extends BaseController {
 
     @ApiOperation("List Project / 项目列表")
