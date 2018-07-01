@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 
 /**
  * Created by 程序猿DD/翟永超 on 2018/4/27.
@@ -83,10 +84,14 @@ public class ProjectController extends BaseController {
         saveProject = projectRepo.save(saveProject);
 
         // 关联默认版本（label）
-        Label label = new Label();
-        label.setName(sccaProperties.getDefaultLabel());
-        label.setProject(saveProject);
-        labelRepo.save(label);
+        for (LabelDto labelDto : project.getLabels()) {
+            if(Objects.equals(labelDto.getId(), null)){
+                Label label = new Label();
+                label.setName(labelDto.getName());
+                label.setProject(saveProject);
+                labelRepo.save(label);
+            }
+        }
 
         return WebResp.success("create Project success");
     }
