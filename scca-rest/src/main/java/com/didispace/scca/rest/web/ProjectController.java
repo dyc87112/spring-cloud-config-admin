@@ -161,9 +161,7 @@ public class ProjectController extends BaseController {
 
         // 联动删除实际存储的操作
         for (Env env : removeList) {
-            for (Label label : updateProject.getLabels()) {
-                persistenceService.deleteProperties(updateProject.getName(), env.getName(), label.getName());
-            }
+            persistenceService.deletePropertiesByProjectAndEnv(updateProject, env);
         }
 
         return WebResp.success("update Project success");
@@ -234,8 +232,8 @@ public class ProjectController extends BaseController {
         projectRepo.save(owner);
 
         // 删除持久化内容
-        for(Label label : owner.getLabels()) {
-            persistenceService.deleteProperties(owner.getName(), env.getName(), label.getName());
+        for (Label label : owner.getLabels()) {
+            persistenceService.deletePropertiesByLabel(label);
         }
 
         return WebResp.success("remove project [" + owner.getName() + "] env [" + env.getName() + "] success");

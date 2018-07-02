@@ -16,6 +16,8 @@ public interface PropertyRepo extends JpaRepository<Property, Long> {
 
     int deleteAllByProject(Project project);
 
+    int deleteAllByProjectAnAndEnv(Project project, Env env);
+
     int deleteAllByLabel(Label label);
 
     List<Property> findByEnv_IdAndProject_IdAndLabel_Id(Long envId, Long projectId, Long labelId);

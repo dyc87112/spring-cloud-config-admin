@@ -70,6 +70,13 @@ public class GitPersistenceService implements PersistenceService {
     }
 
     @Override
+    public void deletePropertiesByProjectAndEnv(Project project, Env env) {
+        for (Label label : project.getLabels()) {
+            deleteProperties(project.getName(), env.getName(), label.getName());
+        }
+    }
+
+    @Override
     public void deletePropertiesByLabel(Label label) {
         String projectName = label.getProject().getName();
         for (Env env : label.getProject().getEnvs()) {

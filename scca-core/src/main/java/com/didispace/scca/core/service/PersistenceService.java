@@ -43,6 +43,14 @@ public interface PersistenceService {
     void deletePropertiesByProject(Project project);
 
     /**
+     * 删除某个项目某个环境下的所有配置文件
+     *
+     * @param project
+     * @param env
+     */
+    void deletePropertiesByProjectAndEnv(Project project, Env env);
+
+    /**
      * 删除某个项目某个版本下所有的配置文件
      * <p>
      * （由于Label只属于一个项目，所以该操作就是删除某个项目某个版本在所有环境下的配置）
