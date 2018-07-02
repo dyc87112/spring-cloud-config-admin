@@ -119,7 +119,7 @@ public class ProjectController extends BaseController {
         // 更新项目名称
         updateProject.setName(project.getName());
 
-        // 增加部署环境与配置版本的更新，移除的需要联合删除操作
+        // 更新项目需要移除和添加的环境清单
         List<Env> removeList = new ArrayList<>();
         List<Env> addList = new ArrayList<>();
 
@@ -133,7 +133,7 @@ public class ProjectController extends BaseController {
                 }
             }
 
-            if (remove) {
+            if (remove) { // 移除这个环境
                 removeList.add(env);
             }
         }
@@ -148,18 +148,23 @@ public class ProjectController extends BaseController {
                 }
             }
 
-            if (add) {
-                // 添加这个环境
+            if (add) { // 添加这个环境
                 Env e = envRepo.findOne(envDto.getId());
                 addList.add(e);
             }
         }
 
-        // TODO 还缺少联动删除实际存储的操作
         updateProject.getEnvs().removeAll(removeList);
         updateProject.getEnvs().addAll(addList);
 
         projectRepo.save(updateProject);
+
+        // 联动删除实际存储的操作
+        for (Env env : removeList) {
+            for (Label label : updateProject.getLabels()) {
+                persistenceService.deleteProperties(updateProject.getName(), env.getName(), label.getName());
+            }
+        }
 
         return WebResp.success("update Project success");
     }
@@ -208,7 +213,7 @@ public class ProjectController extends BaseController {
 
         Env env = envRepo.findOne(envId);
         Assert.notNull(env, "Env [" + envId + "] not exist");
-        
+
         owner.getEnvs().add(env);
         projectRepo.save(owner);
 
@@ -227,6 +232,11 @@ public class ProjectController extends BaseController {
 
         owner.getEnvs().remove(env);
         projectRepo.save(owner);
+
+        // 删除持久化内容
+        for(Label label : owner.getLabels()) {
+            persistenceService.deleteProperties(owner.getName(), env.getName(), label.getName());
+        }
 
         return WebResp.success("remove project [" + owner.getName() + "] env [" + env.getName() + "] success");
     }
