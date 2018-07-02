@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Objects;
 
 /**
  * Created by 程序猿DD/翟永超 on 2018/4/27.
@@ -84,14 +83,10 @@ public class ProjectController extends BaseController {
         saveProject = projectRepo.save(saveProject);
 
         // 关联默认版本（label）
-        for (LabelDto labelDto : project.getLabels()) {
-            if(Objects.equals(labelDto.getId(), null)){
-                Label label = new Label();
-                label.setName(labelDto.getName());
-                label.setProject(saveProject);
-                labelRepo.save(label);
-            }
-        }
+        Label label = new Label();
+        label.setName(sccaProperties.getDefaultLabel());
+        label.setProject(saveProject);
+        labelRepo.save(label);
 
         return WebResp.success("create Project success");
     }
@@ -121,16 +116,49 @@ public class ProjectController extends BaseController {
         Project updateProject = projectRepo.findOne(project.getId());
         Assert.notNull(updateProject, "Project [" + project.getId() + "] not exist");
 
-        log.info("update Project : " + updateProject + " --> " + project);
-
-        // TODO 增加部署环境与配置版本的更新，移除的需要联合删除操作
-        List<Env> envs = updateProject.getEnvs();
-
-
-        // TODO 整理出要新增或删除的Env
-
-
+        // 更新项目名称
         updateProject.setName(project.getName());
+
+        // 增加部署环境与配置版本的更新，移除的需要联合删除操作
+        List<Env> removeList = new ArrayList<>();
+        List<Env> addList = new ArrayList<>();
+
+        // 找出要移除的环境
+        for (Env env : updateProject.getEnvs()) {
+            boolean remove = true;
+            for (EnvDto envDto : project.getEnvs()) {
+                if (env.getId() == envDto.getId()) {
+                    remove = false;
+                    break;
+                }
+            }
+
+            if (remove) {
+                removeList.add(env);
+            }
+        }
+
+        // 找出要新关联的环境
+        for (EnvDto envDto : project.getEnvs()) {
+            boolean add = true;
+            for (Env env : updateProject.getEnvs()) {
+                if (env.getId() == envDto.getId()) {
+                    add = false;
+                    break;
+                }
+            }
+
+            if (add) {
+                // 添加这个环境
+                Env e = envRepo.findOne(envDto.getId());
+                addList.add(e);
+            }
+        }
+
+        // TODO 还缺少联动删除实际存储的操作
+        updateProject.getEnvs().removeAll(removeList);
+        updateProject.getEnvs().addAll(addList);
+
         projectRepo.save(updateProject);
 
         return WebResp.success("update Project success");
