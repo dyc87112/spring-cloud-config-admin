@@ -57,7 +57,7 @@ public class EncryptKeyController extends BaseController {
         EncryptKey encryptKey = encryptKeyRepo.findOne(encryptKeyId);
 
         log.info("delete EncryptKey : " + encryptKey);
-        envRepo.delete(encryptKeyId);
+        encryptKeyRepo.delete(encryptKeyId);
 
         return WebResp.success("delete EncryptKey [" + encryptKey.getEKey() + "] success");
     }
