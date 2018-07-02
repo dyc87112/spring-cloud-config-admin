@@ -199,4 +199,36 @@ public class ProjectController extends BaseController {
         return WebResp.success("delete project [" + label.getProject().getName() + "] label [" + label.getName() + "] success");
     }
 
+    @Transactional
+    @ApiOperation("Project Add Env / 项目增加环境")
+    @RequestMapping(path = "/env", method = RequestMethod.POST)
+    public WebResp<String> addProjectEnv(@RequestParam("projectId") Long projectId, @RequestParam("envId") Long envId) {
+        Project owner = projectRepo.findOne(projectId);
+        Assert.notNull(owner, "Project [" + projectId + "] not exist");
+
+        Env env = envRepo.findOne(envId);
+        Assert.notNull(env, "Env [" + envId + "] not exist");
+        
+        owner.getEnvs().add(env);
+        projectRepo.save(owner);
+
+        return WebResp.success("add project [" + owner.getName() + "] env [" + env.getName() + "] success");
+    }
+
+    @Transactional
+    @ApiOperation("Project Remove Env / 项目移除环境")
+    @RequestMapping(path = "/env", method = RequestMethod.DELETE)
+    public WebResp<String> deleteProjectEnv(@RequestParam("projectId") Long projectId, @RequestParam("envId") Long envId) {
+        Project owner = projectRepo.findOne(projectId);
+        Assert.notNull(owner, "Project [" + projectId + "] not exist");
+
+        Env env = envRepo.findOne(envId);
+        Assert.notNull(env, "Env [" + envId + "] not exist");
+
+        owner.getEnvs().remove(env);
+        projectRepo.save(owner);
+
+        return WebResp.success("remove project [" + owner.getName() + "] env [" + env.getName() + "] success");
+    }
+
 }
