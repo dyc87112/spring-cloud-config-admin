@@ -21,7 +21,8 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
     /**
      * eureka的rest接口：根据服务名称获取实例清单
      */
-    private String getInstantsUrl = "/eureka/apps/{serviceName}";
+    private String getInstantsUrl = "/apps/{serviceName}";
+//    private String getInstantsUrl = "/eureka/apps/{serviceName}";
 
     private RestTemplate restTemplate = new RestTemplate();
 
@@ -30,7 +31,9 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
     public String configServerBaseUrl(String envName) {
         Env env = envRepo.findByName(envName);
 
+        // 优化访问eureka的url处理
         String url = env.getRegistryAddress() + getInstantsUrl.replace("{serviceName}", env.getConfigServerName());
+        url = url.replaceAll("//", "/").replaceFirst(":/", "://");
 
         log.info("Get config server instances url : " + url);
 
