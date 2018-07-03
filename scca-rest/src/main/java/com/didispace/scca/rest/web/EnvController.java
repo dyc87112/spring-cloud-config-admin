@@ -111,6 +111,7 @@ public class EnvController extends BaseController {
         u.setName(env.getName());
         u.setConfigServerName(env.getConfigServerName());
         u.setRegistryAddress(env.getRegistryAddress());
+        u.setContextPath(env.getContextPath());
         envRepo.save(u);
 
         return WebResp.success("update Env success");
