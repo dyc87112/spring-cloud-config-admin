@@ -56,25 +56,26 @@ public class PropertyController extends BaseController {
     }
 
     @ApiOperation("Encrypt property / 加密配置")
-    @RequestMapping(path = "/encrypt", method = RequestMethod.GET)
+    @RequestMapping(path = "/encrypt", method = RequestMethod.POST)
     public WebResp<String> encrypt(@RequestParam("envId") Long envId,
                                    @RequestParam("value") String value) {
         // 指定某个环境的加密（单个值）
         Env env = envRepo.findOne(envId);
         String result = baseOptService.encrypt(value, env);
         log.info("encrypt property {} -> {}", value, result);
-        return WebResp.success(result);
+
+        return WebResp.success(result, null);
     }
 
     @ApiOperation("Decrypt property / 解密配置")
-    @RequestMapping(path = "/decrypt", method = RequestMethod.GET)
+    @RequestMapping(path = "/decrypt", method = RequestMethod.POST)
     public WebResp<String> decrypt(@RequestParam("envId") Long envId,
                                    @RequestParam("value") String value) {
         // 指定某个环境的解密（单个值）
         Env env = envRepo.findOne(envId);
         String result = baseOptService.decrypt(value, env);
         log.info("decrypt property {} -> {}", value, result);
-        return WebResp.success(result);
+        return WebResp.success(result, null);
     }
 
 }
