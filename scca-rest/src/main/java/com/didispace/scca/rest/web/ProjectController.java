@@ -170,7 +170,7 @@ public class ProjectController extends BaseController {
     @Transactional
     @ApiOperation("Project Add Label / 项目增加配置版本")
     @RequestMapping(path = "/label", method = RequestMethod.POST)
-    public WebResp<Long> addProjectLabel(@RequestParam("projectId") Long projectId,
+    public WebResp<LabelDto> addProjectLabel(@RequestParam("projectId") Long projectId,
                                            @RequestParam("labelName") String labelName) {
         Project owner = projectRepo.findOne(projectId);
         Assert.notNull(owner, "Project [" + projectId + "] not exist");
@@ -178,9 +178,12 @@ public class ProjectController extends BaseController {
         Label label = new Label();
         label.setName(labelName);
         label.setProject(owner);
-        Long id = labelRepo.save(label).getId();
+        label = labelRepo.save(label);
 
-        return WebResp.success(id, "create project [" + owner.getName() + "] label [" + labelName + "] success");
+        LabelDto dto = new LabelDto();
+        BeanUtils.copyProperties(label, dto);
+
+        return WebResp.success(dto, "create project [" + owner.getName() + "] label [" + labelName + "] success");
     }
 
 
