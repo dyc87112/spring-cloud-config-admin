@@ -57,7 +57,7 @@ public class DbPersistenceService implements PersistenceService {
 
     @Override
     public void deletePropertiesByProjectAndEnv(Project project, Env env) {
-        int rows = propertyRepo.deleteAllByProjectAnAndEnv(project, env);
+        int rows = propertyRepo.deleteAllByProject_IdAndEnv_Id(project.getId(), env.getId());
         log.info("delete project [{}] in env [{}] property rows {}", project.getName(),
                 env.getName(), rows);
     }
