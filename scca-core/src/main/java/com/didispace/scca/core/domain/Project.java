@@ -27,6 +27,7 @@ public class Project {
     /**
      * 项目名
      */
+    @Column(unique = true)
     private String name;
 
     /**
