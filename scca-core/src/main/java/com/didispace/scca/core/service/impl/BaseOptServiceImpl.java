@@ -57,6 +57,7 @@ public class BaseOptServiceImpl implements BaseOptService {
 
     @SneakyThrows
     private String callTextPlain(String url, String value) {
+        log.info("call text plain : " + url);
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("Content-Type", "text/plain")
@@ -71,6 +72,7 @@ public class BaseOptServiceImpl implements BaseOptService {
 
     @SneakyThrows
     private Environment callGetProperties(String url) {
+        log.info("call get properties : " + url);
         Request request = new Request.Builder()
                 .url(url)
                 .get()
