@@ -7,6 +7,8 @@ import com.didispace.scca.core.service.impl.BaseUrlMaker;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -39,11 +41,11 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
 
         // 访问eureka接口获取一个可以访问的实例
         String rStr = restTemplate.getForObject(url, String.class);
-        JSONObject reponse = JSON.parseObject(rStr);
+        JSONObject response = JSON.parseObject(rStr);
 
         String homePageUrl = null;
 
-        for (Object o : reponse.getJSONObject("application").getJSONArray("instance")) {
+        for (Object o : response.getJSONObject("application").getJSONArray("instance")) {
             Map<String, String> instance = (Map) o;
             if (instance.get("status").equals("UP")) {
                 homePageUrl = instance.get("homePageUrl");
@@ -56,6 +58,33 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
         }
 
         return homePageUrl + env.getContextPath();
+    }
+
+    @Override
+    public List<String> allConfigServerBaseUrl(String envName) {
+        List<String> result = new ArrayList<>();
+
+        Env env = envRepo.findByName(envName);
+
+        // 优化访问eureka的url处理
+        String url = env.getRegistryAddress() + getInstantsUrl.replace("{serviceName}", env.getConfigServerName());
+        url = url.replaceAll("//", "/").replaceFirst(":/", "://");
+
+        log.info("Get config server instances url : " + url);
+
+        // 访问eureka接口获取一个可以访问的实例
+        String rStr = restTemplate.getForObject(url, String.class);
+        JSONObject response = JSON.parseObject(rStr);
+
+        for (Object o : response.getJSONObject("application").getJSONArray("instance")) {
+            Map<String, String> instance = (Map) o;
+            if (instance.get("status").equals("UP")) {
+                String homePageUrl = instance.get("homePageUrl");
+                result.add(homePageUrl + env.getContextPath());
+            }
+        }
+
+        return result;
     }
 
 }

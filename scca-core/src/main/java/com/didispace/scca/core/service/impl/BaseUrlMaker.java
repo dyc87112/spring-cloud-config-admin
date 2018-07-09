@@ -7,6 +7,9 @@ import com.didispace.scca.core.service.UrlMakerService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Created by 程序猿DD/翟永超 on 2018/4/24.
  * <p>
@@ -44,6 +47,13 @@ public class BaseUrlMaker implements UrlMakerService {
             log.error("Your env config use registry address, So you should use service discovery plugin and make sure property is not `sccs.config-server-url.enable=true`");
             throw new RuntimeException("Need use service discovery plugin");
         }
+    }
+
+    @Override
+    public List<String> allConfigServerBaseUrl(String envName) {
+        List<String> result = new ArrayList<>();
+        result.add(configServerBaseUrl(envName));
+        return result;
     }
 
 }

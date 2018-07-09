@@ -3,6 +3,8 @@ package com.didispace.scca.core.service;
 import com.didispace.scca.core.domain.Env;
 import org.springframework.cloud.config.environment.Environment;
 
+import java.util.List;
+
 /**
  * 与Spring Cloud Config Server的交互操作
  * <p>
@@ -30,6 +32,14 @@ public interface BaseOptService {
      * @return
      */
     String decrypt(String originValue, Env env);
+
+    /**
+     * 获取某个环境下配置中心的详细信息
+     *
+     * @param env
+     * @return
+     */
+    List<ConfigServerInfo> configServerInfo(Env env);
 
     /**
      * 访问配置中心获取某个应用、某个环境、某个分支的配置

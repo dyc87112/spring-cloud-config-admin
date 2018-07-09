@@ -5,6 +5,7 @@ import com.didispace.scca.core.domain.Env;
 import com.didispace.scca.core.domain.EnvParamRepo;
 import com.didispace.scca.core.domain.EnvRepo;
 import com.didispace.scca.core.service.BaseOptService;
+import com.didispace.scca.core.service.ConfigServerInfo;
 import com.didispace.scca.core.service.UrlMakerService;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.SneakyThrows;
@@ -13,6 +14,9 @@ import okhttp3.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cloud.config.environment.Environment;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -49,10 +53,44 @@ public class BaseOptServiceImpl implements BaseOptService {
         return callTextPlain(urlMakerService.configServerBaseUrl(env.getName()) + decryptPath, originValue);
     }
 
+    @SneakyThrows
+    @Override
+    public List<ConfigServerInfo> configServerInfo(Env env) {
+        List<ConfigServerInfo> result = new ArrayList<>();
+        for(String url : urlMakerService.allConfigServerBaseUrl(env.getName())) {
+            ConfigServerInfo configServerInfo = new ConfigServerInfo();
+            configServerInfo.setUrl(url);
+
+            // 获取该配置中心的加密状态
+            String response = callGet(url + "/encrypt/status");
+            log.info("response : " + response);
+            ObjectMapper mapper = new ObjectMapper();
+            Map<String, String> rMap = mapper.readValue(response, Map.class);
+            configServerInfo.setEncryptStatus(rMap.get("status"));
+
+            result.add(configServerInfo);
+        }
+        return result;
+    }
+
     @Override
     public Environment getProperties(String application, String envName, String label) {
         String url = urlMakerService.propertiesLoadUrl(application, envName, label);
         return callGetProperties(url);
+    }
+
+    @SneakyThrows
+    private String callGet(String url) {
+        log.info("call get : " + url);
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        Call call = okHttpClient.newCall(request);
+        Response response = call.execute();
+        ResponseBody responseBody = response.body();
+        return responseBody.string();
     }
 
     @SneakyThrows

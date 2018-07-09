@@ -7,6 +7,7 @@ import com.ecwid.consul.v1.Response;
 import com.ecwid.consul.v1.health.model.HealthService;
 import lombok.extern.slf4j.Slf4j;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -35,6 +36,24 @@ public class UrlMaker4Consul extends BaseUrlMaker {
         String ip = healthService.getService().getAddress();
         String port = healthService.getService().getPort().toString();
         return "http://" + ip + ":" + port + env.getContextPath();
+    }
+
+    @Override
+    public List<String> allConfigServerBaseUrl(String envName) {
+        List<String> result = new ArrayList<>();
+
+        Env env = envRepo.findByName(envName);
+
+        ConsulClient consulClient = new ConsulClient(env.getRegistryAddress());
+        Response<List<HealthService>> response = consulClient.getHealthServices(env.getConfigServerName(), false, null);
+        List<HealthService> configServerList = response.getValue();
+
+        for (HealthService healthService : configServerList) {
+            String ip = healthService.getService().getAddress();
+            String port = healthService.getService().getPort().toString();
+            result.add("http://" + ip + ":" + port + env.getContextPath());
+        }
+        return result;
     }
 
 }
