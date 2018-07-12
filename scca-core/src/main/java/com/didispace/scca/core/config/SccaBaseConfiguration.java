@@ -7,7 +7,7 @@ import com.didispace.scca.core.service.impl.BaseOptServiceImpl;
 import com.didispace.scca.core.service.impl.BaseUrlMaker;
 import com.didispace.scca.core.service.impl.PropertiesServiceImpl;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingClass;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
@@ -45,7 +45,10 @@ public class SccaBaseConfiguration {
      */
     @Bean
     @ConditionalOnMissingBean
-    @ConditionalOnProperty(value = "sccs.config-server-url.enable")
+    @ConditionalOnMissingClass({
+            "com.didispace.scca.service.discovery.consul.UrlMaker4Consul",
+            "com.didispace.scca.service.discovery.eureka.UrlMaker4Eureka"
+    })
     public UrlMakerService urlMakerService() {
         return new BaseUrlMaker();
     }

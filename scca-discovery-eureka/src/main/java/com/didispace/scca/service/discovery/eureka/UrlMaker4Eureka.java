@@ -33,6 +33,11 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
     public String configServerBaseUrl(String envName) {
         Env env = envRepo.findByName(envName);
 
+        if(env.getRegistryAddress() == null || "".equals(env.getRegistryAddress())) {
+            // 如果没有配置注册中心，直接取服务名字段（配置中心访问地址）
+            return super.configServerBaseUrl(envName);
+        }
+
         // 优化访问eureka的url处理
         String url = env.getRegistryAddress() + getInstantsUrl.replace("{serviceName}", env.getConfigServerName());
         url = url.replaceAll("//", "/").replaceFirst(":/", "://");

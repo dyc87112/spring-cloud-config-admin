@@ -23,6 +23,11 @@ public class UrlMaker4Consul extends BaseUrlMaker {
     public String configServerBaseUrl(String envName) {
         Env env = envRepo.findByName(envName);
 
+        if(env.getRegistryAddress() == null || "".equals(env.getRegistryAddress())) {
+            // 如果没有配置注册中心，直接取服务名字段（配置中心访问地址）
+            return super.configServerBaseUrl(envName);
+        }
+
         ConsulClient consulClient = new ConsulClient(env.getRegistryAddress());
         Response<List<HealthService>> response = consulClient.getHealthServices(env.getConfigServerName(), false, null);
         List<HealthService> configServerList = response.getValue();
