@@ -4,10 +4,12 @@ import com.didispace.scca.rest.config.SccaErrorAttributes;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
+import org.springframework.cloud.client.loadbalancer.LoadBalanced;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.web.client.RestTemplate;
 
 /**
  * Created by 程序猿DD/翟永超 on 2018/6/23.
@@ -25,6 +27,13 @@ public class SccaRestAutoConfiguration {
     @ConditionalOnMissingBean
     public ErrorAttributes errorAttributes() {
         return new SccaErrorAttributes();
+    }
+
+    @Bean
+    @ConditionalOnMissingBean
+    @LoadBalanced
+    public RestTemplate restTemplate() {
+        return new RestTemplate();
     }
 
 }
