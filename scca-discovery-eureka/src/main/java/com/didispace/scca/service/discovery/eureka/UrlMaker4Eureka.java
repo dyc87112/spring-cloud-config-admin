@@ -33,7 +33,7 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
     public String configServerBaseUrl(String envName) {
         Env env = envRepo.findByName(envName);
 
-        if(env.getRegistryAddress() == null || "".equals(env.getRegistryAddress())) {
+        if (env.getRegistryAddress() == null || env.getRegistryAddress().isEmpty()) {
             // 如果没有配置注册中心，直接取服务名字段（配置中心访问地址）
             return super.configServerBaseUrl(envName);
         }
@@ -70,6 +70,12 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
         List<String> result = new ArrayList<>();
 
         Env env = envRepo.findByName(envName);
+
+        if (env.getRegistryAddress() == null || env.getRegistryAddress().isEmpty()) {
+            // 如果没有配置注册中心，直接取服务名字段（配置中心访问地址）
+            result.add(env.getConfigServerName() + env.getContextPath());
+            return result;
+        }
 
         // 优化访问eureka的url处理
         String url = env.getRegistryAddress() + getInstantsUrl.replace("{serviceName}", env.getConfigServerName());

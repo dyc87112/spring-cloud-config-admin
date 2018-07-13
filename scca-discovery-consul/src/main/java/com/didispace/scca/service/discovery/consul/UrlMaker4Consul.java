@@ -23,7 +23,7 @@ public class UrlMaker4Consul extends BaseUrlMaker {
     public String configServerBaseUrl(String envName) {
         Env env = envRepo.findByName(envName);
 
-        if(env.getRegistryAddress() == null || "".equals(env.getRegistryAddress())) {
+        if (env.getRegistryAddress() == null || env.getRegistryAddress().isEmpty()) {
             // 如果没有配置注册中心，直接取服务名字段（配置中心访问地址）
             return super.configServerBaseUrl(envName);
         }
@@ -48,6 +48,12 @@ public class UrlMaker4Consul extends BaseUrlMaker {
         List<String> result = new ArrayList<>();
 
         Env env = envRepo.findByName(envName);
+
+        if (env.getRegistryAddress() == null || env.getRegistryAddress().isEmpty()) {
+            // 如果没有配置注册中心，直接取服务名字段（配置中心访问地址）
+            result.add(env.getConfigServerName() + env.getContextPath());
+            return result;
+        }
 
         ConsulClient consulClient = new ConsulClient(env.getRegistryAddress());
         Response<List<HealthService>> response = consulClient.getHealthServices(env.getConfigServerName(), false, null);
