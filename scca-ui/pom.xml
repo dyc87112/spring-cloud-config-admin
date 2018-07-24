@@ -5,7 +5,6 @@
 
     <groupId>com.didispace</groupId>
     <artifactId>scca-ui</artifactId>
-    <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
     <name>scca-ui</name>

@@ -5,8 +5,9 @@
 **项目地址**
 
 - Github: https://github.com/dyc87112/spring-cloud-config-admin
-- 前端Github: https://github.com/stone-jin/spring-cloud-config-admin-web
 - Gitee：https://gitee.com/didispace/spring-cloud-config-admin
+
+- 前端Github: https://github.com/stone-jin/spring-cloud-config-admin-web
 - 前端Gitee: https://gitee.com/stone-jin/spring-cloud-config-admin-web
 
 # 使用手册

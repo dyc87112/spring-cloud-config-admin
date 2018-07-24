@@ -18,7 +18,7 @@
         <dependency>
             <groupId>com.didispace</groupId>
             <artifactId>scca-core</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${version}</version>
         </dependency>
 
         <dependency>
@@ -29,7 +29,6 @@
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.44</version>
         </dependency>
 
         <dependency>
