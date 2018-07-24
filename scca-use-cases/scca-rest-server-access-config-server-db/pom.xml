@@ -9,26 +9,33 @@
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <maven.test.skip>true</maven.test.skip>
+        <!--scca version-->
+        <version.scca>1.0.0-SNAPSHOT</version.scca>
+    </properties>
+
     <dependencies>
 
         <dependency>
             <groupId>com.didispace</groupId>
             <artifactId>scca-rest</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${version.scca}</version>
         </dependency>
 
         <!-- scca discovery dependency-->
         <dependency>
             <groupId>com.didispace</groupId>
             <artifactId>scca-discovery-eureka</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${version.scca}</version>
         </dependency>
 
         <!-- scca persistence dependency -->
         <dependency>
             <groupId>com.didispace</groupId>
             <artifactId>scca-persistence-db</artifactId>
-            <version>1.0.0-SNAPSHOT</version>
+            <version>${version.scca}</version>
         </dependency>
 
         <!-- scca datasource dependency-->

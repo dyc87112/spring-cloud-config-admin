@@ -10,13 +10,13 @@
     <packaging>jar</packaging>
 
     <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
         <maven.test.skip>true</maven.test.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.java>1.8</version.java>
         <!--dependencies version-->
         <version.spring-boot>1.5.14.RELEASE</version.spring-boot>
         <version.spring-cloud>Edgware.SR3</version.spring-cloud>
-        <version.scca>1.0.0-SNAPSHOT</version.scca>
     </properties>
 
     <dependencies>
