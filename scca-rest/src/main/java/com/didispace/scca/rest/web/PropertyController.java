@@ -7,6 +7,7 @@ import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.config.environment.Environment;
 import org.springframework.cloud.config.environment.PropertySource;
+import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -58,9 +59,12 @@ public class PropertyController extends BaseController {
     @ApiOperation("Encrypt property / 加密配置")
     @RequestMapping(path = "/encrypt", method = RequestMethod.POST)
     public WebResp<String> encrypt(@RequestParam("envId") Long envId,
-                                   @RequestParam("value") String value) {
+                                   @RequestBody String value) {
         // 指定某个环境的加密（单个值）
         Env env = envRepo.findOne(envId);
+
+        Assert.notNull(env, "Env [" + envId + "] not exist");
+
         String result = baseOptService.encrypt(value, env);
         log.info("encrypt property {} -> {}", value, result);
 
@@ -70,9 +74,12 @@ public class PropertyController extends BaseController {
     @ApiOperation("Decrypt property / 解密配置")
     @RequestMapping(path = "/decrypt", method = RequestMethod.POST)
     public WebResp<String> decrypt(@RequestParam("envId") Long envId,
-                                   @RequestParam("value") String value) {
+                                   @RequestBody String value) {
         // 指定某个环境的解密（单个值）
         Env env = envRepo.findOne(envId);
+
+        Assert.notNull(env, "Env [" + envId + "] not exist");
+
         String result = baseOptService.decrypt(value, env);
         log.info("decrypt property {} -> {}", value, result);
         return WebResp.success(result, null);
