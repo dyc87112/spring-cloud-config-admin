@@ -11,7 +11,7 @@
     <parent>
         <groupId>com.didispace</groupId>
         <artifactId>spring-cloud-config-admin</artifactId>
-        <version>1.0.0-SNAPSHOT</version>
+        <version>1.0.0-RELEASE</version>
     </parent>
 
     <dependencies>
@@ -129,6 +129,7 @@
                 <version>2.10.4</version>
                 <configuration>
                     <charset>UTF-8</charset>
+                    <additionalparam>-Xdoclint:none</additionalparam>
                 </configuration>
             </plugin>
             <plugin>
