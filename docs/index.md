@@ -5,6 +5,8 @@
 
 在该项目中，我们对于服务治理、配置存储、可视化操作都做了抽象，只要目的就是为了尽可能的兼容所有Spring Cloud Config的用户。任何Spring Cloud Config仅需要通过一些简单的配置，或者迁移工具就能将原来正在使用的配置中心统一的管理起来。
 
+- [Release Notes](https://dyc87112.github.io/spring-cloud-config-admin/release_notes.html)
+
 # 架构概览
 
 本项目采用了前后端分离的架构，通过core模块抽象了前端需要的操作，再通过persistence和discovery模块隔离不同的配置仓库和不同的服务注册中心，从而达到前端程序不需要关心到底使用了什么存储配置以及使用了什么注册中心，这样用户可以根据自己的需要自由的组合不同的配置存储和服务治理机制，尽可能的匹配大部分Spring Cloud用户的需求。
