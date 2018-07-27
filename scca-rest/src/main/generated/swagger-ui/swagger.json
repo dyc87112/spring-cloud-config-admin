@@ -686,10 +686,12 @@
           "type" : "integer",
           "format" : "int64"
         }, {
-          "name" : "value",
-          "in" : "query",
-          "required" : true,
-          "type" : "string"
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "200" : {
@@ -714,10 +716,12 @@
           "type" : "integer",
           "format" : "int64"
         }, {
-          "name" : "value",
-          "in" : "query",
-          "required" : true,
-          "type" : "string"
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "type" : "string"
+          }
         } ],
         "responses" : {
           "200" : {
