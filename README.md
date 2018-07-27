@@ -36,7 +36,7 @@
 
 # 文档
 
-关于本项目的详细使用方法以及各版本的迭代内容可查看下面的也买呢：
+关于本项目的详细使用方法以及各版本的迭代内容可查看下面的内容：
 
 - [使用手册](https://dyc87112.github.io/spring-cloud-config-admin/)
 - [版本说明](https://dyc87112.github.io/spring-cloud-config-admin/release_notes.html)
