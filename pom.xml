@@ -143,6 +143,11 @@
             <email>dyc87112@qq.com</email>
             <organization>http://blog.didispace.com</organization>
         </developer>
+        <developer>
+            <name>金炳|stone-jin</name>
+            <email>hzjinbing@163.com</email>
+            <organization>https://www.520stone.com</organization>
+        </developer>
     </developers>
 
     <repositories>
