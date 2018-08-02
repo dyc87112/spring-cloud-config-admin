@@ -35,28 +35,21 @@
         <!-- 使用案例(DB存储) 半分离-->
         <module>scca-use-case-db/half-separation/scca-config-server-db</module>
         <module>scca-use-case-db/half-separation/scca-ui-rest-server-db</module>
-        <!-- 使用案例(DB存储) 全模式-->
+        <!-- 使用案例(DB存储) 全分离-->
         <module>scca-use-case-db/full-separation/scca-rest-server-db</module>
         <module>scca-use-case-db/full-separation/scca-ui-server-db</module>
 
         <!-- 使用案例(Git存储) All-In-One -->
         <module>scca-use-case-git/all-in-one/scca-all-in-one-server-git</module>
+        <!-- 使用案例(Git存储) 半分离 -->
+        <module>scca-use-case-git/half-separation/scca-config-server-git</module>
+        <module>scca-use-case-git/half-separation/scca-ui-rest-server-git</module>
+        <!-- 使用案例(Git存储) 全分离 -->
+        <module>scca-use-case-git/full-separation/scca-rest-server-git</module>
+        <module>scca-use-case-git/full-separation/scca-ui-server-git</module>
 
-
-
-        <!--单独部署的Spring Cloud Config Server-->
-        <module>scca-use-cases/scca-config-server-git</module>
-        <!--scca rest server独立部署-->
-        <module>scca-use-cases/scca-rest-server-access-config-server-git</module>
-        <!--spring cloud config server + scca rest server整合部署-->
-        <module>scca-use-cases/scca-rest-server-with-config-server-db</module>
-        <module>scca-use-cases/scca-rest-server-with-config-server-git</module>
-        <!--scca rest server + scca ui server整合部署-->
-        <module>scca-use-cases/scca-ui-server-with-rest-server</module>
-        <!--all in one模式：spring cloud config server + scca rest server + scca ui server-->
-        <module>scca-use-cases/scca-ui-server-with-all</module>
         <!-- 通过scca获取配置的应用 -->
-        <module>scca-use-cases/scca-test-client</module>
+        <module>scca-use-case-client/scca-test-client</module>
 
     </modules>
 
