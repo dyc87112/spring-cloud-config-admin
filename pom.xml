@@ -30,10 +30,20 @@
         <!-- scca ui 模块 -->
         <module>scca-ui</module>
 
-        <!-- 使用案例 -->
+        <!-- 使用案例(DB存储) All-In-One-->
+        <module>scca-use-case-db/all-in-one/scca-all-in-one-server-db</module>
+        <!-- 使用案例(DB存储) 半分离-->
+        <module>scca-use-case-db/half-separation/scca-config-server-db</module>
+        <module>scca-use-case-db/half-separation/scca-ui-rest-server-db</module>
+        <!-- 使用案例(DB存储) 全模式-->
+
+
+        <!-- 使用案例(Git存储) All-In-One -->
+        <module>scca-use-case-git/all-in-one/scca-all-in-one-server-git</module>
+
+
 
         <!--单独部署的Spring Cloud Config Server-->
-        <module>scca-use-cases/scca-config-server-db</module>
         <module>scca-use-cases/scca-config-server-git</module>
         <!--scca rest server独立部署-->
         <module>scca-use-cases/scca-rest-server-access-config-server-db</module>
