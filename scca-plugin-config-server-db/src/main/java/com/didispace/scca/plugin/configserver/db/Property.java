@@ -1,4 +1,4 @@
-package com.didispace.scca.core.domain;
+package com.didispace.scca.plugin.configserver.db;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -6,7 +6,6 @@ import lombok.NoArgsConstructor;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.OneToOne;
 
 /**
  * 详细配置表
@@ -38,19 +37,16 @@ public class Property {
     /**
      * 所属环境
      */
-    @OneToOne
-    private Env env;
+    private String profile;
 
     /**
      * 所属项目
      */
-    @OneToOne
-    private Project project;
+    private String application;
 
     /**
      * 所属版本
      */
-    @OneToOne
-    private Label label;
+    private String label;
 
 }

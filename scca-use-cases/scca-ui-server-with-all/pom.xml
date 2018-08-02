@@ -64,6 +64,11 @@
             <groupId>org.springframework.cloud</groupId>
             <artifactId>spring-cloud-config-server</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-plugin-config-server-db</artifactId>
+            <version>${version.scca}</version>
+        </dependency>
 
         <dependency>
             <groupId>org.springframework.boot</groupId>

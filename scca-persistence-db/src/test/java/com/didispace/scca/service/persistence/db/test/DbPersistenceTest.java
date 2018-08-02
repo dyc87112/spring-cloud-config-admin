@@ -63,7 +63,7 @@ public class DbPersistenceTest {
         persistenceService.saveProperties(application, profile, version, source);
         log.info("save finish!");
 
-        persistenceService.deleteProperties(application, profile, version);
+        persistenceService.deletePropertiesByProjectAndEnvAndLabel(application, profile, version);
         log.info("delete finish!");
         log.info("");
     }
@@ -74,7 +74,7 @@ public class DbPersistenceTest {
         String application = "scca-repo";
         String profile = "stage";
         String label = "test";
-        persistenceService.deleteProperties(application, profile, label);
+        persistenceService.deletePropertiesByProjectAndEnvAndLabel(application, profile, label);
     }
 
 }

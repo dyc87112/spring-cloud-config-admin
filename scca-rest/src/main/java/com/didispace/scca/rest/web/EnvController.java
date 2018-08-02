@@ -81,7 +81,7 @@ public class EnvController extends BaseController {
         log.info("delete env. env={}", JSON.toJSONString(env));
 
         // 删除实际持久化内容
-        persistenceService.deletePropertiesByEnv(env);
+        persistenceService.deletePropertiesByEnv(env.getName());
 
         // 删除这个env与project的关联
         for (Project project : env.getProjects()) {

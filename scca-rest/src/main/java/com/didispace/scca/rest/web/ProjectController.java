@@ -101,7 +101,7 @@ public class ProjectController extends BaseController {
         log.info("delete Project : " + project.getName());
 
         // 级联删除配置版本的数据与实际配置存储
-        persistenceService.deletePropertiesByProject(project);
+        persistenceService.deletePropertiesByProject(project.getName());
 
         // 删除scca中的管理实体
         projectRepo.delete(project);
@@ -161,7 +161,7 @@ public class ProjectController extends BaseController {
 
         // 联动删除实际存储的操作
         for (Env env : removeList) {
-            persistenceService.deletePropertiesByProjectAndEnv(updateProject, env);
+            persistenceService.deletePropertiesByProjectAndEnv(updateProject.getName(), env.getName());
         }
 
         return WebResp.success("update Project success");
@@ -171,7 +171,7 @@ public class ProjectController extends BaseController {
     @ApiOperation("Project Add Label / 项目增加配置版本")
     @RequestMapping(path = "/label", method = RequestMethod.POST)
     public WebResp<LabelDto> addProjectLabel(@RequestParam("projectId") Long projectId,
-                                           @RequestParam("labelName") String labelName) {
+                                             @RequestParam("labelName") String labelName) {
         Project owner = projectRepo.findOne(projectId);
         Assert.notNull(owner, "Project [" + projectId + "] not exist");
 
@@ -196,7 +196,7 @@ public class ProjectController extends BaseController {
 
         log.info("delete Label [{}-{}]", label.getProject().getName(), label.getName());
 
-        // 同步删除配置的存储
+        // TODO 同步删除配置的存储
         persistenceService.deletePropertiesByLabel(label);
 
         // 删除scca中的管理实体

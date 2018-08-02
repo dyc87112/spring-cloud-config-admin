@@ -47,7 +47,7 @@ public class GitPersistenceTest {
         String application = "scca-repo";
         String profile = "stage";
         String label = "test";
-        persistenceService.deleteProperties(application, profile, label);
+        persistenceService.deletePropertiesByProjectAndEnvAndLabel(application, profile, label);
     }
 
 }
