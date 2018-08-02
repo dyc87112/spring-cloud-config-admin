@@ -6,10 +6,10 @@ import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
 
 @EnableDiscoveryClient
 @SpringBootApplication
-public class SccaUIServerWithRestServer {
+public class SccaGitUIRestServer {
 
     public static void main(String[] args) {
-        SpringApplication.run(SccaUIServerWithRestServer.class, args);
+        SpringApplication.run(SccaGitUIRestServer.class, args);
     }
 
 }

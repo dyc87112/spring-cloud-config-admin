@@ -4,11 +4,11 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.didispace</groupId>
-    <artifactId>scca-ui-server</artifactId>
+    <artifactId>scca-ui-rest-server-git</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
-    <name>scca-ui-server</name>
+    <name>scca-ui-rest-server-git</name>
 
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
@@ -28,6 +28,36 @@
             <artifactId>scca-ui</artifactId>
             <version>${version.scca}</version>
         </dependency>
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-rest</artifactId>
+            <version>${version.scca}</version>
+        </dependency>
+        <!-- scca discovery dependency-->
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-discovery-eureka</artifactId>
+            <version>${version.scca}</version>
+        </dependency>
+
+        <!-- scca persistence dependency -->
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-persistence-git</artifactId>
+            <version>${version.scca}</version>
+        </dependency>
+
+        <!-- scca datasource dependency-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.196</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>mysql</groupId>-->
+            <!--<artifactId>mysql-connector-java</artifactId>-->
+            <!--<version>5.1.21</version>-->
+        <!--</dependency>-->
 
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -69,8 +99,27 @@
     <build>
         <plugins>
             <plugin>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-maven-plugin</artifactId>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <charset>UTF-8</charset>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
