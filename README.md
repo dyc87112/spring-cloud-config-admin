@@ -16,7 +16,7 @@
 
 本项目采用了前后端分离的架构，通过core模块抽象了前端需要的操作，再通过persistence和discovery模块隔离不同的配置仓库和不同的服务注册中心，从而达到前端程序不需要关心到底使用了什么存储配置以及使用了什么注册中心，这样用户可以根据自己的需要自由的组合不同的配置存储和服务治理机制，尽可能的匹配大部分Spring Cloud用户的需求。
 
-![](https://github.com/dyc87112/spring-cloud-config-admin/raw/master/statics/images/scca-arch.png)
+![](https://github.com/dyc87112/spring-cloud-config-admin-doc/raw/master/statics/images/scca-arch.png)
 
 # 特性
 
@@ -44,8 +44,8 @@
 
 关于本项目的详细使用方法以及各版本的迭代内容可查看下面的也买呢：
 
-- [使用手册](https://dyc87112.github.io/spring-cloud-config-admin/)
-- [版本说明](https://dyc87112.github.io/spring-cloud-config-admin/release_notes.html)
+- [使用手册](https://dyc87112.github.io/spring-cloud-config-admin-doc/)
+- [版本说明](https://dyc87112.github.io/spring-cloud-config-admin-doc/release_notes.html)
 
 # 贡献
 
