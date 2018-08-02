@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.didispace</groupId>
+    <artifactId>scca-rest-server-db</artifactId>
+    <name>scca-rest-server-db</name>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>jar</packaging>
+
+    <properties>
+        <maven.deploy.skip>true</maven.deploy.skip>
+        <maven.test.skip>true</maven.test.skip>
+        <!--scca version-->
+        <version.scca>1.1.0-SNAPSHOT</version.scca>
+    </properties>
+
+    <dependencies>
+
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-rest</artifactId>
+            <version>${version.scca}</version>
+        </dependency>
+
+        <!-- scca discovery dependency-->
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-discovery-eureka</artifactId>
+            <version>${version.scca}</version>
+        </dependency>
+
+        <!-- scca persistence dependency -->
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-persistence-db</artifactId>
+            <version>${version.scca}</version>
+        </dependency>
+
+        <!-- scca datasource dependency-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.197</version>
+        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>mysql</groupId>-->
+            <!--<artifactId>mysql-connector-java</artifactId>-->
+            <!--<version>5.1.21</version>-->
+        <!--</dependency>-->
+
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-javadoc-plugin</artifactId>
+                <version>2.10.4</version>
+                <configuration>
+                    <charset>UTF-8</charset>
+                </configuration>
+            </plugin>
+            <plugin>
+                <artifactId>maven-source-plugin</artifactId>
+                <version>3.0.0</version>
+                <configuration>
+                    <attach>true</attach>
+                </configuration>
+                <executions>
+                    <execution>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>jar</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>
