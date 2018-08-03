@@ -30,23 +30,23 @@
         <!-- scca ui 模块 -->
         <module>scca-ui</module>
 
-        <!-- 使用案例(DB存储) All-In-One-->
-        <module>scca-use-case-db/all-in-one/scca-all-in-one-server-db</module>
-        <!-- 使用案例(DB存储) 半分离-->
-        <module>scca-use-case-db/half-separation/scca-config-server-db</module>
-        <module>scca-use-case-db/half-separation/scca-ui-rest-server-db</module>
         <!-- 使用案例(DB存储) 全分离-->
+        <module>scca-use-case-db/full-separation/scca-config-server-db</module>
         <module>scca-use-case-db/full-separation/scca-rest-server-db</module>
         <module>scca-use-case-db/full-separation/scca-ui-server-db</module>
+        <!-- 使用案例(DB存储) 半分离-->
+        <module>scca-use-case-db/half-separation/scca-ui-rest-server-db</module>
+        <!-- 使用案例(DB存储) All-In-One-->
+        <module>scca-use-case-db/all-in-one/scca-all-in-one-server-db</module>
 
-        <!-- 使用案例(Git存储) All-In-One -->
-        <module>scca-use-case-git/all-in-one/scca-all-in-one-server-git</module>
-        <!-- 使用案例(Git存储) 半分离 -->
-        <module>scca-use-case-git/half-separation/scca-config-server-git</module>
-        <module>scca-use-case-git/half-separation/scca-ui-rest-server-git</module>
         <!-- 使用案例(Git存储) 全分离 -->
         <module>scca-use-case-git/full-separation/scca-rest-server-git</module>
         <module>scca-use-case-git/full-separation/scca-ui-server-git</module>
+        <module>scca-use-case-git/full-separation/scca-config-server-git</module>
+        <!-- 使用案例(Git存储) 半分离 -->
+        <module>scca-use-case-git/half-separation/scca-ui-rest-server-git</module>
+        <!-- 使用案例(Git存储) All-In-One -->
+        <module>scca-use-case-git/all-in-one/scca-all-in-one-server-git</module>
 
         <!-- 通过scca获取配置的应用 -->
         <module>scca-use-case-client/scca-test-client</module>
