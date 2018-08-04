@@ -2,6 +2,7 @@ package com.didispace.scca.rest;
 
 import com.didispace.scca.rest.config.SccaErrorAttributes;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
+import org.springframework.boot.autoconfigure.domain.EntityScan;
 import org.springframework.boot.autoconfigure.web.ErrorAttributes;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
@@ -9,6 +10,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.web.client.RestTemplate;
 
 /**
@@ -21,6 +23,8 @@ import org.springframework.web.client.RestTemplate;
 @Configuration
 @EnableConfigurationProperties(SccaRestProperties.class)
 @PropertySource("scca-rest.properties")
+@EntityScan("com.didispace.scca.rest.domain")
+@EnableJpaRepositories(basePackages = "com.didispace.scca.rest.domain")
 public class SccaRestAutoConfiguration {
 
     @Bean
