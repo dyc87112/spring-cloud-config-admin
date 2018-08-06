@@ -35,7 +35,7 @@
         <!-- spring cloud config server git存储的扩展包-->
         <dependency>
             <groupId>com.didispace</groupId>
-            <artifactId>scca-plugin-config-server-git</artifactId>
+            <artifactId>scca-plugin-git</artifactId>
             <version>${version.scca}</version>
         </dependency>
 

@@ -61,7 +61,7 @@
         </dependency>
         <dependency>
             <groupId>com.didispace</groupId>
-            <artifactId>scca-plugin-config-server-db</artifactId>
+            <artifactId>scca-plugin-db</artifactId>
             <version>${version.scca}</version>
         </dependency>
 

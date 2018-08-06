@@ -13,18 +13,19 @@
     <description>spring-cloud-config-admin</description>
 
     <modules>
-        <!-- scca 核心模块 -->
+        <!-- scca-config的实现模块：对 spring cloud config server端的扩展，提升配置存储的控制能力-->
+        <module>scca-plugin-core</module>
+        <module>scca-plugin-db</module>
+        <module>scca-plugin-git</module>
+
+        <!-- scca-rest的内部模块 -->
         <module>scca-core</module>
         <module>scca-discovery-consul</module>
         <module>scca-discovery-eureka</module>
         <module>scca-persistence-git</module>
         <module>scca-persistence-db</module>
 
-        <!-- scca 对 spring cloud config server端的扩展，提升配置存储的控制能力-->
-        <module>scca-plugin-config-server-db</module>
-        <module>scca-plugin-config-server-git</module>
-
-        <!-- scca rest 模块 -->
+        <!-- scca-rest模块 -->
         <module>scca-rest</module>
 
         <!-- scca ui 模块 -->

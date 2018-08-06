@@ -40,7 +40,7 @@
         <!-- spring cloud config server db存储的扩展包-->
         <dependency>
             <groupId>com.didispace</groupId>
-            <artifactId>scca-plugin-config-server-db</artifactId>
+            <artifactId>scca-plugin-db</artifactId>
             <version>${version.scca}</version>
         </dependency>
 

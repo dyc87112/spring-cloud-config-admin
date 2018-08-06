@@ -1,3 +1,0 @@
-# AutoConfiguration
-org.springframework.boot.autoconfigure.EnableAutoConfiguration=\
-com.didispace.scca.plugin.configserver.db.SccaPluginConfigServerDbConfiguration
