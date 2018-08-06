@@ -30,8 +30,18 @@ public interface UserService {
     UserDto getUserByUsername(String username);
 
     /**
+     * 获取用户
+     */
+    User getByUsername(String username);
+
+    /**
      * 批量查询用户信息
      */
     Page<UserDto> getUsers(Pageable pageable);
+
+    /**
+     * 校验密码和加密后的是否匹配
+     */
+    boolean matchPassword(String password, String encodedPassword);
 
 }

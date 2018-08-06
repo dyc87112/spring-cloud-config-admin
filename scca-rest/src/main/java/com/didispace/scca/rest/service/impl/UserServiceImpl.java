@@ -56,12 +56,22 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getByUsername(String username) {
+        return userRepo.findUserByUsername(username);
+    }
+
+    @Override
     public Page<UserDto> getUsers(Pageable pageable) {
         Page<User> all = userRepo.findAll(pageable);
         List<User> content = all.getContent();
         List<UserDto> userDtoList = new ArrayList<>(content.size());
         content.forEach(user -> userDtoList.add(toDto(user)));
         return new PageImpl<>(userDtoList);
+    }
+
+    @Override
+    public boolean matchPassword(String password, String encodedPassword){
+        return passwordEncoder.encode(password).equals(encodedPassword);
     }
 
     private void saveUser(User user){
@@ -104,5 +114,6 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("用户不存在：" + username);
         }
     }
+
 
 }
