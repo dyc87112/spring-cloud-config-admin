@@ -1,0 +1,193 @@
+
+<!DOCTYPE html>
+<html class="full-height">
+
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>登录 / 注册</title>
+    <!-- Font Awesome -->
+    <link href="https://cdn.bootcss.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- Bootstrap core CSS -->
+    <link href="https://cdn.bootcss.com/bootstrap/4.0.0/css/bootstrap.css" rel="stylesheet">
+    <!-- Material Design Bootstrap -->
+    <link href="/css/mdb.css" rel="stylesheet">
+    <link href="/css/home.css" rel="stylesheet">
+    <link href="/css/chat.css" rel="stylesheet">
+    <link href="/css/toastr.css" rel="stylesheet">
+    <style>
+        .intro-2 {
+            background: url("https://upload-images.jianshu.io/upload_images/3424642-29b5a605c230168b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240")no-repeat center center;
+            background-size: cover;
+        }
+
+        .card {
+            background-color: rgba(229, 228, 255, 0.2);
+        }
+
+        .md-form label {
+            color: #ffffff;
+        }
+
+        h6 {
+            line-height: 1.7;
+        }
+
+        @media (max-width: 740px) {
+            .full-height,
+            .full-height body,
+            .full-height header,
+            .full-height header .view {
+                height: 750px;
+            }
+        }
+
+        @media (min-width: 741px) and (max-height: 638px) {
+            .full-height,
+            .full-height body,
+            .full-height header,
+            .full-height header .view {
+                height: 750px;
+            }
+        }
+
+        .card {
+            margin-top: 30px;
+        }
+
+        .md-form input[type=text]:focus:not([readonly]),
+        .md-form input[type=password]:focus:not([readonly]) {
+            border-bottom: 1px solid #fb5364;
+            box-shadow: 0 1px 0 0 #fb5364;
+        }
+
+        .md-form input[type=text]:focus:not([readonly])+label,
+        .md-form input[type=password]:focus:not([readonly])+label {
+            color: #fb5364;
+        }
+
+        .md-form .form-control {
+            color: #fff;
+        }
+    </style>
+
+</head>
+
+<body class="creative-lp">
+
+<!-- Navigation & Intro -->
+<header id="app">
+
+    <!-- 顶部导航 -->
+    <nav class="navbar navbar-expand-lg navbar-light fixed-top scrolling-navbar white">
+        <div class="container">
+            <a class="navbar-brand font-weight-bold title" href="/">ANOYI</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02"
+                    aria-controls="navbarTogglerDemo02"
+                    aria-expanded="false" aria-label="Toggle navigation">
+                <i class="fa fa-align-justify" aria-hidden="true"></i>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+                <ul class="list-unstyled navbar-nav mr-auto">
+                    <li class="nav-item ml-4">
+                        <a class="nav-link title" href="/" data-offset="90">主页</a>
+                    </li>
+
+                    <li class="nav-item ml-4">
+                        <a class="nav-link title" href="/blog" data-offset="90">博客</a>
+                    </li>
+                    <li class="nav-item ml-4">
+                        <a class="nav-link title" href="/book" data-offset="90">书架</a>
+                    </li>
+                    <li class="nav-item dropdown ml-4">
+                        <a class="nav-link dropdown-toggle title" id="navbarDropdownMenuLink2" data-toggle="dropdown"
+                           aria-haspopup="true"
+                           aria-expanded="false">场景 </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="/app/chat">即时通信</a>
+                            <a class="dropdown-item" href="/app/live">直播弹幕</a>
+                        </div>
+                    </li>
+                    <li class="nav-item ml-4">
+                        <a class="nav-link title" href="/cncf" data-offset="90">Cloud Native</a>
+                    </li>
+                    <li class="nav-item ml-4">
+                        <a class="nav-link title" href="/about" data-offset="90">About</a>
+                    </li>
+                </ul>
+                <!-- Social Icon  -->
+                <ul class="navbar-nav nav-flex-icons">
+                    <li class="nav-item ml-3">
+                        <a class="btn pink-gradient btn-rounded btn-sm font-weight-bold" href="/login" data-offset="90">登录/注册</a>
+                    </li>
+
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <!--Intro Section-->
+    <section class="view intro-2" >
+        <div class="full-bg-img">
+            <div class="mask rgba-indigo-light flex-center">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-xl-5 col-lg-6 col-md-10 col-sm-12 mx-auto mt-lg-5">
+
+                            <!-- 登录 -->
+                            <div class="card" id="loginDiv">
+                                <div class="card-body">
+                                    <form action="/login" method="post">
+
+                                        <!--Header-->
+                                        <div class="form-header pink-gradient">
+                                            <h3> 终于等到你 </h3>
+                                        </div>
+
+                                        <!--Body-->
+                                        <div class="md-form">
+                                            <i class="fa fa-user prefix white-text"></i>
+                                            <input type="text" id="username" name="username" class="">
+                                            <label for="username">账号</label>
+                                        </div>
+
+                                        <div class="md-form">
+                                            <i class="fa fa-lock prefix white-text"></i>
+                                            <input type="password" id="password" name="password" class="">
+                                            <label for="password">密码</label>
+                                        </div>
+
+                                        <div class="text-center my-4">
+                                            <button class="btn pink-gradient px-5" type="submit">登录</button>
+                                        </div>
+
+                                    </form>
+
+                                </div>
+                            </div>
+                            <!--/登录-->
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+</header>
+<!-- Navigation & Intro -->
+
+<!-- JQuery -->
+<script src="https://cdn.bootcss.com/jquery/3.2.1/jquery.min.js"></script>
+<!-- Bootstrap core JavaScript -->
+<script src="https://cdn.bootcss.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<!-- MDB core JavaScript -->
+<script src="https://cdn.bootcss.com/mdbootstrap/4.5.0/js/mdb.min.js"></script>
+<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>
+<script src="https://cdn.bootcss.com/vue/2.5.3/vue.min.js"></script>
+<script src="https://cdn.bootcss.com/toastr.js/latest/toastr.min.js"></script>
+
+</body>
+
+</html>

@@ -25,4 +25,9 @@ public class PageController {
         response.sendRedirect("/admin");
     }
 
+    @GetMapping("/login")
+    public String loginPage(HttpServletResponse response) throws IOException {
+        return "login";
+    }
+
 }
