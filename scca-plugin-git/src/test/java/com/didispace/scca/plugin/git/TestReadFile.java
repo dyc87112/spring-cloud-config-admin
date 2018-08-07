@@ -2,12 +2,8 @@ package com.didispace.scca.plugin.git;
 
 import lombok.extern.slf4j.Slf4j;
 import org.junit.Test;
-import org.yaml.snakeyaml.Yaml;
 
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by 程序猿DD/翟永超 on 2018/8/7.
@@ -19,7 +15,7 @@ import java.util.Set;
 public class TestReadFile {
 
     @Test
-    public void testRead() {
+    public void testRead() throws Exception {
         String yamlStr =
                 "com.didispace: hello yaml\n" +
                         "aaa: \n" +
@@ -29,39 +25,19 @@ public class TestReadFile {
                         "bbb: \n" +
                         "    - 1\n" +
                         "    - 2\n";
-        Yaml yaml = new Yaml();
-        Map<String, Object> ret = yaml.loadAs(yamlStr, Map.class);
-        Properties props = new Properties();
-        YamlUtils.yamlToProperties(props, ret, null);
+
+
+        // YAML转Properties
+        Properties props = YamlUtils.yamlToProperties(yamlStr);
         log.info(props.toString());
+
+        log.info("\n============\n");
+
+        // Properties转YAML
+        Map<String, Object> map = YamlUtils.propertiesToYamlMap(props);
+        StringBuffer sb = new StringBuffer();
+        YamlUtils.convertYamlString(sb, map, 0);
+        System.out.println(sb.toString());
     }
-
-
-    private void printMap(Map<String, Object> map, int count) {
-        Set<String> set = map.keySet();
-        for (Object key : set) {
-            Object value = map.get(key);
-
-            for (int i = 0; i < count; i++) {
-                System.out.print("    ");
-            }
-
-            if (value instanceof Map) {
-                System.out.println(key + ":");
-                printMap((Map) value, count + 1);
-            } else if (value instanceof List) {
-                System.out.println(key + ":");
-                for (Object obj : (List) value) {
-                    for (int i = 0; i < count; i++) {
-                        System.out.print("    ");
-                    }
-                    System.out.println("    - " + obj.toString());
-                }
-            } else {
-                System.out.println(key + ": " + value);
-            }
-        }
-    }
-
 
 }

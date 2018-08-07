@@ -3,14 +3,15 @@ package com.didispace.scca.plugin.git;
 import com.didispace.easyutils.cmd.CmdRunner;
 import com.didispace.easyutils.file.FileUtils;
 import com.didispace.easyutils.file.PropertiesUtils;
+import lombok.Cleanup;
 import lombok.Data;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import org.yaml.snakeyaml.Yaml;
 
+import java.io.BufferedWriter;
 import java.io.File;
-import java.io.FileInputStream;
+import java.io.FileWriter;
 import java.util.*;
 
 /**
@@ -52,9 +53,7 @@ public class GitPropertyController {
                     if (path.endsWith(".properties")) {
                         properties = PropertiesUtils.loadProperties(path);
                     } else if (path.endsWith(".yaml") || path.endsWith(".yml")) {
-                        Yaml yaml = new Yaml();
-                        Map<String, Object> ret = yaml.loadAs(new FileInputStream(new File(path)), Map.class);
-                        YamlUtils.yamlToProperties(properties, ret, null);
+                        properties = YamlUtils.yamlToProperties(new File(path));
                     }
                     break;
                 }
@@ -87,9 +86,8 @@ public class GitPropertyController {
                 if (file.exists()) {
                     file.delete();
                     log.info("delete file : " + file.getAbsolutePath());
-                    break;
                 } else {
-                    log.error("delete file not exist: " + projectInfo.getPath());
+                    log.warn("delete file not exist: " + path);
                 }
             }
 
@@ -111,7 +109,6 @@ public class GitPropertyController {
                                  @RequestParam String profile,
                                  @RequestParam String label,
                                  @RequestBody Properties update) {
-        // TODO 文件不存在的时候，自动创建
         ProjectInfo projectInfo = new ProjectInfo(application, profile, label, this.gitProperties, this.gitPlusProperties);
         try {
             // git clone properites from git
@@ -120,7 +117,7 @@ public class GitPropertyController {
             // git checkout branch(label)
             CmdRunner.execute("git checkout " + label, new File(projectInfo.getDir()));
 
-            //
+            // 查询一下是否有匹配的文件
             String originPath = "";
             for (String path : projectInfo.getPath()) {
                 if (new File(path).exists()) {
@@ -129,14 +126,31 @@ public class GitPropertyController {
                 }
             }
 
-            // read propertiesFile before upddate, write properties, read propertiesFile after update
-            log.debug("---------------- properties before update ----------------");
-            PropertiesUtils.printProperties(originPath, true);
-            log.debug("---------------- properties after update ----------------");
-            PropertiesUtils.printProperties(update, true);
+            if (originPath.isEmpty()) {
+                // 文件不存在，按配置的第一种格式创建
+                originPath = projectInfo.getPath().get(0);
+                File file = new File(originPath);
+                file.createNewFile();
+            }
 
-            // store update properties
-            PropertiesUtils.store(update, originPath, "Write by scca, more information see : https://github.com/dyc87112/spring-cloud-config-admin");
+            if (originPath.endsWith(".properties")) {
+                // read propertiesFile before upddate, write properties, read propertiesFile after update
+                log.debug("---------------- properties before update ----------------");
+                PropertiesUtils.printProperties(originPath, true);
+
+                log.debug("---------------- properties after update ----------------");
+                PropertiesUtils.printProperties(update, true);
+
+                // store update properties
+                PropertiesUtils.store(update, originPath, "Write by scca, more information see : https://github.com/dyc87112/spring-cloud-config-admin");
+            } else if (originPath.endsWith(".yaml") || originPath.endsWith(".yml")) {
+                // 把update内容写到originPath的YAML文件中
+                Map<String, Object> map = YamlUtils.propertiesToYamlMap(update);
+                StringBuffer sb = new StringBuffer();
+                YamlUtils.convertYamlString(sb, map, 0);
+                @Cleanup BufferedWriter out = new BufferedWriter(new FileWriter(originPath));
+                out.write(sb.toString());
+            }
 
             // commit & push
             CmdRunner.execute("git add .", new File(projectInfo.getDir()));
