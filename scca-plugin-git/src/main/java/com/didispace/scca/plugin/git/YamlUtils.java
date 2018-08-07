@@ -50,8 +50,13 @@ public class YamlUtils {
             Object val = entry.getValue();
             if (val instanceof Map) {
                 yamlToProperties(props, (Map<String, Object>) val, key);
+            } else if(val instanceof List) {
+                int index = 0;
+                for(Object v : (List) val) {
+                    props.put(key + "[" + index + "]", v.toString());
+                    index ++;
+                }
             } else {
-                // FIXME 对List的支持不对
                 props.put(key, val.toString());
             }
         }
