@@ -51,7 +51,7 @@ public class YamlUtils {
             if (val instanceof Map) {
                 yamlToProperties(props, (Map<String, Object>) val, key);
             } else {
-                // TODO 对List的支持不对
+                // FIXME 对List的支持不对
                 props.put(key, val.toString());
             }
         }

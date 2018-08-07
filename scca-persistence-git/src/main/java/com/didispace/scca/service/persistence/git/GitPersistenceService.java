@@ -85,8 +85,8 @@ public class GitPersistenceService implements PersistenceService {
     @Override
     public void saveProperties(String application, String profile, String label, Properties update) {
         String url = urlMakerService.configServerBaseUrl(profile) + "/saveProperties?application={1}&profile={2}&label={3}";
-        Integer rows = restTemplate.postForObject(url, update, Integer.class, application, profile, label);
-        log.info("add {}-{}-{} rows {}", application, profile, label, rows);
+        String result = restTemplate.postForObject(url, update, String.class, application, profile, label);
+        log.info("add {}-{}-{} property {}", application, profile, label, result);
     }
 
     @Override
