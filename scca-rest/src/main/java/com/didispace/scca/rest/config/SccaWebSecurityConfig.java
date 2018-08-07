@@ -38,12 +38,13 @@ public class SccaWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
+        String contextPath = sccaRestProperties.getContextPath();
         http.authorizeRequests()
-                .antMatchers(sccaRestProperties.getContextPath() + "/**").authenticated()
+                .antMatchers(contextPath + "/**").authenticated()
                 .anyRequest().permitAll()
-                .and().formLogin().loginPage("/login").successHandler(authenticationSuccessHandler()).failureHandler(authenticationFailureHandler()).permitAll()
+                .and().formLogin().loginPage(contextPath + "/login").successHandler(authenticationSuccessHandler()).failureHandler(authenticationFailureHandler()).permitAll()
                 .and().rememberMe().alwaysRemember(true)
-                .and().logout().logoutUrl(sccaRestProperties.getContextPath() + "/logout").logoutSuccessHandler(logoutSuccessHandler()).permitAll()
+                .and().logout().logoutUrl(contextPath + "/logout").logoutSuccessHandler(logoutSuccessHandler()).permitAll()
                 .and().csrf().disable()
                 .exceptionHandling().authenticationEntryPoint(restAuthenticationEntryPoint);
     }
