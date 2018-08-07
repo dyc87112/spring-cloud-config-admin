@@ -24,10 +24,4 @@ public class PageController {
     public void indexPage(HttpServletResponse response) throws IOException {
         response.sendRedirect("/admin");
     }
-
-    @GetMapping("/login")
-    public String loginPage(HttpServletResponse response) throws IOException {
-        return "login";
-    }
-
 }
