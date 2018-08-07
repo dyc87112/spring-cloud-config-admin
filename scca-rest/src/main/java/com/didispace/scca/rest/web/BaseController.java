@@ -6,6 +6,7 @@ import com.didispace.scca.core.service.BaseOptService;
 import com.didispace.scca.core.service.PersistenceService;
 import com.didispace.scca.core.service.PropertiesService;
 import com.didispace.scca.core.service.UrlMakerService;
+import com.didispace.scca.rest.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -39,5 +40,8 @@ public class BaseController {
     protected PropertiesService propertiesService;
     @Autowired
     protected UrlMakerService urlMakerService;
+
+    @Autowired
+    protected UserService userService;
 
 }

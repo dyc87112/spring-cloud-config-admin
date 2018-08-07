@@ -24,5 +24,4 @@ public class PageController {
     public void indexPage(HttpServletResponse response) throws IOException {
         response.sendRedirect("/admin");
     }
-
 }
