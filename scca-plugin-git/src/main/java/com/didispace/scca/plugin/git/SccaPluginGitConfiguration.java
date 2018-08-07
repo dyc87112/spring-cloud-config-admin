@@ -12,7 +12,7 @@ import org.springframework.context.annotation.PropertySource;
  * Github: https://github.com/dyc87112/
  */
 @Configuration
-@EnableConfigurationProperties(SccaGitProperties.class)
+@EnableConfigurationProperties({SccaGitProperties.class, SccaGitPlusProperties.class})
 @PropertySource("scca-plugin-git.properties")
 @ComponentScan
 public class SccaPluginGitConfiguration {
