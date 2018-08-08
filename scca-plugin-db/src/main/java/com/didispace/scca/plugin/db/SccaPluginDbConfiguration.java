@@ -13,7 +13,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * Github: https://github.com/dyc87112/
  */
 @Configuration
-@PropertySource("scca-plugin-config-server-db.properties")
+@PropertySource("scca-plugin-db.properties")
 @EntityScan("com.didispace.scca.plugin.db")
 @EnableJpaRepositories(basePackages = "com.didispace.scca.plugin.db")
 @ComponentScan
