@@ -59,8 +59,8 @@ public class UserController extends BaseController {
         if (!match) {
             throw new RuntimeException("error password");
         }
-        user.setNickname(userParam.getNewPwd());
-        userService.updateUserWithoutCheck(user);
+        user.setPassword(userParam.getNewPwd());
+        userService.updateUser(user);
         return WebResp.success("update password success");
     }
 

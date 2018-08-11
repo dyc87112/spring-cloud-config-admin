@@ -45,7 +45,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUserWithoutCheck(User user) {
-        saveUser(user);
+        userRepo.save(user);
     }
 
     @Override
@@ -75,7 +75,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean matchPassword(String password, String encodedPassword){
-        return passwordEncoder.encode(password).equals(encodedPassword);
+        return passwordEncoder.matches(password, encodedPassword);
     }
 
     private void saveUser(User user){
