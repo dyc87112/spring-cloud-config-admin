@@ -21,7 +21,7 @@ import java.util.List;
 @Slf4j
 @RestController
 @RequestMapping("${scca.rest.context-path:}/admin")
-@Secured("hasRole('ADMIN')")
+//@Secured("hasRole('ADMIN')")
 public class UserAdminController extends BaseController {
 
     @ApiOperation("Get User List / 获取用户列表")

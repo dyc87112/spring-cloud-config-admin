@@ -21,8 +21,6 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class SccaUserDetailsService implements UserDetailsService {
 
-    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     private final UserRepo userRepo;
 
     @Override
