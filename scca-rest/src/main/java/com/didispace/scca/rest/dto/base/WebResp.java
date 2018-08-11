@@ -14,6 +14,7 @@ public class WebResp<T> {
 
     public static final Integer SUCCESS = 200;
     public static final Integer ERROR = 500;
+    public static final Integer SERVICE_ERROR = 501;
 
 
     private Integer code;
@@ -41,6 +42,20 @@ public class WebResp<T> {
         WebResp<T> webResp = new WebResp<>();
         webResp.setCode(SUCCESS);
         webResp.setData(data);
+        webResp.setMessage(message);
+        return webResp;
+    }
+
+    public static <T> WebResp<String> error(String message) {
+        WebResp<String> webResp = new WebResp<>();
+        webResp.setCode(ERROR);
+        webResp.setMessage(message);
+        return webResp;
+    }
+
+    public static <T> WebResp<String> serviceError(String message) {
+        WebResp<String> webResp = new WebResp<>();
+        webResp.setCode(SERVICE_ERROR);
         webResp.setMessage(message);
         return webResp;
     }

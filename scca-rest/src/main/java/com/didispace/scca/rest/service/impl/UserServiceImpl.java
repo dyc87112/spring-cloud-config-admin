@@ -3,6 +3,7 @@ package com.didispace.scca.rest.service.impl;
 import com.didispace.scca.rest.domain.User;
 import com.didispace.scca.rest.domain.UserRepo;
 import com.didispace.scca.rest.dto.UserDto;
+import com.didispace.scca.rest.exception.ServiceException;
 import com.didispace.scca.rest.service.UserService;
 import lombok.AllArgsConstructor;
 import org.springframework.data.domain.Sort;
@@ -98,15 +99,15 @@ public class UserServiceImpl implements UserService {
     private void checkUserParams(User user){
         String username = user.getUsername();
         if (!Pattern.matches("\\w{0,19}$", username)){
-            throw new RuntimeException("用户名长度必须为 1-20 位，且只能包含字母、数字和下划线");
+            throw new ServiceException("用户名长度必须为 1-20 位，且只能包含字母、数字和下划线");
         }
         String password = user.getPassword();
         if (!Pattern.matches("\\w{5,17}$", password)){
-            throw new RuntimeException("密码长度必须为 6-18 位，且只能包含字母、数字和下划线");
+            throw new ServiceException("密码长度必须为 6-18 位，且只能包含字母、数字和下划线");
         }
         int nicknameLength = user.getNickname().length();
         if (nicknameLength < 1 || nicknameLength > 10){
-            throw new RuntimeException("昵称长度必须为 1-10 位");
+            throw new ServiceException("昵称长度必须为 1-10 位");
         }
     }
 
@@ -115,7 +116,7 @@ public class UserServiceImpl implements UserService {
      */
     private void checkUserExists(String username){
         if (!userRepo.existsByUsername(username)){
-            throw new RuntimeException("用户不存在：" + username);
+            throw new ServiceException("用户不存在：" + username);
         }
     }
 

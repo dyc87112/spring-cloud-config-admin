@@ -3,6 +3,7 @@ package com.didispace.scca.rest.web;
 import com.didispace.scca.rest.domain.User;
 import com.didispace.scca.rest.dto.UserDto;
 import com.didispace.scca.rest.dto.base.WebResp;
+import com.didispace.scca.rest.exception.ServiceException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
@@ -59,7 +60,7 @@ public class UserAdminController extends BaseController {
                                       @RequestParam("username") String username) {
         // 管理员删除用户
         if(principal.getUsername().equals(username)){
-            throw new RuntimeException("cannot delete yourself");
+            throw new ServiceException("不能删除自己");
         }
         userService.deleteUserByUsername(username);
         return WebResp.success("save new user success");
