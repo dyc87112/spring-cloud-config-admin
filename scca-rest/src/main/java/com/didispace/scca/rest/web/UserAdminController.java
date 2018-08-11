@@ -6,14 +6,10 @@ import com.didispace.scca.rest.dto.base.WebResp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by Anoyi on 2018/8/1.
@@ -25,16 +21,14 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("${scca.rest.context-path:}/admin")
-//@Secured("hasRole('ADMIN')")
+@Secured("hasRole('ADMIN')")
 public class UserAdminController extends BaseController {
 
     @ApiOperation("Get User List / 获取用户列表")
     @RequestMapping(path = "/list", method = RequestMethod.GET)
-    public WebResp<Page<UserDto>> getUserList(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
+    public WebResp<List<UserDto>> getUserList() {
         // 分页获取所有用户信息
-        Pageable pageable = new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id"));
-        Page<UserDto> users = userService.getUsers(pageable);
+        List<UserDto> users = userService.getUsers();
         return WebResp.success(users);
     }
 

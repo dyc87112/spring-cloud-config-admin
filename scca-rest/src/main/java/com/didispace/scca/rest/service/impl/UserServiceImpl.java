@@ -5,9 +5,7 @@ import com.didispace.scca.rest.domain.UserRepo;
 import com.didispace.scca.rest.dto.UserDto;
 import com.didispace.scca.rest.service.UserService;
 import lombok.AllArgsConstructor;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -61,12 +59,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Page<UserDto> getUsers(Pageable pageable) {
-        Page<User> all = userRepo.findAll(pageable);
-        List<User> content = all.getContent();
-        List<UserDto> userDtoList = new ArrayList<>(content.size());
-        content.forEach(user -> userDtoList.add(toDto(user)));
-        return new PageImpl<>(userDtoList);
+    public List<UserDto> getUsers() {
+        List<User> userList = userRepo.findAll(new Sort(Sort.Direction.DESC, "id"));
+        List<UserDto> userDtoList = new ArrayList<>(userList.size());
+        userList.forEach(user -> userDtoList.add(toDto(user)));
+        return userDtoList;
     }
 
     @Override

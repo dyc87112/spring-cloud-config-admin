@@ -2,8 +2,6 @@ package com.didispace.scca.rest.service;
 
 import com.didispace.scca.rest.domain.User;
 import com.didispace.scca.rest.dto.UserDto;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 
@@ -37,7 +35,7 @@ public interface UserService {
     /**
      * 批量查询用户信息
      */
-    Page<UserDto> getUsers(Pageable pageable);
+    List<UserDto> getUsers();
 
     /**
      * 校验密码和加密后的是否匹配
