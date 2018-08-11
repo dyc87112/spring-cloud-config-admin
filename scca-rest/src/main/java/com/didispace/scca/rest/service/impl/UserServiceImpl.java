@@ -44,6 +44,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public void updateUserWithoutCheck(User user) {
+        saveUser(user);
+    }
+
+    @Override
     @Transactional
     public void deleteUserByUsername(String username) {
         userRepo.deleteByUsername(username);
@@ -51,13 +56,13 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserDto getUserByUsername(String username) {
-        User user = userRepo.findUserByUsername(username);
+        User user = userRepo.findByUsername(username);
         return toDto(user);
     }
 
     @Override
     public User getByUsername(String username) {
-        return userRepo.findUserByUsername(username);
+        return userRepo.findByUsername(username);
     }
 
     @Override
@@ -113,6 +118,5 @@ public class UserServiceImpl implements UserService {
             throw new RuntimeException("用户不存在：" + username);
         }
     }
-
 
 }

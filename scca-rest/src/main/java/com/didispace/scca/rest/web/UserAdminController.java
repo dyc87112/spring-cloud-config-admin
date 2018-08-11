@@ -7,6 +7,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.access.annotation.Secured;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -44,14 +45,22 @@ public class UserAdminController extends BaseController {
     @RequestMapping(method = RequestMethod.PUT)
     public WebResp<String> updateUser(@RequestBody User user) {
         // 管理员修改用户信息
-        userService.updateUser(user);
+        User dbUser = userService.getByUsername(user.getUsername());
+        dbUser.setNickname(user.getNickname());
+        dbUser.setRole(user.getRole());
+        dbUser.setPassword(user.getPassword());
+        userService.updateUser(dbUser);
         return WebResp.success("update user success : " + user.getUsername());
     }
 
     @ApiOperation("Delete User / 删除用户")
     @RequestMapping(method = RequestMethod.DELETE)
-    public WebResp<String> deleteUser(@RequestParam("username") String username) {
+    public WebResp<String> deleteUser(@AuthenticationPrincipal org.springframework.security.core.userdetails.User principal,
+                                      @RequestParam("username") String username) {
         // 管理员删除用户
+        if(principal.getUsername().equals(username)){
+            throw new RuntimeException("cannot delete yourself");
+        }
         userService.deleteUserByUsername(username);
         return WebResp.success("save new user success");
     }

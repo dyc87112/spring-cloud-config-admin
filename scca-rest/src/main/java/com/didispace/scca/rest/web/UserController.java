@@ -44,7 +44,7 @@ public class UserController extends BaseController {
         String username = principal.getUsername();
         User user = userService.getByUsername(username);
         user.setNickname(userParam.getNickname());
-        userService.updateUser(user);
+        userService.updateUserWithoutCheck(user);
         return WebResp.success("update nickname success");
     }
 
@@ -60,7 +60,7 @@ public class UserController extends BaseController {
             throw new RuntimeException("error password");
         }
         user.setNickname(userParam.getNewPwd());
-        userService.updateUser(user);
+        userService.updateUserWithoutCheck(user);
         return WebResp.success("update password success");
     }
 

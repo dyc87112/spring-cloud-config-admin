@@ -18,6 +18,11 @@ public interface UserService {
     void updateUser(User user);
 
     /**
+     * 直接更新用户信息
+     */
+    void updateUserWithoutCheck(User user);
+
+    /**
      * 删除用户
      */
     void deleteUserByUsername(String username);
