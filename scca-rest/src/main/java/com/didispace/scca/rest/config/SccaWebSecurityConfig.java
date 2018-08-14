@@ -1,6 +1,7 @@
 package com.didispace.scca.rest.config;
 
 import com.didispace.scca.rest.SccaRestProperties;
+import com.didispace.scca.rest.service.LogsService;
 import com.didispace.scca.rest.service.SccaUserDetailsService;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -32,6 +33,8 @@ public class SccaWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     private final SccaRestProperties sccaRestProperties;
 
+    private final LogsService logsService;
+
     private final SccaUserDetailsService userDetailsService;
 
     private final RestAuthenticationEntryPoint restAuthenticationEntryPoint;
@@ -56,7 +59,7 @@ public class SccaWebSecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Bean
     public AuthenticationSuccessHandler authenticationSuccessHandler(){
-        return new SccaAuthenticationSuccessHandler();
+        return new SccaAuthenticationSuccessHandler(this.logsService);
     }
 
     @Bean
