@@ -3,17 +3,15 @@ package com.didispace.scca.rest.web;
 import com.didispace.scca.rest.domain.User;
 import com.didispace.scca.rest.dto.UserDto;
 import com.didispace.scca.rest.dto.base.WebResp;
+import com.didispace.scca.rest.exception.ServiceException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.security.access.annotation.Secured;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 /**
  * Created by Anoyi on 2018/8/1.
@@ -25,16 +23,14 @@ import org.springframework.web.bind.annotation.*;
 @Slf4j
 @RestController
 @RequestMapping("${scca.rest.context-path:}/admin")
-//@Secured("hasRole('ADMIN')")
+@Secured("ROLE_ADMIN")
 public class UserAdminController extends BaseController {
 
     @ApiOperation("Get User List / 获取用户列表")
     @RequestMapping(path = "/list", method = RequestMethod.GET)
-    public WebResp<Page<UserDto>> getUserList(@RequestParam(value = "page", defaultValue = "0") Integer page,
-                                           @RequestParam(value = "size", defaultValue = "10") Integer size) {
+    public WebResp<List<UserDto>> getUserList() {
         // 分页获取所有用户信息
-        Pageable pageable = new PageRequest(page, size, new Sort(Sort.Direction.DESC, "id"));
-        Page<UserDto> users = userService.getUsers(pageable);
+        List<UserDto> users = userService.getUsers();
         return WebResp.success(users);
     }
 
@@ -50,14 +46,22 @@ public class UserAdminController extends BaseController {
     @RequestMapping(method = RequestMethod.PUT)
     public WebResp<String> updateUser(@RequestBody User user) {
         // 管理员修改用户信息
-        userService.updateUser(user);
+        User dbUser = userService.getByUsername(user.getUsername());
+        dbUser.setNickname(user.getNickname());
+        dbUser.setRole(user.getRole());
+        dbUser.setPassword(user.getPassword());
+        userService.updateUser(dbUser);
         return WebResp.success("update user success : " + user.getUsername());
     }
 
     @ApiOperation("Delete User / 删除用户")
     @RequestMapping(method = RequestMethod.DELETE)
-    public WebResp<String> deleteUser(@RequestParam("username") String username) {
+    public WebResp<String> deleteUser(@AuthenticationPrincipal org.springframework.security.core.userdetails.User principal,
+                                      @RequestParam("username") String username) {
         // 管理员删除用户
+        if(principal.getUsername().equals(username)){
+            throw new ServiceException("不能删除自己");
+        }
         userService.deleteUserByUsername(username);
         return WebResp.success("save new user success");
     }

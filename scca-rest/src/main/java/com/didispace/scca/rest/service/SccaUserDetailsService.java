@@ -21,13 +21,11 @@ import org.springframework.stereotype.Service;
 @AllArgsConstructor
 public class SccaUserDetailsService implements UserDetailsService {
 
-    private static final PasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-
     private final UserRepo userRepo;
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-        User user = userRepo.findUserByUsername(username);
+        User user = userRepo.findByUsername(username);
         if (user == null) {
             throw new UsernameNotFoundException("username: " + username);
         }

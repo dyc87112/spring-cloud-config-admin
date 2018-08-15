@@ -31,7 +31,7 @@ public class InitAdminAccountRunner implements CommandLineRunner {
 
     @Override
     public void run(String... strings) throws Exception {
-        User defaultAdmin = userRepo.findUserByUsername(DEFAULT_ACCOUNT_USERNAME);
+        User defaultAdmin = userRepo.findByUsername(DEFAULT_ACCOUNT_USERNAME);
         if (defaultAdmin == null){
             defaultAdmin = new User();
             defaultAdmin.setUsername(DEFAULT_ACCOUNT_USERNAME);

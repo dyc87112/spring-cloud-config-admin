@@ -4,12 +4,11 @@ import com.didispace.scca.rest.domain.User;
 import com.didispace.scca.rest.dto.UserDto;
 import com.didispace.scca.rest.dto.UserParamDto;
 import com.didispace.scca.rest.dto.base.WebResp;
+import com.didispace.scca.rest.exception.ServiceException;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -44,7 +43,7 @@ public class UserController extends BaseController {
         String username = principal.getUsername();
         User user = userService.getByUsername(username);
         user.setNickname(userParam.getNickname());
-        userService.updateUser(user);
+        userService.updateUserWithoutCheck(user);
         return WebResp.success("update nickname success");
     }
 
@@ -57,9 +56,9 @@ public class UserController extends BaseController {
         User user = userService.getByUsername(username);
         boolean match = userService.matchPassword(userParam.getOldPwd(), user.getPassword());
         if (!match) {
-            throw new RuntimeException("error password");
+            throw new ServiceException("密码错误");
         }
-        user.setNickname(userParam.getNewPwd());
+        user.setPassword(userParam.getNewPwd());
         userService.updateUser(user);
         return WebResp.success("update password success");
     }
