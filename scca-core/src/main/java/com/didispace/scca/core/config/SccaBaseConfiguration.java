@@ -21,7 +21,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
  * Github: https://github.com/dyc87112/
  */
 @Configuration
-@EnableConfigurationProperties(SccaProperties.class)
+@EnableConfigurationProperties({SccaProperties.class, SccaConfigServerProperties.class})
 @EntityScan("com.didispace.scca.core.domain")
 @EnableJpaRepositories(basePackages = "com.didispace.scca.core.domain")
 public class SccaBaseConfiguration {
