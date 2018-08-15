@@ -1,5 +1,6 @@
 package com.didispace.scca.core.service.impl;
 
+import com.didispace.scca.core.config.SccaConfigServerProperties;
 import com.didispace.scca.core.domain.EncryptKeyRepo;
 import com.didispace.scca.core.domain.Env;
 import com.didispace.scca.core.domain.EnvParamRepo;
@@ -43,6 +44,9 @@ public class BaseOptServiceImpl implements BaseOptService {
     @Autowired
     protected UrlMakerService urlMakerService;
 
+    @Autowired
+    protected SccaConfigServerProperties sccaConfigServerProperties;
+
     @Override
     public String encrypt(String originValue, Env env) {
         return callTextPlain(urlMakerService.configServerBaseUrl(env.getName()) + encryptPath, originValue);
@@ -83,6 +87,7 @@ public class BaseOptServiceImpl implements BaseOptService {
     private String callGet(String url) {
         log.info("call get : " + url);
         Request request = new Request.Builder()
+                .addHeader("Authorization", Credentials.basic(sccaConfigServerProperties.getUsername(), sccaConfigServerProperties.getPassword()))
                 .url(url)
                 .get()
                 .build();
@@ -99,6 +104,7 @@ public class BaseOptServiceImpl implements BaseOptService {
         Request request = new Request.Builder()
                 .url(url)
                 .addHeader("Content-Type", "text/plain")
+                .addHeader("Authorization", Credentials.basic(sccaConfigServerProperties.getUsername(), sccaConfigServerProperties.getPassword()))
                 .post(RequestBody.create(MediaType.parse("text/plain"), value.getBytes()))
                 .build();
 
@@ -112,6 +118,7 @@ public class BaseOptServiceImpl implements BaseOptService {
     private Environment callGetProperties(String url) {
         log.info("call get properties : " + url);
         Request request = new Request.Builder()
+                .addHeader("Authorization", Credentials.basic(sccaConfigServerProperties.getUsername(), sccaConfigServerProperties.getPassword()))
                 .url(url)
                 .get()
                 .build();
