@@ -1,8 +1,8 @@
 package com.didispace.scca.rest.service;
 
 import com.didispace.scca.rest.domain.UserLog;
-
-import java.util.List;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 public interface LogsService {
 
@@ -14,6 +14,6 @@ public interface LogsService {
     /**
      * 查询用户登录日志
      */
-    List<UserLog> getLoginLogs(String username);
+    Page<UserLog> getLoginLogs(String username, Pageable pageable);
 
 }

@@ -5,9 +5,9 @@ import com.didispace.scca.rest.domain.UserLog;
 import com.didispace.scca.rest.domain.UserLogRepo;
 import com.didispace.scca.rest.service.LogsService;
 import lombok.AllArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
-
-import java.util.List;
 
 /**
  * Created by Anoyi on 2018/8/14.
@@ -27,8 +27,8 @@ public class LogsServiceImpl implements LogsService {
     }
 
     @Override
-    public List<UserLog> getLoginLogs(String username) {
-        return userLogRepo.findTop10ByUsernameAndTypeOrderByIdDesc(username, UserLogTypeEnum.LOGIN.getCode());
+    public Page<UserLog> getLoginLogs(String username, Pageable pageable) {
+        return userLogRepo.findAllByUsernameAndType(username, UserLogTypeEnum.LOGIN.getCode(), pageable);
     }
 
 }
