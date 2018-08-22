@@ -4,8 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.didispace</groupId>
-    <artifactId>scca-config-server-git</artifactId>
-    <name>scca-config-server-git</name>
+    <artifactId>scca-all-in-one-server-db</artifactId>
     <version>1.0.0-SNAPSHOT</version>
     <packaging>jar</packaging>
 
@@ -15,39 +14,63 @@
         <version>1.5.14.RELEASE</version>
     </parent>
 
+    <name>scca-all-in-one-server-db</name>
+
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
         <maven.test.skip>true</maven.test.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.java>1.8</version.java>
-        <!--dependencies version-->
-        <version.spring-cloud>Edgware.SR3</version.spring-cloud>
-        <!--scca version-->
         <version.scca>1.1.0-SNAPSHOT</version.scca>
+        <version.spring-cloud>Edgware.SR3</version.spring-cloud>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-starter-eureka</artifactId>
-        </dependency>
 
-        <dependency>
-            <groupId>org.springframework.cloud</groupId>
-            <artifactId>spring-cloud-config-server</artifactId>
-        </dependency>
-
-        <!-- spring cloud config server git存储的扩展包-->
         <dependency>
             <groupId>com.didispace</groupId>
-            <artifactId>scca-plugin-git</artifactId>
+            <artifactId>scca-ui</artifactId>
             <version>${version.scca}</version>
         </dependency>
 
         <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-actuator</artifactId>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-rest</artifactId>
+            <version>${version.scca}</version>
         </dependency>
+
+        <!-- scca persistence dependency -->
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-persistence-db</artifactId>
+            <version>${version.scca}</version>
+        </dependency>
+
+        <!-- scca datasource dependency-->
+        <dependency>
+            <groupId>com.h2database</groupId>
+            <artifactId>h2</artifactId>
+            <version>1.4.197</version>
+        </dependency>
+
+        <!-- config server with scca plugin-->
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-config-server</artifactId>
+        </dependency>
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-plugin-db</artifactId>
+            <version>${version.scca}</version>
+        </dependency>
+
+        <!-- others -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <optional>true</optional>
+        </dependency>
+
     </dependencies>
 
     <dependencyManagement>

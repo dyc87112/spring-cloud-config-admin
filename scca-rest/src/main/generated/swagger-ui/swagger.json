@@ -21,6 +21,8 @@
   }, {
     "name" : "EnvParam MGT（环境参数管理）"
   }, {
+    "name" : "Logs（日志查询）"
+  }, {
     "name" : "Project MGT（项目管理）"
   }, {
     "name" : "Property MGT（配置详细管理）"
@@ -101,24 +103,11 @@
         "summary" : "Get User List / 获取用户列表",
         "description" : "",
         "operationId" : "getUserList",
-        "parameters" : [ {
-          "name" : "page",
-          "in" : "query",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        }, {
-          "name" : "size",
-          "in" : "query",
-          "required" : true,
-          "type" : "integer",
-          "format" : "int32"
-        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespPageUserDto"
+              "$ref" : "#/definitions/WebRespListUserDto"
             }
           }
         }
@@ -526,6 +515,22 @@
             "description" : "successful operation",
             "schema" : {
               "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
+    "${scca.rest.context-path}/logs/login" : {
+      "get" : {
+        "tags" : [ "Logs（日志查询）" ],
+        "summary" : "Get User Login Logs / 获取用户登录日志",
+        "description" : "",
+        "operationId" : "getUser",
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespListUserLog"
             }
           }
         }
@@ -1076,94 +1081,6 @@
         }
       }
     },
-    "Page" : {
-      "type" : "object",
-      "properties" : {
-        "totalPages" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "totalElements" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "totalPages" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "size" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "content" : {
-          "type" : "array",
-          "items" : {
-            "type" : "object"
-          }
-        },
-        "number" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sort" : {
-          "$ref" : "#/definitions/Sort"
-        },
-        "first" : {
-          "type" : "boolean"
-        },
-        "last" : {
-          "type" : "boolean"
-        },
-        "numberOfElements" : {
-          "type" : "integer",
-          "format" : "int32"
-        }
-      }
-    },
-    "PageUserDto" : {
-      "type" : "object",
-      "properties" : {
-        "totalPages" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "totalElements" : {
-          "type" : "integer",
-          "format" : "int64"
-        },
-        "totalPages" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "size" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "content" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/UserDto"
-          }
-        },
-        "number" : {
-          "type" : "integer",
-          "format" : "int32"
-        },
-        "sort" : {
-          "$ref" : "#/definitions/Sort"
-        },
-        "first" : {
-          "type" : "boolean"
-        },
-        "last" : {
-          "type" : "boolean"
-        },
-        "numberOfElements" : {
-          "type" : "integer",
-          "format" : "int32"
-        }
-      }
-    },
     "ProjectDto" : {
       "type" : "object",
       "properties" : {
@@ -1204,9 +1121,6 @@
         }
       }
     },
-    "Sort" : {
-      "type" : "object"
-    },
     "User" : {
       "type" : "object",
       "properties" : {
@@ -1241,6 +1155,29 @@
         "role" : {
           "type" : "integer",
           "format" : "int32"
+        }
+      }
+    },
+    "UserLog" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "username" : {
+          "type" : "string"
+        },
+        "createTime" : {
+          "type" : "string",
+          "format" : "date-time"
+        },
+        "type" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "type" : "string"
         }
       }
     },
@@ -1468,7 +1405,7 @@
         }
       }
     },
-    "WebRespPageUserDto" : {
+    "WebRespListUserDto" : {
       "type" : "object",
       "properties" : {
         "code" : {
@@ -1476,7 +1413,34 @@
           "format" : "int32"
         },
         "data" : {
-          "$ref" : "#/definitions/PageUserDto"
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/UserDto"
+          }
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "timestamp" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespListUserLog" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/UserLog"
+          }
         },
         "message" : {
           "type" : "string",

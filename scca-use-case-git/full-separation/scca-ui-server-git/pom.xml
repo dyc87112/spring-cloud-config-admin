@@ -10,6 +10,12 @@
 
     <name>scca-ui-server-git</name>
 
+    <parent>
+        <groupId>org.springframework.boot</groupId>
+        <artifactId>spring-boot-starter-parent</artifactId>
+        <version>1.5.14.RELEASE</version>
+    </parent>
+
     <properties>
         <maven.deploy.skip>true</maven.deploy.skip>
         <maven.test.skip>true</maven.test.skip>
@@ -18,7 +24,6 @@
         <!--scca version-->
         <version.scca>1.1.0-SNAPSHOT</version.scca>
         <!--dependencies version-->
-        <version.spring-boot>1.5.14.RELEASE</version.spring-boot>
         <version.spring-cloud>Edgware.SR3</version.spring-cloud>
     </properties>
 
@@ -48,14 +53,6 @@
 
     <dependencyManagement>
         <dependencies>
-            <dependency>
-                <groupId>org.springframework.boot</groupId>
-                <artifactId>spring-boot-starter-parent</artifactId>
-                <version>${version.spring-boot}</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-
             <dependency>
                 <groupId>org.springframework.cloud</groupId>
                 <artifactId>spring-cloud-dependencies</artifactId>

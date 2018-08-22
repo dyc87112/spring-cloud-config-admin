@@ -38,6 +38,7 @@
         <!-- 使用案例(DB存储) 半分离-->
         <module>scca-use-case-db/half-separation/scca-ui-rest-server-db</module>
         <!-- 使用案例(DB存储) All-In-One-->
+        <module>scca-use-case-db/all-in-one/scca-all-in-one-server-db</module>
         <module>scca-use-case-db/all-in-one/scca-all-in-one-server-db-docker</module>
 
         <!-- 使用案例(Git存储) 全分离 -->
