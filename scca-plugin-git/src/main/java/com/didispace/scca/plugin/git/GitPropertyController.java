@@ -198,10 +198,12 @@ public class GitPropertyController {
             // 生成本地拉取配置用来修改使用的唯一目录名
             this.dir = UUID.randomUUID().toString();
 
+            String searchPaths = gitProperties.getSearchPaths().replaceFirst("\\{application\\}", application);
+
             for (String pattern : gitPlusProperties.getFilePattern().split(",")) {
                 String propertiesFile = pattern.replaceFirst("\\{application\\}", application).replaceFirst("\\{profile\\}", profile);
                 this.propertiesFiles.add(propertiesFile);
-                this.path.add(this.dir + gitProperties.getSearchPaths() + "/" + propertiesFile);
+                this.path.add(this.dir + searchPaths + "/" + propertiesFile);
             }
             log.info("properties file : " + this.path);
         }
