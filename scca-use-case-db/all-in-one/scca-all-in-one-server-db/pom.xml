@@ -39,6 +39,12 @@
             <version>${version.scca}</version>
         </dependency>
 
+        <dependency>
+            <groupId>com.didispace</groupId>
+            <artifactId>scca-discovery-eureka</artifactId>
+            <version>${version.scca}</version>
+        </dependency>
+
         <!-- scca persistence dependency -->
         <dependency>
             <groupId>com.didispace</groupId>
