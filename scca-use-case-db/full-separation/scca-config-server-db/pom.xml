@@ -23,7 +23,7 @@
         <!--dependencies version-->
         <version.spring-cloud>Edgware.SR3</version.spring-cloud>
         <!--scca version-->
-        <version.scca>1.1.0-SNAPSHOT</version.scca>
+        <version.scca>1.1.0-RELEASE</version.scca>
     </properties>
 
     <dependencies>
