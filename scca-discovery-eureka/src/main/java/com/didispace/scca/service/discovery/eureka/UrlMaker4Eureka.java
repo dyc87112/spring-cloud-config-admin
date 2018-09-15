@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSONObject;
 import com.didispace.scca.core.domain.Env;
 import com.didispace.scca.core.service.impl.BaseUrlMaker;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.client.support.BasicAuthorizationInterceptor;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
@@ -26,8 +27,6 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
     private String getInstantsUrl = "/apps/{serviceName}";
 //    private String getInstantsUrl = "/eureka/apps/{serviceName}";
 
-    private RestTemplate restTemplate = new RestTemplate();
-
 
     @Override
     public String configServerBaseUrl(String envName) {
@@ -45,6 +44,7 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
         log.info("Get config server instances url : " + url);
 
         // 访问eureka接口获取一个可以访问的实例
+        RestTemplate restTemplate = newRestTemplateInstance(url);
         String rStr = restTemplate.getForObject(url, String.class);
         JSONObject response = JSON.parseObject(rStr);
 
@@ -87,6 +87,7 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
 
         log.info("Get config server instances url : " + url);
 
+        RestTemplate restTemplate = newRestTemplateInstance(url);
         // 访问eureka接口获取一个可以访问的实例
         String rStr = restTemplate.getForObject(url, String.class);
         JSONObject response = JSON.parseObject(rStr);
@@ -103,6 +104,24 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
         }
 
         return result;
+    }
+
+    /***
+     * new RestTemplate instance for requesting Eureka server
+     * @param url
+     * @return  RestTemplate  instance
+     */
+    private RestTemplate newRestTemplateInstance(String url) {
+        RestTemplate restTemplate = new RestTemplate();
+        boolean isIncludedBasicAuth = url.contains("@");
+        if (isIncludedBasicAuth) {
+            String userNamePasswordString = url.substring(url.indexOf("://")+3, url.indexOf("@"));
+            String[] userNameAndPasswordArray = userNamePasswordString.split(":");
+            String userName = userNameAndPasswordArray[0];
+            String password = userNameAndPasswordArray[1];
+            restTemplate.getInterceptors().add(new BasicAuthorizationInterceptor(userName, password));
+        }
+        return restTemplate;
     }
 
 }
