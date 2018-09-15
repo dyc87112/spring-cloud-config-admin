@@ -526,11 +526,24 @@
         "summary" : "Get User Login Logs / 获取用户登录日志",
         "description" : "",
         "operationId" : "getUser",
+        "parameters" : [ {
+          "name" : "page",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        }, {
+          "name" : "size",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int32"
+        } ],
         "responses" : {
           "200" : {
             "description" : "successful operation",
             "schema" : {
-              "$ref" : "#/definitions/WebRespListUserLog"
+              "$ref" : "#/definitions/WebRespPageUserLog"
             }
           }
         }
@@ -1081,6 +1094,86 @@
         }
       }
     },
+    "Page" : {
+      "type" : "object",
+      "properties" : {
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalElements" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "size" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "content" : {
+          "type" : "array",
+          "items" : {
+            "type" : "object"
+          }
+        },
+        "number" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "sort" : {
+          "$ref" : "#/definitions/Sort"
+        },
+        "first" : {
+          "type" : "boolean"
+        },
+        "last" : {
+          "type" : "boolean"
+        },
+        "numberOfElements" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "PageUserLog" : {
+      "type" : "object",
+      "properties" : {
+        "totalPages" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "totalElements" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "size" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "content" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/UserLog"
+          }
+        },
+        "number" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "sort" : {
+          "$ref" : "#/definitions/Sort"
+        },
+        "first" : {
+          "type" : "boolean"
+        },
+        "last" : {
+          "type" : "boolean"
+        },
+        "numberOfElements" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
     "ProjectDto" : {
       "type" : "object",
       "properties" : {
@@ -1120,6 +1213,9 @@
           }
         }
       }
+    },
+    "Sort" : {
+      "type" : "object"
     },
     "User" : {
       "type" : "object",
@@ -1429,7 +1525,7 @@
         }
       }
     },
-    "WebRespListUserLog" : {
+    "WebRespPageUserLog" : {
       "type" : "object",
       "properties" : {
         "code" : {
@@ -1437,10 +1533,7 @@
           "format" : "int32"
         },
         "data" : {
-          "type" : "array",
-          "items" : {
-            "$ref" : "#/definitions/UserLog"
-          }
+          "$ref" : "#/definitions/PageUserLog"
         },
         "message" : {
           "type" : "string",

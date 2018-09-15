@@ -48,6 +48,7 @@
                 <version>2.10.4</version>
                 <configuration>
                     <charset>UTF-8</charset>
+                    <additionalparam>-Xdoclint:none</additionalparam>
                 </configuration>
             </plugin>
             <plugin>
