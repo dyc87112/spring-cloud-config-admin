@@ -130,6 +130,10 @@ public class GitPropertyController {
                 // 文件不存在，按配置的第一种格式创建
                 originPath = projectInfo.getPath().get(0);
                 File file = new File(originPath);
+                File parentFile = file.getParentFile();
+                if ( !parentFile.exists()) {
+                    parentFile.mkdirs();
+                }
                 file.createNewFile();
             }
 
