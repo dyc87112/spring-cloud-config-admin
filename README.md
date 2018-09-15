@@ -1,6 +1,6 @@
 # spring-cloud-config-admin（简称：SCCA）
 
-[![Build Status](https://travis-ci.org/dyc87112/spring-cloud-config-admin.svg?branch=1.1.x)](https://travis-ci.org/dyc87112/spring-cloud-config-admin)
+[![Build Status](https://travis-ci.org/dyc87112/spring-cloud-config-admin.svg?branch=1.2.x)](https://travis-ci.org/dyc87112/spring-cloud-config-admin)
 
 在Spring Cloud的微服务架构方案中虽然提供了Spring Cloud Config来担任配置中心的角色，但是该项目的功能在配置的管理层面还是非常欠缺的。初期我们可以依赖选取的配置存储系统（比如：Gitlab、Github）给我们提供的配置管理界面来操作所有的配置信息，但是这样的管理还是非常粗粒度的，因此这个项目的目的就是解决这个问题，希望提供一套基于Spring Cloud Config配置中心的可视化管理系统。
 
@@ -30,7 +30,7 @@
 - 模块可分离部署，支持多种不同场景的用户使用
 - 兼容所有Spring Cloud支持的服务发现机制
 
-## 1.1.0（开发中）
+## 1.1.0
 
 - 架构优化：增加配置中心插件模块，配置的持久化操作从rest模块移到配置中心模块
 - 用户管理：创建用户、修改用户、删除用户、重置密码
@@ -39,13 +39,13 @@
 - 支持配置中心增加用户名/密码访问控制的优化
 - 一些Bug修复，具体见Release Notes
 
-## 1.2.0（规划中）
+## 1.2.0（开发中）
 
 **欢迎提交ISSUE提出您的想法，我们会综合考虑纳入该版本的开发清单中！**
 
 # 文档
 
-关于本项目的详细使用方法以及各版本的迭代内容可查看下面的也买呢：
+关于本项目的详细使用方法以及各版本的迭代内容可查看下面的内容：
 
 - [使用手册](https://dyc87112.github.io/spring-cloud-config-admin-doc/1.1.0)
 - [版本说明](https://dyc87112.github.io/spring-cloud-config-admin-doc/release_notes.html)
