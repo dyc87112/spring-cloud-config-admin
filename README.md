@@ -1,6 +1,7 @@
 # spring-cloud-config-admin（简称：SCCA）
 
 [![Build Status](https://travis-ci.org/dyc87112/spring-cloud-config-admin.svg?branch=1.2.x)](https://travis-ci.org/dyc87112/spring-cloud-config-admin)
+[![Release Version](https://img.shields.io/github/release/dyc87112/spring-cloud-config-admin.svg)](https://github.com/dyc87112/spring-cloud-config-admin/releases)
 
 在Spring Cloud的微服务架构方案中虽然提供了Spring Cloud Config来担任配置中心的角色，但是该项目的功能在配置的管理层面还是非常欠缺的。初期我们可以依赖选取的配置存储系统（比如：Gitlab、Github）给我们提供的配置管理界面来操作所有的配置信息，但是这样的管理还是非常粗粒度的，因此这个项目的目的就是解决这个问题，希望提供一套基于Spring Cloud Config配置中心的可视化管理系统。
 
