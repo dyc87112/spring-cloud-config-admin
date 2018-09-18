@@ -6,7 +6,7 @@
 
     <groupId>com.didispace</groupId>
     <artifactId>spring-cloud-config-admin</artifactId>
-    <version>1.1.0-RELEASE</version>
+    <version>1.1.1-SNAPSHOT</version>
     <packaging>pom</packaging>
 
     <name>spring-cloud-config-admin</name>

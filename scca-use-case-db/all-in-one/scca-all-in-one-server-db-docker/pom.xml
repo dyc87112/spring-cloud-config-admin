@@ -21,7 +21,7 @@
         <maven.test.skip>true</maven.test.skip>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.java>1.8</version.java>
-        <version.scca>1.1.0-RELEASE</version.scca>
+        <version.scca>1.1.1-SNAPSHOT</version.scca>
         <version.spring-boot>1.5.14.RELEASE</version.spring-boot>
         <version.spring-cloud>Edgware.SR3</version.spring-cloud>
     </properties>

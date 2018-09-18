@@ -22,7 +22,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <version.java>1.8</version.java>
         <!--scca version-->
-        <version.scca>1.1.0-RELEASE</version.scca>
+        <version.scca>1.1.1-SNAPSHOT</version.scca>
         <!--dependencies version-->
         <version.spring-cloud>Edgware.SR3</version.spring-cloud>
     </properties>
