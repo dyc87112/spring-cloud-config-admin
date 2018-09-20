@@ -4,12 +4,15 @@ import com.didispace.scca.rest.constant.UserRoleEnum;
 import com.didispace.scca.rest.domain.User;
 import com.didispace.scca.rest.domain.UserRepo;
 import lombok.AllArgsConstructor;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Anoyi on 2018/8/1.
@@ -33,11 +36,15 @@ public class SccaUserDetailsService implements UserDetailsService {
     }
 
     private UserDetails createUserPrincipal(User user) {
-        return org.springframework.security.core.userdetails.User.builder()
-                .username(user.getUsername())
-                .password(user.getPassword())
-                .roles(UserRoleEnum.getValue(user.getRole()))
-                .build();
+        List<GrantedAuthority> authorities = new ArrayList<>();
+        String role = UserRoleEnum.getValue(user.getRole());
+        authorities.add(new SimpleGrantedAuthority("ROLE_" + role));
+        return new  org.springframework.security.core.userdetails.User(user.getUsername(), user.getPassword(), authorities);
+//        return org.springframework.security.core.userdetails.User.builder()
+//                .username(user.getUsername())
+//                .password(user.getPassword())
+//                .roles(UserRoleEnum.getValue(user.getRole()))
+//                .build();
     }
 
 }
