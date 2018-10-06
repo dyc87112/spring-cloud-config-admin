@@ -196,7 +196,8 @@ public class GitPropertyController {
             this.projectUrl = gitProperties.getRepoUri().replaceFirst("\\{application\\}", application);
 
             // projectUrl append username & password， git clone projectUrl
-            this.projectUrl = this.projectUrl.replaceFirst("http://", "http://" + gitProperties.getUsername() + ":" + gitProperties.getPassword() + "@");
+            String regex = this.getUrlRegex(this.projectUrl);
+            this.projectUrl = this.projectUrl.replaceFirst(regex, regex + gitProperties.getUsername() + ":" + gitProperties.getPassword() + "@");
             log.info("project url : " + this.projectUrl);
 
             // 生成本地拉取配置用来修改使用的唯一目录名
@@ -210,6 +211,12 @@ public class GitPropertyController {
                 this.path.add(this.dir + searchPaths + "/" + propertiesFile);
             }
             log.info("properties file : " + this.path);
+        }
+
+        private String getUrlRegex(String projectUrl) {
+            String regex = "http://";
+            if (projectUrl.contains("https://")) regex = "https://";
+            return regex;
         }
 
     }
