@@ -50,14 +50,14 @@ public class YamlUtils {
             Object val = entry.getValue();
             if (val instanceof Map) {
                 yamlToProperties(props, (Map<String, Object>) val, key);
-            } else if(val instanceof List) {
+            } else if (val instanceof List) {
                 int index = 0;
-                for(Object v : (List) val) {
-                    props.put(key + "[" + index + "]", v.toString());
-                    index ++;
+                for (Object v : (List) val) {
+                    props.put(key + "[" + index + "]", v == null ? "" : v.toString());
+                    index++;
                 }
             } else {
-                props.put(key, val.toString());
+                props.put(key, val == null ? "" : val.toString());
             }
         }
     }
