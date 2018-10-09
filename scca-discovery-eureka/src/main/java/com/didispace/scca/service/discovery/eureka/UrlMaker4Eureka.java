@@ -62,7 +62,8 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
             throw new RuntimeException("No instances : " + env.getConfigServerName());
         }
 
-        if(homePageUrl.lastIndexOf("/") + 1 == homePageUrl.length() && env.getContextPath().indexOf("/") == 0) {
+        if(homePageUrl.lastIndexOf("/") + 1 == homePageUrl.length() &&
+                env.getContextPath() != null && env.getContextPath().indexOf("/") == 0) {
             homePageUrl = homePageUrl.substring(0, homePageUrl.length() - 1);
         }
 
@@ -95,7 +96,8 @@ public class UrlMaker4Eureka extends BaseUrlMaker {
             Map<String, String> instance = (Map) o;
             if (instance.get("status").equals("UP")) {
                 String homePageUrl = instance.get("homePageUrl");
-                if(homePageUrl.lastIndexOf("/") + 1 == homePageUrl.length() && env.getContextPath().indexOf("/") == 0) {
+                if(homePageUrl.lastIndexOf("/") + 1 == homePageUrl.length()
+                        && env.getContextPath() != null && env.getContextPath().indexOf("/") == 0) {
                     homePageUrl = homePageUrl.substring(0, homePageUrl.length() - 1);
                 }
                 result.add(homePageUrl + env.getContextPath());
