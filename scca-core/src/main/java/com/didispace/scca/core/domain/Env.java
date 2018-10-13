@@ -1,7 +1,9 @@
 package com.didispace.scca.core.domain;
 
-import lombok.Data;
+import lombok.Getter;
 import lombok.NoArgsConstructor;
+import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -14,9 +16,11 @@ import java.util.List;
  * @create 2018/4/24.
  * @blog http://blog.didispace.com
  */
-@Data
 @Entity
 @NoArgsConstructor
+@Getter
+@Setter
+@ToString(exclude = {"envParams", "projects"})
 public class Env {
 
     @Id
