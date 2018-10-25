@@ -43,4 +43,9 @@ public class Project {
     @OneToMany(mappedBy = "project", cascade = CascadeType.REMOVE)
     private List<Label> labels = new ArrayList<>();
 
+    public Project(Long id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
 }

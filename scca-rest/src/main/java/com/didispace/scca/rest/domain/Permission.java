@@ -3,14 +3,13 @@ package com.didispace.scca.rest.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 
 /**
- * 用户
- * Created by Anoyi on 2018/8/1.
+ * 权限
+ * Created by Anoyi on 2018/10/24.
  * <p>
  * Blog: https://anoyi.com/
  * Github: https://github.com/ChineseSilence
@@ -18,32 +17,25 @@ import javax.persistence.Id;
 @Data
 @Entity
 @NoArgsConstructor
-public class User {
+public class Permission {
 
     @Id
     @GeneratedValue
     private Long id;
 
     /**
-     * 用户名
+     * 用户 ID
      */
-    @Column(unique = true)
-    private String username;
+    private Long userId;
 
     /**
-     * 密码
+     * 环境 ID
      */
-    private String password;
+    private Long envId;
 
     /**
-     * 昵称
+     * 项目 ID
      */
-    private String nickname;
-
-    /**
-     * 角色权限
-     * {@link com.didispace.scca.rest.constant.UserRoleEnum}
-     */
-    private Integer role;
+    private Long projectId;
 
 }

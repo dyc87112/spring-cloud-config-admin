@@ -57,4 +57,9 @@ public class Env {
     @ManyToMany(mappedBy = "envs")
     private List<Project> projects = new ArrayList<>();
 
+    public Env(Long id, String name){
+        this.id = id;
+        this.name = name;
+    }
+
 }

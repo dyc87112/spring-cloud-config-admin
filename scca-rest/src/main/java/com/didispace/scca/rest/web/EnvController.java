@@ -9,6 +9,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 
@@ -54,6 +55,7 @@ public class EnvController extends BaseController {
 
     @ApiOperation("Create Env / 创建环境")
     @RequestMapping(method = RequestMethod.POST)
+    @Secured("ROLE_ADMIN")
     public WebResp<String> createEnv(@RequestBody EnvDto env) {
         log.info("create env. env={}", JSON.toJSONString(env));
 
@@ -76,6 +78,7 @@ public class EnvController extends BaseController {
     @Transactional
     @ApiOperation("Delete Env / 删除环境")
     @RequestMapping(method = RequestMethod.DELETE)
+    @Secured("ROLE_ADMIN")
     public WebResp<String> deleteEnv(@RequestParam("id") Long id) {
         Env env = envRepo.findOne(id);
         log.info("delete env. env={}", JSON.toJSONString(env));
@@ -98,6 +101,7 @@ public class EnvController extends BaseController {
     @Transactional
     @ApiOperation("Update Env / 更新环境")
     @RequestMapping(method = RequestMethod.PUT)
+    @Secured("ROLE_ADMIN")
     public WebResp<String> updateEnv(@RequestBody EnvDto env) {
         Env u = envRepo.findOne(env.getId());
 

@@ -11,6 +11,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
@@ -70,6 +71,7 @@ public class ProjectController extends BaseController {
     @Transactional
     @ApiOperation("Create Project / 创建项目")
     @RequestMapping(method = RequestMethod.POST)
+    @Secured("ROLE_ADMIN")
     public WebResp<String> create(@RequestBody ProjectDto project) {
         log.info("create Project : " + project);
 
@@ -94,6 +96,7 @@ public class ProjectController extends BaseController {
     @Transactional
     @ApiOperation("Delete Project / 删除项目")
     @RequestMapping(method = RequestMethod.DELETE)
+    @Secured("ROLE_ADMIN")
     public WebResp<String> deleteProject(@RequestParam("id") Long id) {
         Project project = projectRepo.findOne(id);
         Assert.notNull(project, "Project [" + id + "] not exist");
@@ -112,6 +115,7 @@ public class ProjectController extends BaseController {
     @Transactional
     @ApiOperation("Update Project / 更新项目")
     @RequestMapping(method = RequestMethod.PUT)
+    @Secured("ROLE_ADMIN")
     public WebResp<String> updateProject(@RequestBody ProjectDto project) {
         Project updateProject = projectRepo.findOne(project.getId());
         Assert.notNull(updateProject, "Project [" + project.getId() + "] not exist");
@@ -170,6 +174,7 @@ public class ProjectController extends BaseController {
     @Transactional
     @ApiOperation("Project Add Label / 项目增加配置版本")
     @RequestMapping(path = "/label", method = RequestMethod.POST)
+    @Secured("ROLE_ADMIN")
     public WebResp<LabelDto> addProjectLabel(@RequestParam("projectId") Long projectId,
                                              @RequestParam("labelName") String labelName) {
         Project owner = projectRepo.findOne(projectId);
@@ -190,6 +195,7 @@ public class ProjectController extends BaseController {
     @Transactional
     @ApiOperation("Project Delete Label / 项目删除版本")
     @RequestMapping(path = "/label", method = RequestMethod.DELETE)
+    @Secured("ROLE_ADMIN")
     public WebResp<String> deleteProjectLabel(@RequestParam("labelId") Long labelId) {
         Label label = labelRepo.findOne(labelId);
         Assert.notNull(label, "Label [" + labelId + "] not exist");
@@ -208,6 +214,7 @@ public class ProjectController extends BaseController {
     @Transactional
     @ApiOperation("Project Add Env / 项目增加环境")
     @RequestMapping(path = "/env", method = RequestMethod.POST)
+    @Secured("ROLE_ADMIN")
     public WebResp<String> addProjectEnv(@RequestParam("projectId") Long projectId, @RequestParam("envId") Long envId) {
         Project owner = projectRepo.findOne(projectId);
         Assert.notNull(owner, "Project [" + projectId + "] not exist");
@@ -224,6 +231,7 @@ public class ProjectController extends BaseController {
     @Transactional
     @ApiOperation("Project Remove Env / 项目移除环境")
     @RequestMapping(path = "/env", method = RequestMethod.DELETE)
+    @Secured("ROLE_ADMIN")
     public WebResp<String> deleteProjectEnv(@RequestParam("projectId") Long projectId, @RequestParam("envId") Long envId) {
         Project owner = projectRepo.findOne(projectId);
         Assert.notNull(owner, "Project [" + projectId + "] not exist");
