@@ -9,6 +9,7 @@ import javax.persistence.Id;
 import java.util.Date;
 
 /**
+ * 用户操作日志
  * Created by Anoyi on 2018/8/14.
  * <p>
  * Blog: https://anoyi.com/

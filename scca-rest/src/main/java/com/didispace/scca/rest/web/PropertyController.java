@@ -1,12 +1,14 @@
 package com.didispace.scca.rest.web;
 
 import com.didispace.scca.core.domain.Env;
+import com.didispace.scca.rest.domain.User;
 import com.didispace.scca.rest.dto.base.WebResp;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cloud.config.environment.Environment;
 import org.springframework.cloud.config.environment.PropertySource;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.util.Assert;
 import org.springframework.web.bind.annotation.*;
 
@@ -27,9 +29,13 @@ public class PropertyController extends BaseController {
 
     @ApiOperation("persistent properties / 获取持久化的配置信息")
     @RequestMapping(path = "/persistent", method = RequestMethod.GET)
-    public WebResp<Properties> propertiesFromPersistent(@RequestParam("project") String project,
+    public WebResp<Properties> propertiesFromPersistent(@AuthenticationPrincipal org.springframework.security.core.userdetails.User principal,
+                                                        @RequestParam("project") String project,
                                                         @RequestParam("profile") String profile,
                                                         @RequestParam("label") String label) {
+        // 权限校验
+        checkPermission(principal, project, profile);
+
         // 直接通过持久化实现，获取配置信息
         Properties properties = persistenceService.readProperties(project, profile, label);
         return WebResp.success(properties);
@@ -37,10 +43,14 @@ public class PropertyController extends BaseController {
 
     @ApiOperation("Save properties / 保存持久化的配置信息")
     @RequestMapping(path = "/persistent", method = RequestMethod.POST)
-    public WebResp<String> saveProperties(@RequestParam("project") String project,
+    public WebResp<String> saveProperties(@AuthenticationPrincipal org.springframework.security.core.userdetails.User principal,
+                                          @RequestParam("project") String project,
                                           @RequestParam("profile") String profile,
                                           @RequestParam("label") String label,
                                           @RequestBody Properties newProperties) {
+        // 权限校验
+        checkPermission(principal, project, profile);
+
         // 保存配置信息
         persistenceService.saveProperties(project, profile, label, newProperties);
         return WebResp.success("save properties success");
@@ -83,6 +93,15 @@ public class PropertyController extends BaseController {
         String result = baseOptService.decrypt(value, env);
         log.info("decrypt property {} -> {}", value, result);
         return WebResp.success(result, null);
+    }
+
+    /**
+     * 用户操作权限校验
+     */
+    private void checkPermission(org.springframework.security.core.userdetails.User principal, String project, String profile){
+        String username = principal.getUsername();
+        User user = userService.getByUsername(username);
+        permissionService.permissionFilter(user, profile, project);
     }
 
 }

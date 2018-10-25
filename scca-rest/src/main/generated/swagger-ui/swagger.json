@@ -23,6 +23,8 @@
   }, {
     "name" : "Logs（日志查询）"
   }, {
+    "name" : "Permission（权限管理）"
+  }, {
     "name" : "Project MGT（项目管理）"
   }, {
     "name" : "Property MGT（配置详细管理）"
@@ -549,6 +551,51 @@
         }
       }
     },
+    "${scca.rest.context-path}/permission" : {
+      "get" : {
+        "tags" : [ "Permission（权限管理）" ],
+        "summary" : "Get User Permissions / 权限查询",
+        "description" : "",
+        "operationId" : "getPermission",
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "query",
+          "required" : true,
+          "type" : "integer",
+          "format" : "int64"
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespPermissionMatrixDto"
+            }
+          }
+        }
+      },
+      "post" : {
+        "tags" : [ "Permission（权限管理）" ],
+        "summary" : "Update User Permissions / 更新权限",
+        "description" : "",
+        "operationId" : "updatePermission",
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : false,
+          "schema" : {
+            "$ref" : "#/definitions/PermissionParamDto"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "successful operation",
+            "schema" : {
+              "$ref" : "#/definitions/WebRespString"
+            }
+          }
+        }
+      }
+    },
     "${scca.rest.context-path}/project" : {
       "get" : {
         "tags" : [ "Project MGT（项目管理）" ],
@@ -1040,6 +1087,39 @@
         }
       }
     },
+    "Env" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "registryAddress" : {
+          "type" : "string"
+        },
+        "configServerName" : {
+          "type" : "string"
+        },
+        "contextPath" : {
+          "type" : "string"
+        },
+        "envParams" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/EnvParam"
+          }
+        },
+        "projects" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Project"
+          }
+        }
+      }
+    },
     "EnvDto" : {
       "type" : "object",
       "properties" : {
@@ -1057,6 +1137,24 @@
           "type" : "string"
         },
         "contextPath" : {
+          "type" : "string"
+        }
+      }
+    },
+    "EnvParam" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "env" : {
+          "$ref" : "#/definitions/Env"
+        },
+        "pkey" : {
+          "type" : "string"
+        },
+        "pvalue" : {
           "type" : "string"
         }
       }
@@ -1079,6 +1177,21 @@
         },
         "pValue" : {
           "type" : "string"
+        }
+      }
+    },
+    "Label" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "project" : {
+          "$ref" : "#/definitions/Project"
         }
       }
     },
@@ -1122,15 +1235,15 @@
         "sort" : {
           "$ref" : "#/definitions/Sort"
         },
-        "numberOfElements" : {
-          "type" : "integer",
-          "format" : "int32"
+        "first" : {
+          "type" : "boolean"
         },
         "last" : {
           "type" : "boolean"
         },
-        "first" : {
-          "type" : "boolean"
+        "numberOfElements" : {
+          "type" : "integer",
+          "format" : "int32"
         }
       }
     },
@@ -1162,15 +1275,98 @@
         "sort" : {
           "$ref" : "#/definitions/Sort"
         },
-        "numberOfElements" : {
-          "type" : "integer",
-          "format" : "int32"
+        "first" : {
+          "type" : "boolean"
         },
         "last" : {
           "type" : "boolean"
         },
-        "first" : {
-          "type" : "boolean"
+        "numberOfElements" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      }
+    },
+    "Permission" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "userId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "envId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "projectId" : {
+          "type" : "integer",
+          "format" : "int64"
+        }
+      }
+    },
+    "PermissionMatrixDto" : {
+      "type" : "object",
+      "properties" : {
+        "envs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Env"
+          }
+        },
+        "projects" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Project"
+          }
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Permission"
+          }
+        }
+      }
+    },
+    "PermissionParamDto" : {
+      "type" : "object",
+      "properties" : {
+        "userId" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "permissions" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Permission"
+          }
+        }
+      }
+    },
+    "Project" : {
+      "type" : "object",
+      "properties" : {
+        "id" : {
+          "type" : "integer",
+          "format" : "int64"
+        },
+        "name" : {
+          "type" : "string"
+        },
+        "envs" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Env"
+          }
+        },
+        "labels" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Label"
+          }
         }
       }
     },
@@ -1534,6 +1730,27 @@
         },
         "data" : {
           "$ref" : "#/definitions/PageUserLog"
+        },
+        "message" : {
+          "type" : "string",
+          "description" : "响应消息"
+        },
+        "timestamp" : {
+          "type" : "integer",
+          "format" : "int64",
+          "description" : "时间戳"
+        }
+      }
+    },
+    "WebRespPermissionMatrixDto" : {
+      "type" : "object",
+      "properties" : {
+        "code" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "data" : {
+          "$ref" : "#/definitions/PermissionMatrixDto"
         },
         "message" : {
           "type" : "string",

@@ -79,6 +79,11 @@ public class UserServiceImpl implements UserService {
         return passwordEncoder.matches(password, encodedPassword);
     }
 
+    @Override
+    public boolean existUser(Long id) {
+        return userRepo.findById(id) != null;
+    }
+
     private void saveUser(User user){
         String encodedPassword = passwordEncoder.encode(user.getPassword());
         user.setPassword(encodedPassword);

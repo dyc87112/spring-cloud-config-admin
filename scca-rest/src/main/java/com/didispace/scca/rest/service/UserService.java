@@ -47,4 +47,9 @@ public interface UserService {
      */
     boolean matchPassword(String password, String encodedPassword);
 
+    /**
+     * 校验用户是否存在
+     */
+    boolean existUser(Long id);
+
 }
