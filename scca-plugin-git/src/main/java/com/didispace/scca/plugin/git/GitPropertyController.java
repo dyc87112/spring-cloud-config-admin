@@ -151,7 +151,7 @@ public class GitPropertyController {
                 // 把update内容写到originPath的YAML文件中
                 Map<String, Object> map = YamlUtils.propertiesToYamlMap(update);
                 StringBuffer sb = new StringBuffer();
-                YamlUtils.convertYamlString(sb, map, 0);
+                YamlUtils.convertYamlString(sb, map);
                 @Cleanup BufferedWriter out = new BufferedWriter(new FileWriter(originPath));
                 out.write(sb.toString());
             }
