@@ -37,7 +37,7 @@ public class TestReadFile {
         // Properties转YAML
         Map<String, Object> map = YamlUtils.propertiesToYamlMap(props);
         StringBuffer sb = new StringBuffer();
-        YamlUtils.convertYamlString(sb, map, 0);
+        YamlUtils.convertYamlString(sb, map);
         System.out.println(sb.toString());
     }
 
