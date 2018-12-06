@@ -7,6 +7,8 @@ import org.yaml.snakeyaml.Yaml;
 import java.io.File;
 import java.io.FileInputStream;
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * Created by 程序猿DD/翟永超 on 2018/8/7.
@@ -69,51 +71,14 @@ public class YamlUtils {
      * @return
      */
     public static Map<String, Object> propertiesToYamlMap(Properties props) {
-        Map<String, Object> map = new TreeMap<>();
-        for (Object key : props.keySet()) {
-            List<String> keyList = Arrays.asList(((String) key).split("\\."));
-            Map<String, Object> valueMap = createTree(keyList, map);
-            String value = props.getProperty((String) key);
-            valueMap.put(keyList.get(keyList.size() - 1), value);
-        }
-        return map;
+        return props.entrySet().stream().collect(Collectors.toMap(
+                e -> String.valueOf(e.getKey()),
+                e -> String.valueOf(e.getValue())
+        ));
     }
 
-    private static Map<String, Object> createTree(List<String> keys, Map<String, Object> map) {
-        Map<String, Object> valueMap = (Map<String, Object>) map.get(keys.get(0));
-        if (valueMap == null) {
-            valueMap = new HashMap<>();
-        }
-        map.put(keys.get(0), valueMap);
-        Map<String, Object> out = valueMap;
-        if (keys.size() > 2) {
-            out = createTree(keys.subList(1, keys.size()), valueMap);
-        }
-        return out;
-    }
-
-    public static void convertYamlString(StringBuffer sb, Map<String, Object> map, int count) {
-        Set<String> set = map.keySet();
-        for (Object key : set) {
-            Object value = map.get(key);
-            for (int i = 0; i < count; i++) {
-                sb.append("    ");
-            }
-            if (value instanceof Map) {
-                sb.append(key + ":\n");
-                convertYamlString(sb, (Map) value, count + 1);
-            } else if (value instanceof List) {
-                for (Object obj : (List) value) {
-                    for (int i = 0; i < count; i++) {
-                        System.out.print("    ");
-                        sb.append("    ");
-                    }
-                    sb.append("    - " + obj.toString() + "\n");
-                }
-            } else {
-                sb.append(key + ": " + value + "\n");
-            }
-        }
+    public static void convertYamlString(StringBuffer sb, Map<String, Object> map) {
+        if (map != null) sb.append(new YamlProcessor().dump(map));
     }
 
 }
